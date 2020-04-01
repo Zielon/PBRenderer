@@ -1,9 +1,10 @@
 #include "application.h"
+#include "../geometry/model.h"
 
 Application::Application():
 	window(1200, 800),
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),
-	shader("../opengl/glsl/default.vert", "../opengl/glsl/default.frag"){}
+	shader("default.vert", "default.frag"){}
 
 void Application::start() const{
 
@@ -18,4 +19,9 @@ void Application::start() const{
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
+}
+
+void Application::load() const{
+	
+	Model model;
 }

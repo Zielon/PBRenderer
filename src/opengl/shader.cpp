@@ -17,7 +17,8 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, c
 
 	for (auto shader : shaders)
 	{
-		auto path = std::get<0>(shader);
+		auto path = "../opengl/glsl/" + std::get<0>(shader);
+
 		auto type = std::get<1>(shader);
 		auto name = std::get<2>(shader);
 

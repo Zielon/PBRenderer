@@ -8,6 +8,7 @@ class Application
 public:
 	Application();
 	void start() const;
+	void load() const;
 private:
 	Window window;
 	Menu menu;

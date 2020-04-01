@@ -27,9 +27,6 @@
     <ClInclude Include="..\src\core\scene.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geomtery\triangle.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\material\material.h">
       <Filter>material</Filter>
     </ClInclude>
@@ -66,6 +63,12 @@
     <ClInclude Include="..\src\application\menu.h">
       <Filter>application</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\geometry\model.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\triangle.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="..\src\application\menu.cpp">
       <Filter>application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\model.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
