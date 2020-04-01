@@ -13,6 +13,15 @@
     <Filter Include="application">
       <UniqueIdentifier>{dcb4fc57-0075-4a36-b573-881323fec5c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="opengl">
+      <UniqueIdentifier>{64da162b-42a8-4a77-8069-d8f831c884e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{ede03f4e-86e8-44bb-8fef-037c9452c18e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="opengl\glsl">
+      <UniqueIdentifier>{6a8e4670-9251-41c4-91a3-a5d81f96d61c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -30,6 +39,33 @@
     <ClInclude Include="..\src\application\window.h">
       <Filter>application</Filter>
     </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\examples\imgui_impl_opengl3.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd_party\imgui\examples\imgui_impl_glfw.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\application\menu.h">
+      <Filter>application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -39,5 +75,40 @@
     <ClCompile Include="..\src\application\window.cpp">
       <Filter>application</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\opengl\shader.h">
+      <Filter>opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\opengl\shader.cpp">
+      <Filter>opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rd_party\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rd_party\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rd_party\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rd_party\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rd_party\imgui\examples\imgui_impl_opengl3.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rd_party\imgui\examples\imgui_impl_glfw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\menu.cpp">
+      <Filter>application</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\opengl\glsl\default.frag">
+      <Filter>opengl\glsl</Filter>
+    </None>
+    <None Include="..\src\opengl\glsl\default.vert">
+      <Filter>opengl\glsl</Filter>
+    </None>
   </ItemGroup>
 </Project>
