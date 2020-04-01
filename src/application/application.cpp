@@ -4,7 +4,10 @@
 Application::Application():
 	window(1200, 800),
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),
-	shader("default.vert", "default.frag"){}
+	shader("default.vert", "default.frag"){
+
+	load();
+}
 
 void Application::start() const{
 
@@ -22,6 +25,6 @@ void Application::start() const{
 }
 
 void Application::load() const{
-	
 	Model model;
+	model.loadModel();
 }

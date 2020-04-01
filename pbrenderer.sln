@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pbrenderer", "config\pbrenderer.vcxproj", "{482BA2F9-45F7-4892-837C-10912AA10395}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pbrenderer", "program\pbrenderer.vcxproj", "{482BA2F9-45F7-4892-837C-10912AA10395}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

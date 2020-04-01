@@ -9,6 +9,5 @@ class Model
 public:
 	Model();
 
-private:
 	void loadModel() const;
 };
