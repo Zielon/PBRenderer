@@ -1,6 +1,3 @@
-#ifndef SCENE_H
-#define SCENE_H
+#pragma once
 
 class Scene { };
-
-#endif // SCENE_H
