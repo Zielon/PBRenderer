@@ -27,10 +27,16 @@
     <ClInclude Include="..\src\application\application.h">
       <Filter>application</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\application\window.h">
+      <Filter>application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\application\application.cpp">
+      <Filter>application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\application\window.cpp">
       <Filter>application</Filter>
     </ClCompile>
   </ItemGroup>

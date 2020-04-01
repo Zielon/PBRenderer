@@ -1,6 +1,3 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#pragma once
 
 class Triangle { };
-
-#endif // TRIANGLE_H

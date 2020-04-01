@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\application\application.h" />
+    <ClInclude Include="..\src\application\window.h" />
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\geomtery\triangle.h" />
     <ClInclude Include="..\src\material\material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\application\application.cpp" />
+    <ClCompile Include="..\src\application\window.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
