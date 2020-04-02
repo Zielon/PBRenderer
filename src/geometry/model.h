@@ -20,7 +20,7 @@ namespace general
 		std::vector<rasterizer::Texture> textures_loaded;
 		std::vector<rasterizer::Mesh> meshes;
 		std::string directory;
-		bool gamma_correction;
+		bool gamma_correction{};
 
 		void loadModel();
 

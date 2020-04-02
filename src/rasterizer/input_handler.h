@@ -7,7 +7,11 @@ namespace rasterizer
 	class InputHandler
 	{
 	public:
+		InputHandler(GLFWwindow* window, Camera* camera, int width, int height);
 
+		static void process();
+
+	private:
 		static GLFWwindow* window;
 		static Camera* camera;
 		static float last_x;
@@ -16,13 +20,9 @@ namespace rasterizer
 		static float delta_time;
 		static float last_frame;
 
-		InputHandler(GLFWwindow* window, Camera* camera, int width, int height);
-
 		static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 		static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
-		static void process();
 
 		static void time_update();
 	};
