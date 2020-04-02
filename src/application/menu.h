@@ -4,17 +4,20 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-class Menu
+namespace pbr
 {
-public:
-	Menu(const glm::ivec2& position, const glm::ivec2& size);
+	class Menu
+	{
+	public:
+		Menu(const glm::ivec2& position, const glm::ivec2& size);
 
-	void attach(std::function<void()> func);
+		void attach(std::function<void()> func);
 
-	void draw() const;
+		void draw() const;
 
-private:
-	glm::ivec2 position;
-	glm::ivec2 size;
-	std::vector<std::function<void()>> functions;
-};
+	private:
+		glm::ivec2 position;
+		glm::ivec2 size;
+		std::vector<std::function<void()>> functions;
+	};
+}

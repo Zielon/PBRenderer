@@ -2,5 +2,5 @@
 
 namespace pbr
 {
-	class Triangle { };
+	class Camera { };
 }

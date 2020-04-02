@@ -1,3 +1,6 @@
 #pragma once
 
-class Scene { };
+namespace pbr
+{
+	class Scene { };
+}

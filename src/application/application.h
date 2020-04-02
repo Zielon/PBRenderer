@@ -4,17 +4,18 @@
 #include "menu.h"
 #include "../opengl/shader.h"
 
-class Application
+namespace pbr
 {
-public:
-	Application();
+	class Application
+	{
+	public:
+		Application();
 
-	void start() const;
+		void start() const;
 
-	void load() const;
-
-private:
-	Window window;
-	Menu menu;
-	Shader shader;
-};
+	private:
+		Window window;
+		Menu menu;
+		Shader shader;
+	};
+}

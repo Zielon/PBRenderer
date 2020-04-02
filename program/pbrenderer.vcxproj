@@ -30,7 +30,11 @@
     <ClInclude Include="..\src\application\application.h" />
     <ClInclude Include="..\src\application\menu.h" />
     <ClInclude Include="..\src\application\window.h" />
+    <ClInclude Include="..\src\cameras\perspective.h" />
+    <ClInclude Include="..\src\core\camera.h" />
+    <ClInclude Include="..\src\core\gl_camera.h" />
     <ClInclude Include="..\src\core\scene.h" />
+    <ClInclude Include="..\src\geometry\gl_mesh.h" />
     <ClInclude Include="..\src\geometry\model.h" />
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\material\material.h" />
@@ -45,6 +49,7 @@
     <ClCompile Include="..\src\application\application.cpp" />
     <ClCompile Include="..\src\application\menu.cpp" />
     <ClCompile Include="..\src\application\window.cpp" />
+    <ClCompile Include="..\src\geometry\gl_mesh.cpp" />
     <ClCompile Include="..\src\geometry\model.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\opengl\shader.cpp" />
@@ -120,7 +125,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)3rd_party\glfw-3.3\lib\lib-vc2017-64bit;$(SolutionDir)3rd_party\glfw-3.3\bin\lib-vc2017-64bit;$(SolutionDir)3rd_party\assimp\lib;$(SolutionDir)3rd_party\glad\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -153,7 +158,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

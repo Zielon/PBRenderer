@@ -1,7 +1,7 @@
 #include "window.h"
 #include <iostream>
 
-Window::Window(int width, int height): width(width), height(height){
+pbr::Window::Window(int width, int height): width(width), height(height){
 
 	glfwInit();
 
@@ -38,7 +38,7 @@ Window::Window(int width, int height): width(width), height(height){
 	io.Fonts->AddFontDefault();
 }
 
-Window::~Window(){
+pbr::Window::~Window(){
 	glfwDestroyWindow(window);
 	glfwTerminate();
 	ImGui::DestroyContext();

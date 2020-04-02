@@ -1,3 +1,6 @@
 #pragma once
 
-class Material { };
+namespace pbr
+{
+	class Material { };
+}

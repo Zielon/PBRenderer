@@ -4,8 +4,9 @@
 #include <sstream>
 #include <iostream>
 #include <tuple>
+#include <direct.h>
 
-Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath){
+pbr::Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath){
 
 	auto shaders = std::vector<std::tuple<std::string, GLuint, std::string>>{
 		std::make_tuple(vertexPath, GL_VERTEX_SHADER, "VERTEX_SHADER"),
@@ -17,21 +18,31 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, c
 
 	for (auto shader : shaders)
 	{
-		auto path = "../opengl/glsl/" + std::get<0>(shader);
+		auto relativePath = std::get<0>(shader);
 
+		if (relativePath.empty()) continue;
+
+		auto path = "..\\src\\opengl\\glsl\\" + relativePath;
 		auto type = std::get<1>(shader);
 		auto name = std::get<2>(shader);
 
-		if (path.empty()) continue;
-
 		std::ifstream shaderFile;
+		std::string code;
 
-		shaderFile.open(path);
-		std::stringstream shaderStream;
-		shaderStream << shaderFile.rdbuf();
-		shaderFile.close();
+		try
+		{
+			shaderFile.open(path);
+			std::stringstream shaderStream;
+			shaderStream << shaderFile.rdbuf();
+			shaderFile.close();
+			code = shaderStream.str();
+		}
+		catch (std::ifstream::failure& e)
+		{
+			std::cerr << "SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+		}
 
-		const char* shaderCode = shaderStream.str().c_str();
+		const char* shaderCode = code.c_str();
 
 		int id = glCreateShader(type);
 		glShaderSource(id, 1, &shaderCode, nullptr);
@@ -51,7 +62,7 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, c
 	for (auto shaderId : ids) glDeleteShader(shaderId);
 }
 
-void Shader::check_compile_errors(GLuint shader, const std::string& type){
+void pbr::Shader::check_compile_errors(GLuint shader, const std::string& type){
 
 	GLint success;
 	GLchar infoLog[1024];

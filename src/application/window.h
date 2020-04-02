@@ -6,21 +6,24 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
 
-class Window
+namespace pbr
 {
-public:
-	Window(int width, int height);
+	class Window
+	{
+	public:
+		Window(int width, int height);
 
-	~Window();
+		~Window();
 
-	// Getters and setters
+		// Getters and setters
 
-	GLFWwindow* get() const{
-		return window;
-	}
+		GLFWwindow* get() const{
+			return window;
+		}
 
-private:
-	GLFWwindow* window{nullptr};
-	const int width;
-	const int height;
-};
+	private:
+		GLFWwindow* window{nullptr};
+		const int width;
+		const int height;
+	};
+}

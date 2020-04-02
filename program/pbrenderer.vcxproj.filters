@@ -22,6 +22,9 @@
     <Filter Include="opengl\glsl">
       <UniqueIdentifier>{6a8e4670-9251-41c4-91a3-a5d81f96d61c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cameras">
+      <UniqueIdentifier>{35a647dc-72c5-4037-b041-77907b6a7529}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -69,6 +72,18 @@
     <ClInclude Include="..\src\geometry\triangle.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cameras\perspective.h">
+      <Filter>cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\gl_mesh.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\gl_camera.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\camera.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -106,6 +121,9 @@
       <Filter>application</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\model.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\gl_mesh.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
