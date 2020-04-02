@@ -5,9 +5,9 @@
 #include <glm/vec3.hpp>
 #include <vector>
 
-#include "../opengl/shader.h"
+#include "shader.h"
 
-namespace pbr
+namespace rasterizer
 {
 	/**
 	 * Basic mesh structures
@@ -28,10 +28,10 @@ namespace pbr
 		glm::vec2 tex_coords;
 	};
 
-	class GLMesh
+	class Mesh
 	{
 	public:
-		GLMesh(
+		Mesh(
 			std::vector<Vertex> vertices,
 			std::vector<unsigned int> indices,
 			std::vector<Texture> textures);

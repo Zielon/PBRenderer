@@ -6,7 +6,7 @@
 #include <tuple>
 #include <direct.h>
 
-pbr::Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath){
+rasterizer::Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath){
 
 	auto shaders = std::vector<std::tuple<std::string, GLuint, std::string>>{
 		std::make_tuple(vertexPath, GL_VERTEX_SHADER, "VERTEX_SHADER"),
@@ -22,7 +22,7 @@ pbr::Shader::Shader(const std::string& vertexPath, const std::string& fragmentPa
 
 		if (relativePath.empty()) continue;
 
-		auto path = "..\\src\\opengl\\glsl\\" + relativePath;
+		auto path = "..\\src\\rasterizer\\glsl\\" + relativePath;
 		auto type = std::get<1>(shader);
 		auto name = std::get<2>(shader);
 
@@ -62,7 +62,7 @@ pbr::Shader::Shader(const std::string& vertexPath, const std::string& fragmentPa
 	for (auto shaderId : ids) glDeleteShader(shaderId);
 }
 
-void pbr::Shader::check_compile_errors(GLuint shader, const std::string& type){
+void rasterizer::Shader::check_compile_errors(GLuint shader, const std::string& type){
 
 	GLint success;
 	GLchar infoLog[1024];
@@ -70,21 +70,21 @@ void pbr::Shader::check_compile_errors(GLuint shader, const std::string& type){
 	if (type != "PROGRAM")
 	{
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
 		if (!success)
 		{
 			glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-			std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog <<
-				"\n -- --------------------------------------------------- -- " << std::endl;
+			std::cerr << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << std::endl;
 		}
 	}
 	else
 	{
 		glGetProgramiv(shader, GL_LINK_STATUS, &success);
+
 		if (!success)
 		{
 			glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
-			std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog <<
-				"\n -- --------------------------------------------------- -- " << std::endl;
+			std::cerr << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << std::endl;
 		}
 	}
 }

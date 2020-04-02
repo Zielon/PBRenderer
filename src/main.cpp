@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]){
 
-	pbr::Application app;
+	app::Application app;
 	app.start();
 
 	return 0;

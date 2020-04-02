@@ -2,20 +2,26 @@
 
 #include "window.h"
 #include "menu.h"
-#include "../opengl/shader.h"
+#include "../rasterizer/shader.h"
+#include "../rasterizer/camera.h"
+#include "../rasterizer/input_handler.h"
 
-namespace pbr
+namespace app
 {
 	class Application
 	{
 	public:
 		Application();
 
-		void start() const;
+		~Application();
+
+		void start();
 
 	private:
 		Window window;
 		Menu menu;
-		Shader shader;
+		rasterizer::Shader shader;
+		rasterizer::Camera camera;
+		rasterizer::InputHandler input_handler;
 	};
 }

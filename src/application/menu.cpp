@@ -1,7 +1,7 @@
 #include"menu.h"
 #include "window.h"
 
-pbr::Menu::Menu(const glm::ivec2& position, const glm::ivec2& size): position(position), size(size){
+app::Menu::Menu(const glm::ivec2& position, const glm::ivec2& size): position(position), size(size){
 
 	attach([](){
 		ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.60f);
@@ -9,12 +9,12 @@ pbr::Menu::Menu(const glm::ivec2& position, const glm::ivec2& size): position(po
 	});
 }
 
-void pbr::Menu::attach(std::function<void()> func){
+void app::Menu::attach(std::function<void()> func){
 
 	functions.push_back(std::move(func));
 }
 
-void pbr::Menu::draw() const{
+void app::Menu::draw() const{
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

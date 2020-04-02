@@ -6,11 +6,11 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-pbr::Model::Model(){
+general::Model::Model(){
 	loadModel();
 }
 
-void pbr::Model::loadModel(){
+void general::Model::loadModel(){
 
 	Assimp::Importer importer;
 
@@ -29,12 +29,12 @@ void pbr::Model::loadModel(){
 	process_node(scene->mRootNode, scene);
 }
 
-void pbr::Model::draw(const Shader& shader){
+void general::Model::draw(const rasterizer::Shader& shader){
 
 	for (auto mesh : meshes) mesh.draw(shader);
 }
 
-void pbr::Model::process_node(aiNode* node, const aiScene* scene){
+void general::Model::process_node(aiNode* node, const aiScene* scene){
 
 	// process each mesh located at the current node
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -51,17 +51,17 @@ void pbr::Model::process_node(aiNode* node, const aiScene* scene){
 	}
 }
 
-pbr::GLMesh pbr::Model::process_mesh(aiMesh* mesh, const aiScene* scene){
+rasterizer::Mesh general::Model::process_mesh(aiMesh* mesh, const aiScene* scene){
 
 	// data to fill
-	std::vector<Vertex> vertices;
+	std::vector<rasterizer::Vertex> vertices;
 	std::vector<unsigned int> indices;
-	std::vector<Texture> textures;
+	std::vector<rasterizer::Texture> textures;
 
 	// Walk through each of the mesh's vertices
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		Vertex vertex;
+		rasterizer::Vertex vertex;
 		glm::vec3 vector;
 		// we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
 		// positions
@@ -116,28 +116,30 @@ pbr::GLMesh pbr::Model::process_mesh(aiMesh* mesh, const aiScene* scene){
 	// normal: texture_normalN
 
 	// 1. diffuse maps
-	std::vector<Texture> diffuseMaps = load_material_textures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+	std::vector<rasterizer::Texture> diffuseMaps = load_material_textures(
+		material, aiTextureType_DIFFUSE, "texture_diffuse");
 	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	// 2. specular maps
-	std::vector<Texture> specularMaps = load_material_textures(material, aiTextureType_SPECULAR, "texture_specular");
+	std::vector<rasterizer::Texture> specularMaps = load_material_textures(
+		material, aiTextureType_SPECULAR, "texture_specular");
 	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	// 3. normal maps
-	std::vector<Texture> normalMaps = load_material_textures(material, aiTextureType_HEIGHT, "texture_normal");
+	std::vector<rasterizer::Texture> normalMaps = load_material_textures(
+		material, aiTextureType_HEIGHT, "texture_normal");
 	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 	// 4. height maps
-	std::vector<Texture> heightMaps = load_material_textures(material, aiTextureType_AMBIENT, "texture_height");
+	std::vector<rasterizer::Texture> heightMaps = load_material_textures(
+		material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
 	// return a mesh object created from the extracted mesh data
-	return GLMesh(vertices, indices, textures);
+	return rasterizer::Mesh(vertices, indices, textures);
 }
 
-// checks all material textures of a given type and loads the textures if they're not loaded yet.
-// the required info is returned as a Texture struct.
-std::vector<pbr::Texture> pbr::Model::
-load_material_textures(aiMaterial* mat, aiTextureType type, std::string type_name){
+std::vector<rasterizer::Texture> general::Model::load_material_textures(
+	aiMaterial* mat, aiTextureType type, std::string type_name){
 
-	std::vector<Texture> textures;
+	std::vector<rasterizer::Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString str;
@@ -157,7 +159,7 @@ load_material_textures(aiMaterial* mat, aiTextureType type, std::string type_nam
 		if (!skip)
 		{
 			// if texture hasn't been loaded already, load it
-			Texture texture;
+			rasterizer::Texture texture;
 			texture.id = texture_from_file(str.C_Str(), this->directory);
 			texture.type = type_name;
 			texture.path = str.C_Str();
@@ -169,7 +171,7 @@ load_material_textures(aiMaterial* mat, aiTextureType type, std::string type_nam
 	return textures;
 }
 
-unsigned int pbr::Model::texture_from_file(const char* path, const std::string& directory, bool gamma){
+unsigned int general::Model::texture_from_file(const char* path, const std::string& directory, bool gamma){
 	std::string filename = std::string(path);
 	filename = directory + '/' + filename;
 

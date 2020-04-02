@@ -4,31 +4,33 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <vector>
-#include "gl_mesh.h"
+#include "../rasterizer/shader.h"
+#include "../rasterizer/mesh.h"
 
-namespace pbr
+namespace general
 {
 	class Model
 	{
 	public:
 		Model();
 
-		void draw(const Shader& shader);
+		void draw(const rasterizer::Shader& shader);
 
 	private:
-		std::vector<Texture> textures_loaded;
-		std::vector<GLMesh> meshes;
+		std::vector<rasterizer::Texture> textures_loaded;
+		std::vector<rasterizer::Mesh> meshes;
 		std::string directory;
 		bool gamma_correction;
 
 		void loadModel();
 
-		unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma = false);
+		static unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma = false);
 
 		void process_node(aiNode* node, const aiScene* scene);
 
-		GLMesh process_mesh(aiMesh* mesh, const aiScene* scene);
+		rasterizer::Mesh process_mesh(aiMesh* mesh, const aiScene* scene);
 
-		std::vector<Texture> load_material_textures(aiMaterial* mat, aiTextureType type, std::string type_name);
+		std::vector<rasterizer::Texture> load_material_textures(
+			aiMaterial* mat, aiTextureType type, std::string type_name);
 	};
 }

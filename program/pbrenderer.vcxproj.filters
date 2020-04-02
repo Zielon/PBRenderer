@@ -13,17 +13,17 @@
     <Filter Include="application">
       <UniqueIdentifier>{dcb4fc57-0075-4a36-b573-881323fec5c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="opengl">
-      <UniqueIdentifier>{64da162b-42a8-4a77-8069-d8f831c884e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{ede03f4e-86e8-44bb-8fef-037c9452c18e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="opengl\glsl">
-      <UniqueIdentifier>{6a8e4670-9251-41c4-91a3-a5d81f96d61c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cameras">
       <UniqueIdentifier>{35a647dc-72c5-4037-b041-77907b6a7529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rasterizer">
+      <UniqueIdentifier>{64da162b-42a8-4a77-8069-d8f831c884e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rasterizer\glsl">
+      <UniqueIdentifier>{6a8e4670-9251-41c4-91a3-a5d81f96d61c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,23 +66,29 @@
     <ClInclude Include="..\src\application\menu.h">
       <Filter>application</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\model.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\geometry\triangle.h">
       <Filter>geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cameras\perspective.h">
       <Filter>cameras</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\gl_mesh.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\gl_camera.h">
-      <Filter>core</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\camera.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\rasterizer\camera.h">
+      <Filter>rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\rasterizer\mesh.h">
+      <Filter>rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\rasterizer\shader.h">
+      <Filter>rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\model.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\rasterizer\input_handler.h">
+      <Filter>rasterizer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,12 +98,6 @@
     </ClCompile>
     <ClCompile Include="..\src\application\window.cpp">
       <Filter>application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\opengl\shader.h">
-      <Filter>opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\opengl\shader.cpp">
-      <Filter>opengl</Filter>
     </ClCompile>
     <ClCompile Include="..\3rd_party\imgui\imgui.cpp">
       <Filter>imgui</Filter>
@@ -120,19 +120,25 @@
     <ClCompile Include="..\src\application\menu.cpp">
       <Filter>application</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\rasterizer\mesh.cpp">
+      <Filter>rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\rasterizer\shader.cpp">
+      <Filter>rasterizer</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\geometry\model.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\geometry\gl_mesh.cpp">
-      <Filter>geometry</Filter>
+    <ClCompile Include="..\src\rasterizer\input_handler.cpp">
+      <Filter>rasterizer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\opengl\glsl\default.frag">
-      <Filter>opengl\glsl</Filter>
+    <None Include="..\src\rasterizer\glsl\default.frag">
+      <Filter>rasterizer\glsl</Filter>
     </None>
-    <None Include="..\src\opengl\glsl\default.vert">
-      <Filter>opengl\glsl</Filter>
+    <None Include="..\src\rasterizer\glsl\default.vert">
+      <Filter>rasterizer\glsl</Filter>
     </None>
   </ItemGroup>
 </Project>

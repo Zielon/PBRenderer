@@ -1,16 +1,16 @@
-#include "gl_mesh.h"
+#include "mesh.h"
 #include <utility>
 
-pbr::GLMesh::GLMesh(
+rasterizer::Mesh::Mesh(
 	std::vector<Vertex> vertices,
 	std::vector<unsigned> indices,
 	std::vector<Texture> textures):
 	vertices(std::move(vertices)), indices(std::move(indices)), textures(std::move(textures)){
-	
+
 	setup();
 }
 
-void pbr::GLMesh::draw(const Shader& shader){
+void rasterizer::Mesh::draw(const Shader& shader){
 
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -44,7 +44,7 @@ void pbr::GLMesh::draw(const Shader& shader){
 	glActiveTexture(GL_TEXTURE0);
 }
 
-void pbr::GLMesh::setup(){
+void rasterizer::Mesh::setup(){
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace pbr
+namespace rasterizer
 {
 	class Shader
 	{

@@ -4,7 +4,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-namespace pbr
+namespace app
 {
 	class Menu
 	{
