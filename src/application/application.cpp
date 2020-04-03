@@ -6,7 +6,6 @@
 
 #include "../geometry/model.h"
 #include "../rasterizer/camera.h"
-#include <iostream>
 
 const unsigned int SCR_WIDTH = 1200;
 const unsigned int SCR_HEIGHT = 900;
@@ -53,6 +52,7 @@ void app::Application::start(){
 		shader->setMat4("model", mesh);
 		shader->setMat4("projection", projection);
 		shader->setMat4("view", camera.GetViewMatrix());
+		shader->setVec3("camera_position", camera.Position);
 
 		model.draw(shader);
 		menu.draw();
