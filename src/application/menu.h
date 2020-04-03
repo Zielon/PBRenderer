@@ -6,7 +6,7 @@
 
 namespace app
 {
-	class Menu
+	class Menu final
 	{
 	public:
 		Menu(const glm::ivec2& position, const glm::ivec2& size);

@@ -5,9 +5,9 @@ GLFWwindow* rasterizer::InputHandler::window = nullptr;
 rasterizer::Camera* rasterizer::InputHandler::camera = nullptr;;
 float rasterizer::InputHandler::last_x = 0;
 float rasterizer::InputHandler::last_y = 0;
-bool rasterizer::InputHandler::first_mouse = false;
 float rasterizer::InputHandler::delta_time = 0;
 float rasterizer::InputHandler::last_frame = 0;
+bool rasterizer::InputHandler::first_mouse = false;
 
 rasterizer::InputHandler::InputHandler(GLFWwindow* window, Camera* camera, int width, int height){
 

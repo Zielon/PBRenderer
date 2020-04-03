@@ -9,9 +9,6 @@
 
 namespace rasterizer
 {
-	/**
-	 * Basic mesh structures
-	 */
 	struct Texture
 	{
 		unsigned int id;

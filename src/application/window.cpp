@@ -43,3 +43,7 @@ app::Window::~Window(){
 	glfwTerminate();
 	ImGui::DestroyContext();
 }
+
+GLFWwindow* app::Window::get() const{
+	return window;
+}

@@ -2,13 +2,14 @@
 
 #include "window.h"
 #include "menu.h"
+
 #include "../rasterizer/shader.h"
 #include "../rasterizer/camera.h"
 #include "../rasterizer/input_handler.h"
 
 namespace app
 {
-	class Application
+	class Application final
 	{
 	public:
 		Application();

@@ -8,18 +8,14 @@
 
 namespace app
 {
-	class Window
+	class Window final
 	{
 	public:
 		Window(int width, int height);
 
 		~Window();
 
-		// Getters and setters
-
-		GLFWwindow* get() const{
-			return window;
-		}
+		GLFWwindow* get() const;
 
 	private:
 		GLFWwindow* window{nullptr};

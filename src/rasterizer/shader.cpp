@@ -4,9 +4,10 @@
 #include <sstream>
 #include <iostream>
 #include <tuple>
-#include <direct.h>
 
-rasterizer::Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath){
+rasterizer::Shader::Shader(const std::string& vertexPath,
+                           const std::string& fragmentPath,
+                           const std::string& geometryPath){
 
 	auto shaders = std::vector<std::tuple<std::string, GLuint, std::string>>{
 		std::make_tuple(vertexPath, GL_VERTEX_SHADER, "VERTEX_SHADER"),
@@ -22,7 +23,7 @@ rasterizer::Shader::Shader(const std::string& vertexPath, const std::string& fra
 
 		if (relativePath.empty()) continue;
 
-		auto path = "..\\src\\rasterizer\\glsl\\" + relativePath;
+		auto path = R"(..\src\rasterizer\glsl\)" + relativePath;
 		auto type = std::get<1>(shader);
 		auto name = std::get<2>(shader);
 
@@ -39,7 +40,7 @@ rasterizer::Shader::Shader(const std::string& vertexPath, const std::string& fra
 		}
 		catch (std::ifstream::failure& e)
 		{
-			std::cerr << "SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+			std::cerr << "SHADER::FILE_NOT_SUCCESSFULLY_READ" << std::endl;
 		}
 
 		const char* shaderCode = code.c_str();
