@@ -16,8 +16,10 @@ rasterizer::InputHandler::InputHandler(GLFWwindow* window, Camera* camera, int w
 	last_x = width / 2.f;
 	last_y = height / 2.f;
 
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 }
 
 void rasterizer::InputHandler::mouse_callback(GLFWwindow* window, double xpos, double ypos){
@@ -29,19 +31,24 @@ void rasterizer::InputHandler::mouse_callback(GLFWwindow* window, double xpos, d
 		first_mouse = false;
 	}
 
-	const float xoffset = xpos - last_x;
-	const float yoffset = last_y - ypos;
+	const float x_offset = xpos - last_x;
+	const float y_offset = ypos - last_y;
 
 	last_x = xpos;
 	last_y = ypos;
 
-	camera->ProcessMouseMovement(xoffset, yoffset);
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	{
+		camera->ProcessMouseMovement(x_offset, y_offset);
+	}
 }
 
 void rasterizer::InputHandler::scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 
 	camera->ProcessMouseScroll(yoffset);
 }
+
+void rasterizer::InputHandler::mouse_button_callback(GLFWwindow* window, int button, int action, int mods){ }
 
 void rasterizer::InputHandler::process(){
 

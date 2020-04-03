@@ -40,6 +40,7 @@
     <ClInclude Include="..\src\rasterizer\input_handler.h" />
     <ClInclude Include="..\src\rasterizer\mesh.h" />
     <ClInclude Include="..\src\rasterizer\shader.h" />
+    <ClInclude Include="..\src\rasterizer\shader_manager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rd_party\imgui\examples\imgui_impl_glfw.cpp" />
@@ -56,10 +57,14 @@
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\mesh.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
+    <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\rasterizer\glsl\default.frag" />
-    <None Include="..\src\rasterizer\glsl\default.vert" />
+    <None Include="..\src\rasterizer\glsl\flat\flat.frag" />
+    <None Include="..\src\rasterizer\glsl\flat\flat.geo" />
+    <None Include="..\src\rasterizer\glsl\flat\flat.vert" />
+    <None Include="..\src\rasterizer\glsl\texture\texture.frag" />
+    <None Include="..\src\rasterizer\glsl\texture\texture.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -25,6 +25,12 @@
     <Filter Include="rasterizer\glsl">
       <UniqueIdentifier>{6a8e4670-9251-41c4-91a3-a5d81f96d61c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rasterizer\glsl\texture">
+      <UniqueIdentifier>{08ac733a-b9b2-4a40-b3b8-ecc7ad9574cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rasterizer\glsl\flat">
+      <UniqueIdentifier>{99b79785-039d-45db-966b-6ec46b062761}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -90,6 +96,9 @@
     <ClInclude Include="..\src\rasterizer\input_handler.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\rasterizer\shader_manager.h">
+      <Filter>rasterizer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -132,13 +141,25 @@
     <ClCompile Include="..\src\rasterizer\input_handler.cpp">
       <Filter>rasterizer</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\rasterizer\shader_manager.cpp">
+      <Filter>rasterizer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\src\rasterizer\glsl\default.frag">
-      <Filter>rasterizer\glsl</Filter>
+    <None Include="..\src\rasterizer\glsl\texture\texture.frag">
+      <Filter>rasterizer\glsl\texture</Filter>
     </None>
-    <None Include="..\src\rasterizer\glsl\default.vert">
-      <Filter>rasterizer\glsl</Filter>
+    <None Include="..\src\rasterizer\glsl\texture\texture.vert">
+      <Filter>rasterizer\glsl\texture</Filter>
+    </None>
+    <None Include="..\src\rasterizer\glsl\flat\flat.frag">
+      <Filter>rasterizer\glsl\flat</Filter>
+    </None>
+    <None Include="..\src\rasterizer\glsl\flat\flat.geo">
+      <Filter>rasterizer\glsl\flat</Filter>
+    </None>
+    <None Include="..\src\rasterizer\glsl\flat\flat.vert">
+      <Filter>rasterizer\glsl\flat</Filter>
     </None>
   </ItemGroup>
 </Project>

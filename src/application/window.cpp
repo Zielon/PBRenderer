@@ -33,6 +33,7 @@ app::Window::Window(int width, int height): width(width), height(height){
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui::StyleColorsDark();
+	ImGui::GetStyle().Alpha = 0.8;
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(nullptr);
 	io.Fonts->AddFontDefault();

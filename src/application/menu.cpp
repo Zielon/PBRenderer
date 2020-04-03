@@ -3,10 +3,6 @@
 
 app::Menu::Menu(const glm::ivec2& position, const glm::ivec2& size): position(position), size(size){
 
-	attach([](){
-		ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.60f);
-		if (ImGui::CollapsingHeader("Camera Parameters", ImGuiTreeNodeFlags_None)) { }
-	});
 }
 
 void app::Menu::attach(std::function<void()> func){

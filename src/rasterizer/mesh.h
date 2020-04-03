@@ -20,9 +20,9 @@ namespace rasterizer
 	{
 		glm::vec3 position;
 		glm::vec3 normal;
+		glm::vec2 tex_coords;
 		glm::vec3 tangent;
 		glm::vec3 bitangent;
-		glm::vec2 tex_coords;
 	};
 
 	class Mesh
@@ -33,7 +33,7 @@ namespace rasterizer
 			std::vector<unsigned int> indices,
 			std::vector<Texture> textures);
 
-		void draw(const Shader& shader);
+		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
 
 		std::vector<Vertex>& getVertices(){
 			return vertices;

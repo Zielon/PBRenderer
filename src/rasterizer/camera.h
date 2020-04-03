@@ -19,8 +19,8 @@ namespace rasterizer
 	// Default camera values
 	const float YAW = -90.0f;
 	const float PITCH = -10.0f;
-	const float SPEED = 4.5f;
-	const float SENSITIVITY = 0.25f;
+	const float SPEED = 3.5f;
+	const float SENSITIVITY = 0.10f;
 	const float ZOOM = 45.0f;
 
 	class Camera

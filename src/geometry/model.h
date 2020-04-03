@@ -14,7 +14,7 @@ namespace general
 	public:
 		Model();
 
-		void draw(const rasterizer::Shader& shader);
+		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
 
 	private:
 		std::vector<rasterizer::Texture> textures_loaded;

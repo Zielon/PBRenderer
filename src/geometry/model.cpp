@@ -15,10 +15,13 @@ void general::Model::loadModel(){
 
 	Assimp::Importer importer;
 
-	std::string path = R"(..\resoruces\nanosuit\nanosuit.obj)";
+	//std::string path = R"(..\resoruces\nanosuit\nanosuit.obj)";
+	std::string path = R"(..\resoruces\armadillo\armadillo.ply)";
+	//std::string path = R"(..\resoruces\\cyborg\\cyborg.obj)";
 
 	const aiScene* scene =
-		importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+		importer.ReadFile(
+			path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -30,7 +33,7 @@ void general::Model::loadModel(){
 	process_node(scene->mRootNode, scene);
 }
 
-void general::Model::draw(const rasterizer::Shader& shader){
+void general::Model::draw(const std::shared_ptr<rasterizer::Shader>& shader){
 
 	for (auto mesh : meshes) mesh.draw(shader);
 }
@@ -79,15 +82,22 @@ rasterizer::Mesh general::Model::process_mesh(aiMesh* mesh, const aiScene* scene
 		else
 			vertex.tex_coords = glm::vec2(0.0f, 0.0f);
 
-		vector.x = mesh->mTangents[i].x;
-		vector.y = mesh->mTangents[i].y;
-		vector.z = mesh->mTangents[i].z;
-		vertex.tangent = vector;
+		// To generate tangents UV coordinates are needed.
+		if (mesh->mTangents)
+		{
+			vector.x = mesh->mTangents[i].x;
+			vector.y = mesh->mTangents[i].y;
+			vector.z = mesh->mTangents[i].z;
+			vertex.tangent = glm::vec3(0.0f, 0.0f, 0.0f);
+		}
 
-		vector.x = mesh->mBitangents[i].x;
-		vector.y = mesh->mBitangents[i].y;
-		vector.z = mesh->mBitangents[i].z;
-		vertex.bitangent = vector;
+		if (mesh->mBitangents)
+		{
+			vector.x = mesh->mBitangents[i].x;
+			vector.y = mesh->mBitangents[i].y;
+			vector.z = mesh->mBitangents[i].z;
+			vertex.bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
+		}
 
 		vertices.push_back(vertex);
 	}

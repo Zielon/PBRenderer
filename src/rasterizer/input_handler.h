@@ -24,6 +24,8 @@ namespace rasterizer
 
 		static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
+		static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+
 		static void time_update();
 	};
 }
