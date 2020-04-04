@@ -29,7 +29,6 @@ app::Window::Window(int width, int height): width(width), height(height){
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glViewport(0, 0, width, height);
 
-	//ImGui inits.
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui::StyleColorsDark();

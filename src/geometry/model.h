@@ -16,13 +16,16 @@ namespace general
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
 
+		void reload_model(int model);
+
 	private:
 		std::vector<rasterizer::Texture> textures_loaded;
 		std::vector<rasterizer::Mesh> meshes;
 		std::string directory;
 		bool gamma_correction{};
+		int current_model = -1;
 
-		void loadModel();
+		void load_model(const std::string &path);
 
 		static unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma = false);
 

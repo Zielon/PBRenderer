@@ -24,6 +24,9 @@ namespace app
 		rasterizer::Camera camera;
 		rasterizer::ShaderManager shader_manager;
 		rasterizer::InputHandler input_handler;
-		int type = 0;
+		int shader_type = 0;
+		int model_type = 0;
+
+		void attach_menu();
 	};
 }

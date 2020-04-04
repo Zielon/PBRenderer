@@ -17,7 +17,7 @@ void main()
 	vec3 normal = normalize(frag.normal);
 	vec3 lightDir = normalize(camera_position);
 
-	diffuse += vec3(1.f, 1.f, 1.f) * max(dot(normal, lightDir), 0.0) * vec3(0.75f, 0.75f, 0.75f);
+	diffuse += diffuse * max(dot(normal, lightDir), 0.0) * vec3(0.75f, 0.75f, 0.75f);
 	
-    FragColor = vec4(diffuse, 1.0);
+    FragColor = vec4(ambient + diffuse, 1.0);
 }

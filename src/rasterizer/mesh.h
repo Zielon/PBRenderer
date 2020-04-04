@@ -33,7 +33,7 @@ namespace rasterizer
 			std::vector<unsigned int> indices,
 			std::vector<Texture> textures);
 
-		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
+		void draw(const std::shared_ptr<Shader>& shader);
 
 		std::vector<Vertex>& getVertices(){
 			return vertices;

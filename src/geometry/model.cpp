@@ -7,21 +7,19 @@
 #include <stb_image.h>
 
 general::Model::Model(){
-
-	loadModel();
+	reload_model(0);
 }
 
-void general::Model::loadModel(){
+void general::Model::load_model(const std::string& path){
+
+	textures_loaded.clear();
+	meshes.clear();
 
 	Assimp::Importer importer;
 
-	//std::string path = R"(..\resoruces\nanosuit\nanosuit.obj)";
-	std::string path = R"(..\resoruces\armadillo\armadillo.ply)";
-	//std::string path = R"(..\resoruces\\cyborg\\cyborg.obj)";
-
 	const aiScene* scene =
 		importer.ReadFile(
-			path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+			path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -36,6 +34,33 @@ void general::Model::loadModel(){
 void general::Model::draw(const std::shared_ptr<rasterizer::Shader>& shader){
 
 	for (auto mesh : meshes) mesh.draw(shader);
+}
+
+void general::Model::reload_model(int model){
+
+	if (current_model == model)
+		return;
+
+	current_model = model;
+
+	const std::string armadillo = R"(..\resoruces\armadillo\armadillo.ply)";
+	const std::string nanosuit = R"(..\resoruces\nanosuit\nanosuit.obj)";
+	const std::string cyborg = R"(..\resoruces\cyborg\cyborg.obj)";
+
+	switch (current_model)
+	{
+	case 0:
+		load_model(armadillo);
+		break;
+	case 1:
+		load_model(nanosuit);
+		break;
+	case 2:
+		load_model(cyborg);
+		break;
+	default:
+		throw std::runtime_error("");
+	}
 }
 
 void general::Model::process_node(aiNode* node, const aiScene* scene){

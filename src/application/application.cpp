@@ -17,15 +17,7 @@ app::Application::Application():
 	camera(glm::vec3(0.0f, 0.0f, 6.0f)),
 	input_handler(window.get(), &camera, SCR_WIDTH, SCR_HEIGHT){
 
-	const char* shaders[] = {"FLAT", "SHADER"};
-
-	menu.attach([shaders, this](){
-		ImGui::PushItemWidth(ImGui::GetWindowWidth());
-		if (ImGui::CollapsingHeader("Current shader", ImGuiTreeNodeFlags_Selected))
-		{
-			ImGui::ListBox("", &type, shaders, IM_ARRAYSIZE(shaders), 2);
-		}
-	});
+	attach_menu();
 }
 
 app::Application::~Application() = default;
@@ -41,7 +33,7 @@ void app::Application::start(){
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		auto shader = shader_manager.reload(type);
+		auto shader = shader_manager.reload(shader_type);
 
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), ASPECT, 0.1f, 100.0f);
 
@@ -54,7 +46,9 @@ void app::Application::start(){
 		shader->setMat4("view", camera.GetViewMatrix());
 		shader->setVec3("camera_position", camera.Position);
 
+		model.reload_model(model_type);
 		model.draw(shader);
+
 		menu.draw();
 
 		glfwSwapBuffers(window.get());
@@ -62,4 +56,26 @@ void app::Application::start(){
 	}
 
 	glfwTerminate();
+}
+
+void app::Application::attach_menu(){
+
+	const char* shaders[] = {"FLAT", "TEXTURE"};
+	const char* models[] = {"ARMADILLO", "NANOSUIT", "CYBORG"};
+
+	menu.attach([shaders, this](){
+		ImGui::PushItemWidth(ImGui::GetWindowWidth());
+		if (ImGui::CollapsingHeader("Current shader", ImGuiTreeNodeFlags_None))
+		{
+			ImGui::ListBox("", &shader_type, shaders, IM_ARRAYSIZE(shaders), 2);
+		}
+	});
+
+	menu.attach([models, this](){
+		ImGui::PushItemWidth(ImGui::GetWindowWidth());
+		if (ImGui::CollapsingHeader("Current model", ImGuiTreeNodeFlags_None))
+		{
+			ImGui::ListBox("", &model_type, models, IM_ARRAYSIZE(models), 3);
+		}
+	});
 }
