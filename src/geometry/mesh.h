@@ -5,9 +5,12 @@
 #include <glm/vec3.hpp>
 #include <vector>
 
-#include "shader.h"
+#include "../rasterizer/shader.h"
+#include "scene_object.h"
+#include "../accelerators/bvh.h"
+#include "triangle.h"
 
-namespace rasterizer
+namespace general
 {
 	struct Texture
 	{
@@ -25,7 +28,7 @@ namespace rasterizer
 		glm::vec3 bitangent;
 	};
 
-	class Mesh
+	class Mesh : public SceneObject
 	{
 	public:
 		Mesh(
@@ -33,23 +36,18 @@ namespace rasterizer
 			std::vector<unsigned int> indices,
 			std::vector<Texture> textures);
 
-		void draw(const std::shared_ptr<Shader>& shader);
+		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
 
-		std::vector<Vertex>& getVertices(){
-			return vertices;
-		}
+		std::vector<Vertex>& get_vertices();
 
-		std::vector<unsigned int>& getIndices(){
-			return indices;
-		}
+		std::vector<unsigned int>& get_indices();
 
-		std::vector<Texture>& getTextures(){
-			return textures;
-		}
+		std::vector<Texture>& get_textures();
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
 
+		std::shared_ptr<pbr::BVH<pbr::Triangle>> bvh;
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
 		std::vector<Texture> textures;

@@ -31,6 +31,12 @@
     <Filter Include="materials">
       <UniqueIdentifier>{e7bbe5a2-1dca-4187-be3d-75cbed8166d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="integrators">
+      <UniqueIdentifier>{f3c90fd0-c075-4a7f-9bde-aa6c40e2dbe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="accelerators">
+      <UniqueIdentifier>{dc9689d1-07e8-4d34-8c66-d5279ce0ceb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -81,9 +87,6 @@
     <ClInclude Include="..\src\rasterizer\camera.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\rasterizer\mesh.h">
-      <Filter>rasterizer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\rasterizer\shader.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
@@ -107,6 +110,33 @@
     </ClInclude>
     <ClInclude Include="..\src\core\material.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\integrators\whitted.h">
+      <Filter>integrators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\integrator.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\accelerators\bvh.h">
+      <Filter>accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\aggregate.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\intersection.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\scene_object.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\accelerators\node.h">
+      <Filter>accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\light.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\mesh.h">
+      <Filter>geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,9 +168,6 @@
     <ClCompile Include="..\src\application\menu.cpp">
       <Filter>application</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\rasterizer\mesh.cpp">
-      <Filter>rasterizer</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\rasterizer\shader.cpp">
       <Filter>rasterizer</Filter>
     </ClCompile>
@@ -157,6 +184,9 @@
       <Filter>geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\ray.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\mesh.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>

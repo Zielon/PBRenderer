@@ -1,7 +1,7 @@
 #include "mesh.h"
 #include <utility>
 
-rasterizer::Mesh::Mesh(
+general::Mesh::Mesh(
 	std::vector<Vertex> vertices,
 	std::vector<unsigned> indices,
 	std::vector<Texture> textures):
@@ -10,7 +10,7 @@ rasterizer::Mesh::Mesh(
 	setup();
 }
 
-void rasterizer::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
+void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
 
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -44,7 +44,19 @@ void rasterizer::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
 	glActiveTexture(GL_TEXTURE0);
 }
 
-void rasterizer::Mesh::setup(){
+std::vector<general::Vertex>& general::Mesh::get_vertices(){
+	return vertices;
+}
+
+std::vector<unsigned>& general::Mesh::get_indices(){
+	return indices;
+}
+
+std::vector<general::Texture>& general::Mesh::get_textures(){
+	return textures;
+}
+
+void general::Mesh::setup(){
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -68,7 +80,8 @@ void rasterizer::Mesh::setup(){
 
 	// vertex texture coords
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, tex_coords)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+	                      reinterpret_cast<void*>(offsetof(Vertex, tex_coords)));
 
 	// vertex tangent
 	glEnableVertexAttribArray(3);
@@ -76,7 +89,8 @@ void rasterizer::Mesh::setup(){
 
 	// vertex bitangent
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, bitangent)));
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+	                      reinterpret_cast<void*>(offsetof(Vertex, bitangent)));
 
 	glBindVertexArray(0);
 }

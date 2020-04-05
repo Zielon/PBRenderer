@@ -1,6 +1,8 @@
 #pragma once
 
+#include "../core/camera.h"
+
 namespace pbr
 {
-	class PerspectiveCamera { };
+	class PerspectiveCamera : public Camera { };
 }

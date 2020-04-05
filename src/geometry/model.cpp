@@ -75,15 +75,15 @@ void general::Model::process_node(aiNode* node, const aiScene* scene){
 		process_node(node->mChildren[i], scene);
 }
 
-rasterizer::Mesh general::Model::process_mesh(aiMesh* mesh, const aiScene* scene){
+general::Mesh general::Model::process_mesh(aiMesh* mesh, const aiScene* scene){
 
-	std::vector<rasterizer::Vertex> vertices;
+	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
-	std::vector<rasterizer::Texture> textures;
+	std::vector<Texture> textures;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		rasterizer::Vertex vertex{};
+		Vertex vertex{};
 
 		glm::vec3 vector;
 
@@ -137,32 +137,32 @@ rasterizer::Mesh general::Model::process_mesh(aiMesh* mesh, const aiScene* scene
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
 	// 1. diffuse maps
-	std::vector<rasterizer::Texture> diffuseMaps = load_material_textures(
+	std::vector<Texture> diffuseMaps = load_material_textures(
 		material, aiTextureType_DIFFUSE, "texture_diffuse");
 	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
 	// 2. specular maps
-	std::vector<rasterizer::Texture> specularMaps = load_material_textures(
+	std::vector<Texture> specularMaps = load_material_textures(
 		material, aiTextureType_SPECULAR, "texture_specular");
 	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
 	// 3. normal maps
-	std::vector<rasterizer::Texture> normalMaps = load_material_textures(
+	std::vector<Texture> normalMaps = load_material_textures(
 		material, aiTextureType_HEIGHT, "texture_normal");
 	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
 	// 4. height maps
-	std::vector<rasterizer::Texture> heightMaps = load_material_textures(
+	std::vector<Texture> heightMaps = load_material_textures(
 		material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-	return rasterizer::Mesh(vertices, indices, textures);
+	return Mesh(vertices, indices, textures);
 }
 
-std::vector<rasterizer::Texture> general::Model::load_material_textures(
+std::vector<general::Texture> general::Model::load_material_textures(
 	aiMaterial* mat, aiTextureType type, std::string type_name){
 
-	std::vector<rasterizer::Texture> textures;
+	std::vector<Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
 		aiString str;
@@ -182,7 +182,7 @@ std::vector<rasterizer::Texture> general::Model::load_material_textures(
 
 		if (!skip)
 		{
-			rasterizer::Texture texture;
+			Texture texture;
 			texture.id = texture_from_file(str.C_Str(), this->directory);
 			texture.type = type_name;
 			texture.path = str.C_Str();

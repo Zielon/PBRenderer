@@ -17,15 +17,18 @@ out G2P
 
 void main()
 {	
+	// Average normal for face to achieve flat shading 
+	vec3 n = normalize((vertices[0].normal + vertices[1].normal + vertices[2].normal) / 3.0);
+
 	gl_Position = vertices[0].position;
-	vertex.normal = vertices[0].normal;
+	vertex.normal = n;
 	EmitVertex();
 
 	gl_Position = vertices[1].position;
-	vertex.normal = vertices[0].normal;
+	vertex.normal = n;
 	EmitVertex();
 
 	gl_Position = vertices[2].position;
-	vertex.normal = vertices[0].normal;
+	vertex.normal = n;
 	EmitVertex();
 }
