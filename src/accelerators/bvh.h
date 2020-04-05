@@ -6,7 +6,7 @@
 
 namespace pbr
 {
-	enum class Split { SAH, Middle };
+	enum class Split { SAH, MIDDLE, EQUAL };
 
 	template <typename T>
 	class BVH : public Aggregate
@@ -14,7 +14,21 @@ namespace pbr
 	public:
 		void add(T object){ }
 
-		void build(Split type){ }
+		void build(Split type){
+
+			switch (type)
+			{
+			case Split::MIDDLE:
+				middle_split();
+				break;
+			case Split::EQUAL:
+				equal_split();
+				break;
+			case Split::SAH:
+				sah_split();
+				break;
+			}
+		}
 
 		bool intersect(const Ray& ray, Intersection& intersection){ }
 
@@ -22,5 +36,7 @@ namespace pbr
 		void middle_split(){ }
 
 		void sah_split(){ }
+
+		void equal_split(){}
 	};
 }
