@@ -1,5 +1,5 @@
 #include "material.h"
 
-Material::Material(){}
+rasterizer::Material::Material(){}
 
-Material::~Material(){}
+rasterizer::Material::~Material(){}

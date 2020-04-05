@@ -32,10 +32,13 @@
     <ClInclude Include="..\src\application\window.h" />
     <ClInclude Include="..\src\cameras\perspective.h" />
     <ClInclude Include="..\src\core\camera.h" />
+    <ClInclude Include="..\src\core\material.h" />
     <ClInclude Include="..\src\core\scene.h" />
+    <ClInclude Include="..\src\geometry\bbox.h" />
     <ClInclude Include="..\src\geometry\model.h" />
+    <ClInclude Include="..\src\geometry\ray.h" />
     <ClInclude Include="..\src\geometry\triangle.h" />
-    <ClInclude Include="..\src\material\material.h" />
+    <ClInclude Include="..\src\materials\plastic.h" />
     <ClInclude Include="..\src\rasterizer\camera.h" />
     <ClInclude Include="..\src\rasterizer\input_handler.h" />
     <ClInclude Include="..\src\rasterizer\mesh.h" />
@@ -52,7 +55,9 @@
     <ClCompile Include="..\src\application\application.cpp" />
     <ClCompile Include="..\src\application\menu.cpp" />
     <ClCompile Include="..\src\application\window.cpp" />
+    <ClCompile Include="..\src\geometry\bbox.cpp" />
     <ClCompile Include="..\src\geometry\model.cpp" />
+    <ClCompile Include="..\src\geometry\ray.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\mesh.cpp" />

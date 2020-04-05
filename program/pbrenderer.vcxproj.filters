@@ -7,9 +7,6 @@
     <Filter Include="geometry">
       <UniqueIdentifier>{eef4fdfc-02bf-4b49-af49-c23278c1a272}</UniqueIdentifier>
     </Filter>
-    <Filter Include="material">
-      <UniqueIdentifier>{e7bbe5a2-1dca-4187-be3d-75cbed8166d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="application">
       <UniqueIdentifier>{dcb4fc57-0075-4a36-b573-881323fec5c7}</UniqueIdentifier>
     </Filter>
@@ -31,13 +28,13 @@
     <Filter Include="rasterizer\glsl\flat">
       <UniqueIdentifier>{99b79785-039d-45db-966b-6ec46b062761}</UniqueIdentifier>
     </Filter>
+    <Filter Include="materials">
+      <UniqueIdentifier>{e7bbe5a2-1dca-4187-be3d-75cbed8166d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
       <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\material\material.h">
-      <Filter>material</Filter>
     </ClInclude>
     <ClInclude Include="..\src\application\application.h">
       <Filter>application</Filter>
@@ -99,6 +96,18 @@
     <ClInclude Include="..\src\rasterizer\shader_manager.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\materials\plastic.h">
+      <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\bbox.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\ray.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\material.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -143,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp">
       <Filter>rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\bbox.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\ray.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
