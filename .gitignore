@@ -348,7 +348,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-3rd_party/glfw-3.3
-3rd_party/glad
-resources/buddha/*
