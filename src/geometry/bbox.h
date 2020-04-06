@@ -21,7 +21,7 @@ namespace pbr
 
 		glm::vec3 diagonal() const;
 
-		int maximum_slab() const;
+		int maximum_extent() const;
 
 		float volume() const;
 

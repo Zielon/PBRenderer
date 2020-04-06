@@ -21,7 +21,7 @@ glm::vec3 pbr::BBox::diagonal() const{
 	return m_max - m_min;
 }
 
-int pbr::BBox::maximum_slab() const{
+int pbr::BBox::maximum_extent() const{
 
 	const auto d = diagonal();
 	return d.z > d.y && d.z > d.x ? 2 : (d.y > d.x);
