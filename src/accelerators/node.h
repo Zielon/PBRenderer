@@ -12,13 +12,15 @@ namespace pbr
 		BBox bbox;
 		int offset;
 		int length;
+		int elements;
 		std::unique_ptr<Node> left{nullptr};
 		std::unique_ptr<Node> right{nullptr};
 
 		Node() = default;
 
-		Node(int offset, int length): offset(offset), length(length){}
+		Node(int offset, int length): offset(offset), length(length), elements(length - offset){}
 
-		Node(const BBox& bbox, int offset, int length): bbox(bbox), offset(offset), length(length){}
+		Node(const BBox& bbox, int offset, int length): bbox(bbox), offset(offset), length(length),
+		                                                elements(length - offset){}
 	};
 }

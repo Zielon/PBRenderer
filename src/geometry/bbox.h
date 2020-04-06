@@ -8,7 +8,7 @@
 
 namespace pbr
 {
-	class BBox final
+	class BBox
 	{
 	public:
 		BBox() = default;

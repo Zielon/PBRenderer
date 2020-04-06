@@ -123,9 +123,6 @@
     <ClInclude Include="..\src\core\aggregate.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\intersection.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\geometry\scene_object.h">
       <Filter>geometry</Filter>
     </ClInclude>
@@ -138,7 +135,7 @@
     <ClInclude Include="..\src\geometry\mesh.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\interactable.h">
+    <ClInclude Include="..\src\geometry\intersectable.h">
       <Filter>geometry</Filter>
     </ClInclude>
   </ItemGroup>
@@ -190,6 +187,9 @@
       <Filter>geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\mesh.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\triangle.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>

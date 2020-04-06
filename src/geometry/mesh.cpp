@@ -1,14 +1,13 @@
 #include "mesh.h"
 #include <utility>
 
-general::Mesh::Mesh(
-	std::vector<GL_Vertex> vertices,
-	std::vector<unsigned> indices,
-	std::vector<GL_Texture> textures):
+general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
+                    std::vector<unsigned> indices,
+                    std::vector<GL_Texture> textures):
 	bvh(std::make_shared<pbr::BVH<pbr::Triangle>>()),
 	vertices(std::move(vertices)),
-	indices(std::move(indices)),
-	textures(std::move(textures)){
+	textures(std::move(textures)),
+	indices(std::move(indices)){
 
 	generate_triangle();
 	generate_gl_buffers();
@@ -68,7 +67,10 @@ void general::Mesh::generate_triangle(){
 		auto v1 = vertices[indices[i + 1]].position;
 		auto v2 = vertices[indices[i + 2]].position;
 
-		bvh->add(pbr::Triangle(v0, v1, v2, normalize(cross(v1 - v0, v2 - v0))));
+		const auto min = glm::min(glm::min(v1, v2), v0);
+		const auto max = glm::max(glm::max(v1, v2), v0);
+
+		bvh->add(pbr::Triangle(v0, v1, v2, normalize(cross(v1 - v0, v2 - v0)), min, max));
 	}
 }
 

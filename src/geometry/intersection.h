@@ -4,5 +4,3 @@ namespace pbr
 {
 	class Intersection {};
 }
-
-

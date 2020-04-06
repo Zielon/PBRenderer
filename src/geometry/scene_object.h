@@ -1,10 +1,10 @@
 #pragma once
 
-#include "interactable.h"
+#include "intersectable.h"
 
 namespace pbr
 {
-	class SceneObject : public Interactable
+	class SceneObject : public Intersectable
 	{
 	public:
 		virtual ~SceneObject() = default;

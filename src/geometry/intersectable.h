@@ -6,10 +6,10 @@
 
 namespace pbr
 {
-	class Interactable
+	class Intersectable
 	{
 	public:
-		virtual ~Interactable() = default;
+		virtual ~Intersectable() = default;
 
 		virtual bool intersect(const Ray& ray, Intersection& intersection) = 0;
 

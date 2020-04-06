@@ -31,10 +31,9 @@ namespace general
 	class Mesh : public pbr::SceneObject
 	{
 	public:
-		Mesh(
-			std::vector<GL_Vertex> vertices,
-			std::vector<unsigned int> indices,
-			std::vector<GL_Texture> textures);
+		Mesh(std::vector<GL_Vertex> vertices,
+		     std::vector<unsigned int> indices,
+		     std::vector<GL_Texture> textures);
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
 
@@ -47,10 +46,9 @@ namespace general
 
 		pbr::BBox bbox;
 		std::shared_ptr<pbr::BVH<pbr::Triangle>> bvh;
-
 		std::vector<GL_Vertex> vertices;
-		std::vector<unsigned int> indices;
 		std::vector<GL_Texture> textures;
+		std::vector<GLuint> indices;
 
 		void generate_triangle();
 

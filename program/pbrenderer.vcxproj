@@ -40,8 +40,7 @@
     <ClInclude Include="..\src\core\material.h" />
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
-    <ClInclude Include="..\src\geometry\interactable.h" />
-    <ClInclude Include="..\src\geometry\intersection.h" />
+    <ClInclude Include="..\src\geometry\intersectable.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
     <ClInclude Include="..\src\geometry\model.h" />
     <ClInclude Include="..\src\geometry\ray.h" />
@@ -68,6 +67,7 @@
     <ClCompile Include="..\src\geometry\mesh.cpp" />
     <ClCompile Include="..\src\geometry\model.cpp" />
     <ClCompile Include="..\src\geometry\ray.cpp" />
+    <ClCompile Include="..\src\geometry\triangle.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
@@ -173,7 +173,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level1</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
