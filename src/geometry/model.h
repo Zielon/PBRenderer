@@ -20,7 +20,7 @@ namespace general
 		void reload_model(int model);
 
 	private:
-		std::vector<Texture> textures_loaded;
+		std::vector<GL_Texture> textures_loaded;
 		std::vector<Mesh> meshes;
 		std::string directory;
 		bool gamma_correction{};
@@ -34,7 +34,7 @@ namespace general
 
 		Mesh process_mesh(aiMesh* mesh, const aiScene* scene);
 
-		std::vector<Texture> load_material_textures(
+		std::vector<GL_Texture> load_material_textures(
 			aiMaterial* mat, aiTextureType type, std::string type_name);
 	};
 }

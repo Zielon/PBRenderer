@@ -40,6 +40,7 @@
     <ClInclude Include="..\src\core\material.h" />
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
+    <ClInclude Include="..\src\geometry\interactable.h" />
     <ClInclude Include="..\src\geometry\intersection.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
     <ClInclude Include="..\src\geometry\model.h" />

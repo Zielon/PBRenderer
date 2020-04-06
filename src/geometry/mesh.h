@@ -12,14 +12,14 @@
 
 namespace general
 {
-	struct Texture
+	struct GL_Texture
 	{
 		unsigned int id;
 		std::string type;
 		std::string path;
 	};
 
-	struct Vertex
+	struct GL_Vertex
 	{
 		glm::vec3 position;
 		glm::vec3 normal;
@@ -28,30 +28,32 @@ namespace general
 		glm::vec3 bitangent;
 	};
 
-	class Mesh : public SceneObject
+	class Mesh : public pbr::SceneObject
 	{
 	public:
 		Mesh(
-			std::vector<Vertex> vertices,
+			std::vector<GL_Vertex> vertices,
 			std::vector<unsigned int> indices,
-			std::vector<Texture> textures);
+			std::vector<GL_Texture> textures);
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
 
-		std::vector<Vertex>& get_vertices();
+		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) override;
 
-		std::vector<unsigned int>& get_indices();
-
-		std::vector<Texture>& get_textures();
+		pbr::BBox getBBox() override;
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
 
+		pbr::BBox bbox;
 		std::shared_ptr<pbr::BVH<pbr::Triangle>> bvh;
-		std::vector<Vertex> vertices;
-		std::vector<unsigned int> indices;
-		std::vector<Texture> textures;
 
-		void setup();
+		std::vector<GL_Vertex> vertices;
+		std::vector<unsigned int> indices;
+		std::vector<GL_Texture> textures;
+
+		void generate_triangle();
+
+		void generate_gl_buffers();
 	};
 }

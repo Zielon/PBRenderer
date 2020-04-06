@@ -1,6 +1,12 @@
 #pragma once
 
-namespace general
+#include "interactable.h"
+
+namespace pbr
 {
-	class SceneObject {};
+	class SceneObject : public Interactable
+	{
+	public:
+		virtual ~SceneObject() = default;
+	};
 }

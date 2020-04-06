@@ -15,7 +15,7 @@ namespace pbr
 	public:
 
 	private:
-		BVH<std::shared_ptr<general::SceneObject>> bvh;
+		BVH<std::shared_ptr<SceneObject>> bvh;
 		std::shared_ptr<Integrator> integrator;
 		std::vector<std::shared_ptr<Light>> lights;
 	};

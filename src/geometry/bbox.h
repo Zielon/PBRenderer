@@ -15,7 +15,7 @@ namespace pbr
 
 		BBox(const glm::vec3& min, const glm::vec3& max);
 
-		void extend(const glm::vec3& point);
+		void extend(const glm::vec3& vec);
 
 		void extend(const BBox& bbox);
 

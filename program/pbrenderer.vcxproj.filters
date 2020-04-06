@@ -138,6 +138,9 @@
     <ClInclude Include="..\src\geometry\mesh.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\geometry\interactable.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />

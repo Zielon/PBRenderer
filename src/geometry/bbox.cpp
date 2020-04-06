@@ -35,7 +35,7 @@ float pbr::BBox::volume() const{
 
 bool pbr::BBox::intersect(const Ray& ray, float* hit_t0, float* hit_t1) const{
 
-	return true;
+	return false;
 }
 
 glm::vec3 pbr::BBox::centroid() const{
