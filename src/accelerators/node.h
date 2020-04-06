@@ -10,17 +10,17 @@ namespace pbr
 	{
 	public:
 		BBox bbox;
-		int offset;
-		int length;
+		int start;
+		int end;
 		int elements;
 		std::unique_ptr<Node> left{nullptr};
 		std::unique_ptr<Node> right{nullptr};
 
 		Node() = default;
 
-		Node(int offset, int length): offset(offset), length(length), elements(length - offset){}
+		Node(int start, int end): start(start), end(end), elements(end - start){}
 
-		Node(const BBox& bbox, int offset, int length): bbox(bbox), offset(offset), length(length),
-		                                                elements(length - offset){}
+		Node(const BBox& bbox, int start, int end): bbox(bbox), start(start), end(end),
+		                                            elements(end - start){}
 	};
 }

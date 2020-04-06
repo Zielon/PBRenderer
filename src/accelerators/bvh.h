@@ -44,28 +44,29 @@ namespace pbr
 
 		void middle_split(Node* node){
 
-			for (int i = node->offset; i < node->length; ++i)
+			// Compute bbox of all primitives in the BVH node.
+			for (int i = node->start; i < node->end; ++i)
 				node->bbox.extend(primitives[i].getBBox());
 
 			// Leaf condition and finish recursion.
-			if (node->elements <= 1)
+			if (node->elements == 1)
 			{
 				return;
 			}
 
-			int slab = node->bbox.maximum_slab();
+			int extent = node->bbox.maximum_extent();
 
-			auto middle = (node->offset + node->length) / 2;
+			auto middle = (node->start + node->end) / 2;
 
 			auto mid = primitives.begin() + middle;
-			auto begin = primitives.begin() + node->offset;
-			auto end = primitives.begin() + node->length;
+			auto begin = primitives.begin() + node->start;
+			auto end = primitives.begin() + node->end;
 
-			node->left = std::make_unique<Node>(node->offset, middle);
-			node->right = std::make_unique<Node>(middle, node->length);
+			node->left = std::make_unique<Node>(node->start, middle);
+			node->right = std::make_unique<Node>(middle, node->end);
 
-			std::nth_element(begin, mid, end, [slab](T& a, T& b){
-				return a.getBBox().centroid()[slab] < b.getBBox().centroid()[slab];
+			std::nth_element(begin, mid, end, [extent](T& a, T& b){
+				return a.getBBox().centroid()[extent] < b.getBBox().centroid()[extent];
 			});
 
 			middle_split(node->left.get());

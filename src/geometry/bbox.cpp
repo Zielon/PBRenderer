@@ -40,7 +40,7 @@ bool pbr::BBox::intersect(const Ray& ray, float* hit_t0, float* hit_t1) const{
 
 glm::vec3 pbr::BBox::centroid() const{
 
-	return (m_max + m_min) * 0.5f;
+	return m_min * 0.5f + m_max * 0.5f;
 }
 
 glm::vec3 pbr::BBox::min() const{
