@@ -35,7 +35,7 @@ namespace general
 		     std::vector<unsigned int> indices,
 		     std::vector<GL_Texture> textures);
 
-		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
+		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe);
 
 		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const;
 

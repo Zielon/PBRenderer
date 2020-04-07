@@ -15,7 +15,7 @@ namespace general
 	public:
 		Model();
 
-		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
+		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe);
 
 		void reload_model(int model);
 

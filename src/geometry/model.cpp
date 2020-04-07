@@ -31,9 +31,9 @@ void general::Model::load_model(const std::string& path){
 	process_node(scene->mRootNode, scene);
 }
 
-void general::Model::draw(const std::shared_ptr<rasterizer::Shader>& shader){
+void general::Model::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
 
-	for (auto mesh : meshes) mesh.draw(shader);
+	for (auto mesh : meshes) mesh.draw(shader, wireframe);
 }
 
 void general::Model::reload_model(int model){

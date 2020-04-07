@@ -15,10 +15,10 @@ general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 
 	bvh->build(pbr::Split::SAH);
 
-	std::cout << "MESH INITIALIZED" << std::endl;
+	std::cout << "INFO::MESH INITIALIZED" << std::endl;
 }
 
-void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
+void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
 
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -46,7 +46,18 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
 	}
 
 	glBindVertexArray(VAO);
+
+	shader->setVec3("color", glm::vec3(0.75f, 0.75f, 0.75f));
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+
+	if (wireframe)
+	{
+		shader->setVec3("color", glm::vec3(.0f, .0f, .0f));
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
 	glBindVertexArray(0);
 
 	glActiveTexture(GL_TEXTURE0);

@@ -26,6 +26,7 @@ namespace app
 		rasterizer::InputHandler input_handler;
 		int shader_type = 0;
 		int model_type = 0;
+		bool wireframe = false;
 
 		void attach_menu();
 	};

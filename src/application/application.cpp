@@ -47,7 +47,7 @@ void app::Application::start(){
 		shader->setVec3("camera_position", camera.Position);
 
 		model.reload_model(model_type);
-		model.draw(shader);
+		model.draw(shader, wireframe);
 
 		menu.draw();
 
@@ -63,19 +63,24 @@ void app::Application::attach_menu(){
 	const char* shaders[] = {"FLAT", "TEXTURE"};
 	const char* models[] = {"ARMADILLO", "NANOSUIT", "CYBORG"};
 
-	menu.attach([shaders, this](){
-		ImGui::PushItemWidth(ImGui::GetWindowWidth());
-		if (ImGui::CollapsingHeader("Current shader", ImGuiTreeNodeFlags_None))
-		{
-			ImGui::ListBox("", &shader_type, shaders, IM_ARRAYSIZE(shaders), 2);
-		}
-	});
+	menu.attach([shaders, models, this](){
 
-	menu.attach([models, this](){
+		ImGui::Text("PBRenderer");
+
+		ImGui::Separator();
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
-		if (ImGui::CollapsingHeader("Current model", ImGuiTreeNodeFlags_None))
+		if (ImGui::CollapsingHeader("Current shader"))
 		{
-			ImGui::ListBox("", &model_type, models, IM_ARRAYSIZE(models), 3);
+			ImGui::ListBox("shaders", &shader_type, shaders, IM_ARRAYSIZE(shaders), 2);
 		}
+
+		ImGui::PushItemWidth(ImGui::GetWindowWidth());
+		if (ImGui::CollapsingHeader("Current model"))
+		{
+			ImGui::ListBox("models", &model_type, models, IM_ARRAYSIZE(models), 3);
+		}
+
+		ImGui::PushItemWidth(ImGui::GetWindowWidth());
+		ImGui::Checkbox("Show wireframe", &wireframe);
 	});
 }

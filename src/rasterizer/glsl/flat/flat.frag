@@ -3,6 +3,7 @@
 out vec4 FragColor;
 
 uniform vec3 camera_position;
+uniform vec3 color;
 
 in G2P
 {
@@ -11,7 +12,6 @@ in G2P
 
 void main()
 {    
-	vec3 color = vec3(0.75f, 0.75f, 0.75f);
     vec3 ambient = vec3(0.05f, 0.05f, 0.05f);
     vec3 diffuse = vec3(0.4f, 0.4f, 0.4f);
    
