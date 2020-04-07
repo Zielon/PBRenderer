@@ -10,6 +10,12 @@ void pbr::BBox::extend(const glm::vec3& vec){
 	m_max = glm::max(m_max, vec);
 }
 
+void pbr::BBox::extend(const glm::vec3& min, const glm::vec3& max){
+
+	m_min = glm::min(m_min, min);
+	m_max = glm::max(m_max, max);
+}
+
 void pbr::BBox::extend(const BBox& bbox){
 
 	m_min = glm::min(m_min, bbox.m_min);

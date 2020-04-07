@@ -54,7 +54,7 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
 
 bool general::Mesh::intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const{
 
-	return false;
+	return bvh->intersect(ray, intersection);
 }
 
 pbr::BBox general::Mesh::get_bbox() const{
@@ -64,7 +64,7 @@ pbr::BBox general::Mesh::get_bbox() const{
 
 void general::Mesh::generate_triangle(){
 
-	for (int i = 0; i < indices.size(); i += 3)
+	for (auto i = 0; i < indices.size(); i += 3)
 	{
 		auto v0 = vertices[indices[i]].position;
 		auto v1 = vertices[indices[i + 1]].position;
@@ -73,7 +73,9 @@ void general::Mesh::generate_triangle(){
 		const auto min = glm::min(glm::min(v1, v2), v0);
 		const auto max = glm::max(glm::max(v1, v2), v0);
 
-		bvh->add(pbr::Triangle(v0, v1, v2, normalize(cross(v1 - v0, v2 - v0)), min, max));
+		bvh->add(pbr::Triangle(v0, v1, v2, min, max));
+
+		bbox.extend(min, max);
 	}
 }
 

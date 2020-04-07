@@ -17,6 +17,8 @@ namespace pbr
 
 		void extend(const glm::vec3& vec);
 
+		void extend(const glm::vec3& min, const glm::vec3& max);
+
 		void extend(const BBox& bbox);
 
 		glm::vec3 diagonal() const;
