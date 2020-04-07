@@ -40,11 +40,11 @@
     <ClInclude Include="..\src\core\material.h" />
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
-    <ClInclude Include="..\src\geometry\intersectable.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
     <ClInclude Include="..\src\geometry\model.h" />
     <ClInclude Include="..\src\geometry\ray.h" />
     <ClInclude Include="..\src\geometry\scene_object.h" />
+    <ClInclude Include="..\src\geometry\intersection.h" />
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\materials\plastic.h" />
@@ -173,7 +173,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

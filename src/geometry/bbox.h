@@ -25,13 +25,15 @@ namespace pbr
 
 		float volume() const;
 
+		float surface_area() const;
+
 		glm::vec3 centroid() const;
 
 		glm::vec3 min() const;
 
 		glm::vec3 max() const;
 
-		bool intersect(const Ray& ray, float* hit_t0, float* hit_t1) const;
+		bool intersect(const Ray& ray, const glm::vec3& inv_dir) const;
 
 	private:
 		glm::vec3 m_min{std::numeric_limits<float>::max()};

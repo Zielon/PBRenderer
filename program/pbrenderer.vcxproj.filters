@@ -135,7 +135,7 @@
     <ClInclude Include="..\src\geometry\mesh.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\intersectable.h">
+    <ClInclude Include="..\src\geometry\intersection.h">
       <Filter>geometry</Filter>
     </ClInclude>
   </ItemGroup>

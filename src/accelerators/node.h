@@ -22,5 +22,11 @@ namespace pbr
 
 		Node(const BBox& bbox, int start, int end): bbox(bbox), start(start), end(end),
 		                                            elements(end - start){}
+
+		bool intersect(const Ray& ray) const{
+
+			const auto inv = 1.0f / ray.d;
+			return bbox.intersect(ray, inv);
+		}
 	};
 }

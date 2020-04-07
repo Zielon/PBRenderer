@@ -1,5 +1,6 @@
 #include "mesh.h"
 #include <utility>
+#include <iostream>
 
 general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                     std::vector<unsigned> indices,
@@ -12,7 +13,9 @@ general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 	generate_triangle();
 	generate_gl_buffers();
 
-	bvh->build(pbr::Split::MIDDLE);
+	bvh->build(pbr::Split::SAH);
+
+	std::cout << "MESH INITIALIZED" << std::endl;
 }
 
 void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
@@ -49,12 +52,12 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader){
 	glActiveTexture(GL_TEXTURE0);
 }
 
-bool general::Mesh::intersect(const pbr::Ray& ray, pbr::Intersection& intersection){
+bool general::Mesh::intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const{
 
 	return false;
 }
 
-pbr::BBox general::Mesh::getBBox(){
+pbr::BBox general::Mesh::get_bbox() const{
 
 	return bbox;
 }

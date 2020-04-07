@@ -37,9 +37,9 @@ namespace general
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader);
 
-		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) override;
+		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const;
 
-		pbr::BBox getBBox() override;
+		pbr::BBox get_bbox() const;
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
