@@ -6,6 +6,8 @@ namespace pbr
 	class Aggregate
 	{
 	public:
-		virtual bool intersect(const Ray& ray, Intersection& intersection) = 0;
+		virtual ~Aggregate() = default;
+
+		virtual bool intersect(const Ray& ray, Intersection& intersection) const = 0;
 	};
 }

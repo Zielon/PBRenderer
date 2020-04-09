@@ -6,9 +6,10 @@
 #include <vector>
 
 #include "../rasterizer/shader.h"
-#include "scene_object.h"
+
 #include "../accelerators/bvh.h"
 #include "triangle.h"
+#include "scene_object.h"
 
 namespace general
 {
@@ -37,9 +38,12 @@ namespace general
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe);
 
-		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const;
+		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const override;
 
 		pbr::BBox get_bbox() const;
+
+		glm::mat4 toWorld{};
+		glm::mat4 toLocal{};
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};

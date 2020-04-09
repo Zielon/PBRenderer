@@ -1,6 +1,7 @@
 #include "mesh.h"
 #include <utility>
 #include <iostream>
+#include <glm/ext/matrix_transform.inl>
 
 general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                     std::vector<unsigned> indices,
@@ -14,6 +15,14 @@ general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 	generate_gl_buffers();
 
 	bvh->build(pbr::Split::SAH);
+
+	// Hard-coded for now
+	glm::mat4 world = glm::mat4(1.0f);
+	world = translate(world, glm::vec3(0.0f, -1.75f, 0.0f));
+	world = scale(world, glm::vec3(0.01f, 0.01f, 0.01f));
+
+	toWorld = world;
+	toLocal = inverse(world);
 
 	std::cout << "INFO::MESH INITIALIZED" << std::endl;
 }
@@ -47,6 +56,7 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool
 
 	glBindVertexArray(VAO);
 
+	shader->setMat4("model", toWorld);
 	shader->setVec3("color", glm::vec3(0.75f, 0.75f, 0.75f));
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 
@@ -84,7 +94,9 @@ void general::Mesh::generate_triangle(){
 		const auto min = glm::min(glm::min(v1, v2), v0);
 		const auto max = glm::max(glm::max(v1, v2), v0);
 
-		bvh->add(pbr::Triangle(v0, v1, v2, min, max));
+		auto ids = glm::ivec3(i, i + 1, i + 2);
+
+		bvh->add(std::make_shared<pbr::Triangle>(ids, v0, v1, v2, min, max));
 
 		bbox.extend(min, max);
 	}

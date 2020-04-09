@@ -24,12 +24,12 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 
 	const auto t = dot(edge1, qvec) * inv_det;
 
-	const auto w0 = 1.0f - w1 - w1;
+	const auto w0 = 1.0f - w1 - w2;
 
-	if (t > 0.0f)
+	if (t > 0.0f && intersection.distance > t)
 	{
 		intersection.distance = t;
-		//intersection.triangle = this;
+		intersection.object = this;
 		intersection.uv = v0 * w0 + v1 * w1 + v2 * w2;
 
 		return true;

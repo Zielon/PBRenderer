@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <direct.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -33,7 +34,10 @@ void general::Model::load_model(const std::string& path){
 
 void general::Model::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
 
-	for (auto mesh : meshes) mesh.draw(shader, wireframe);
+	for (auto mesh : meshes)
+	{
+		mesh.draw(shader, wireframe);
+	}
 }
 
 void general::Model::reload_model(int model){

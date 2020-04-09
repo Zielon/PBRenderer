@@ -45,6 +45,10 @@ namespace rasterizer
 			glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 		}
 
+		void setIVec3(const std::string& name, const glm::ivec3& value) const {
+			glUniform3iv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+		}
+
 		void setVec3(const std::string& name, float x, float y, float z) const{
 			glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
 		}

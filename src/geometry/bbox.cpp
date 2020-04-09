@@ -60,7 +60,7 @@ glm::vec3 pbr::BBox::max() const{
 	return m_max;
 }
 
-bool pbr::BBox::intersect(const Ray& ray, const glm::vec3& inv_dir) const{
+bool pbr::BBox::intersect(const Ray& ray, const glm::vec3& inv_dir, float& t) const{
 
 	const auto t0 = (m_min - ray.o) * inv_dir;
 	const auto t1 = (m_max - ray.o) * inv_dir;
@@ -70,6 +70,9 @@ bool pbr::BBox::intersect(const Ray& ray, const glm::vec3& inv_dir) const{
 
 	const auto t_min = glm::max(min.x, glm::max(min.y, min.z));
 	const auto t_max = glm::min(max.x, glm::min(max.y, max.z));
+
+	// Distance to the intersection;
+	t = t_min;
 
 	return t_max >= t_min;
 }

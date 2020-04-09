@@ -1,6 +1,8 @@
 #pragma once
 
 #include <algorithm>
+#include <queue>
+#include <functional>
 
 #include "node.h"
 #include "../core/aggregate.h"
@@ -22,13 +24,23 @@ namespace pbr
 		BBox bbox;
 	};
 
+	struct Comparator
+	{
+		bool operator()(const Node* lhs, const Node* rhs) const{
+			return lhs->distance < rhs->distance;
+		}
+	};
+
 	enum class Split { SAH, MIDDLE, EQUAL };
 
 	template <typename T>
-	class BVH : public Aggregate
+	class BVH final : public Aggregate
 	{
 	public:
-		void add(T object){
+
+		BVH() = default;
+
+		void add(std::shared_ptr<T> object){
 			primitives.push_back(object);
 		}
 
@@ -50,15 +62,42 @@ namespace pbr
 			}
 		}
 
-		bool intersect(const Ray& ray, Intersection& intersection) override{
+		bool intersect(const Ray& ray, Intersection& intersection) const override{
 
-			//while (true) { }
+			std::priority_queue<Node*, std::vector<Node*>, Comparator> queue;
 
-			return true;
+			queue.push(root.get());
+
+			intersection.distance = std::numeric_limits<float>::max();
+
+			while (!queue.empty())
+			{
+				auto node = queue.top();
+				queue.pop();
+
+				if (node->isLeaf)
+				{
+					for (int i = node->start; i < node->end; ++i)
+						primitives[i]->intersect(ray, intersection);
+
+					continue;
+				}
+
+				if (node->intersect(ray))
+				{
+					auto left = node->left.get();
+					auto right = node->right.get();
+
+					if (left->intersect(ray)) queue.push(left);
+					if (right->intersect(ray)) queue.push(right);
+				}
+			}
+
+			return intersection.distance < std::numeric_limits<float>::max();
 		}
 
 	private:
-		std::vector<T> primitives;
+		std::vector<std::shared_ptr<T>> primitives;
 		std::shared_ptr<Node> root;
 
 		/**
@@ -69,11 +108,12 @@ namespace pbr
 
 			// Compute bbox of all primitives in the BVH node.
 			for (int i = node->start; i < node->end; ++i)
-				node->bbox.extend(primitives[i].get_bbox());
+				node->bbox.extend(primitives[i]->get_bbox());
 
 			// Leaf condition and finish recursion.
-			if (node->elements == 1)
+			if (node->elements < 64)
 			{
+				node->isLeaf = true;
 				return;
 			}
 
@@ -88,8 +128,8 @@ namespace pbr
 			node->left = std::make_unique<Node>(node->start, middle);
 			node->right = std::make_unique<Node>(middle, node->end);
 
-			std::nth_element(begin, mid, end, [extent](T& a, T& b){
-				return a.get_bbox().centroid()[extent] < b.get_bbox().centroid()[extent];
+			std::nth_element(begin, mid, end, [extent](const std::shared_ptr<T>& a, const std::shared_ptr<T>& b){
+				return a->get_bbox().centroid()[extent] < b->get_bbox().centroid()[extent];
 			});
 
 			middle_split(node->left.get());
@@ -103,8 +143,9 @@ namespace pbr
 		void sah_split(Node* node){
 
 			// Leaf condition and finish recursion.
-			if (node->elements == 1)
+			if (node->elements < 64)
 			{
+				node->isLeaf = true;
 				return;
 			}
 
@@ -122,7 +163,7 @@ namespace pbr
 				// Fill buckets
 				for (int i = node->start; i < node->end; ++i)
 				{
-					BBox bbox = primitives[i].get_bbox();
+					BBox bbox = primitives[i]->get_bbox();
 
 					const auto centroid = bbox.centroid();
 					const auto ratio = (centroid[extent] - node->bbox.min()[extent]) / node->bbox.diagonal()[extent];
@@ -178,8 +219,8 @@ namespace pbr
 			node->left = std::make_unique<Node>(left_box, node->start, node->end - right_count);
 			node->right = std::make_unique<Node>(right_box, node->end - right_count, node->end);
 
-			std::nth_element(begin, cut, end, [axis](T& a, T& b){
-				return a.get_bbox().centroid()[axis] < b.get_bbox().centroid()[axis];
+			std::nth_element(begin, cut, end, [axis](const std::shared_ptr<T>& a, const std::shared_ptr<T>& b){
+				return a->get_bbox().centroid()[axis] < b->get_bbox().centroid()[axis];
 			});
 
 			middle_split(node->left.get());
@@ -193,7 +234,7 @@ namespace pbr
 			if (!root) root = std::make_unique<Node>(0, primitives.size());
 
 			for (auto& primitive : primitives)
-				root->bbox.extend(primitive.get_bbox());
+				root->bbox.extend(primitive->get_bbox());
 		}
 	};
 }

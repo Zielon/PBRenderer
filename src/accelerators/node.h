@@ -10,9 +10,12 @@ namespace pbr
 	{
 	public:
 		BBox bbox;
-		int start;
-		int end;
-		int elements;
+		int start{};
+		int end{};
+		int elements{};
+		float distance{};
+		bool isLeaf = false;
+
 		std::unique_ptr<Node> left{nullptr};
 		std::unique_ptr<Node> right{nullptr};
 
@@ -20,13 +23,13 @@ namespace pbr
 
 		Node(int start, int end): start(start), end(end), elements(end - start){}
 
-		Node(const BBox& bbox, int start, int end): bbox(bbox), start(start), end(end),
-		                                            elements(end - start){}
+		Node(const BBox& bbox, int start, int end):
+			bbox(bbox), start(start), end(end), elements(end - start){}
 
-		bool intersect(const Ray& ray) const{
+		bool intersect(const Ray& ray){
 
 			const auto inv = 1.0f / ray.d;
-			return bbox.intersect(ray, inv);
+			return bbox.intersect(ray, inv, distance);
 		}
 	};
 }

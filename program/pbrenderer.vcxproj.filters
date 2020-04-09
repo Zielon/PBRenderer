@@ -138,6 +138,9 @@
     <ClInclude Include="..\src\geometry\intersection.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\geometry\intersectable.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -191,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="..\src\geometry\triangle.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\scene.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

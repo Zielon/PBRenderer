@@ -35,7 +35,7 @@ namespace pbr
 
 		glm::vec3 max() const;
 
-		bool intersect(const Ray& ray, const glm::vec3& inv_dir) const;
+		bool intersect(const Ray& ray, const glm::vec3& inv_dir, float& t) const;
 
 	private:
 		glm::vec3 m_min{std::numeric_limits<float>::max()};
