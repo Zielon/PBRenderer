@@ -1,12 +1,12 @@
 #include "shader_manager.h"
 
-rasterizer::ShaderManager::ShaderManager(){
+rasterizer::Shader_manager::Shader_manager(){
 
 	shaders["FLAT"] = std::make_shared<Shader>(R"(flat\flat.vert)", R"(flat\flat.frag)", R"(flat\flat.geo)");
 	shaders["TEXTURE"] = std::make_shared<Shader>(R"(texture\texture.vert)", R"(texture\texture.frag)");
 }
 
-std::shared_ptr<rasterizer::Shader> rasterizer::ShaderManager::reload(int index){
+std::shared_ptr<rasterizer::Shader> rasterizer::Shader_manager::reload(int index){
 
 	std::string type;
 

@@ -84,9 +84,6 @@
     <ClInclude Include="..\src\core\camera.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\rasterizer\camera.h">
-      <Filter>rasterizer</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\rasterizer\shader.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
@@ -140,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="..\src\geometry\intersectable.h">
       <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\rasterizer\camera_handler.h">
+      <Filter>rasterizer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

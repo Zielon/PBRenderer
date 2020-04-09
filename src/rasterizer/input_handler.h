@@ -1,19 +1,20 @@
 #pragma once
+
 #include "../application/window.h"
-#include "camera.h"
+#include "camera_handler.h"
 
 namespace rasterizer
 {
-	class InputHandler
+	class Input_handler
 	{
 	public:
-		InputHandler(GLFWwindow* window, Camera* camera, int width, int height);
+		Input_handler(GLFWwindow* window, std::shared_ptr<general::Camera> camera, int width, int height);
 
 		static void process();
 
 	private:
 		static GLFWwindow* window;
-		static Camera* camera;
+		static Camera_handler camera_handler;
 		static float last_x;
 		static float last_y;
 		static bool first_mouse;

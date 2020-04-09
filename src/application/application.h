@@ -3,7 +3,6 @@
 #include "window.h"
 #include "menu.h"
 
-#include "../rasterizer/camera.h"
 #include "../rasterizer/input_handler.h"
 #include "../rasterizer/shader_manager.h"
 
@@ -19,11 +18,11 @@ namespace app
 		void start();
 
 	private:
-		Window window;
 		Menu menu;
-		rasterizer::Camera camera;
-		rasterizer::ShaderManager shader_manager;
-		rasterizer::InputHandler input_handler;
+		Window window;
+		std::shared_ptr<general::Camera> camera;
+		rasterizer::Shader_manager shader_manager;
+		rasterizer::Input_handler input_handler;
 		int shader_type = 0;
 		int model_type = 0;
 		bool wireframe = false;

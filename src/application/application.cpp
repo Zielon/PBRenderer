@@ -5,17 +5,16 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../geometry/model.h"
-#include "../rasterizer/camera.h"
 
 const unsigned int SCR_WIDTH = 1200;
 const unsigned int SCR_HEIGHT = 900;
 const float ASPECT = float(SCR_WIDTH) / float(SCR_HEIGHT);
 
 app::Application::Application():
-	window(SCR_WIDTH, SCR_HEIGHT),
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),
-	camera(glm::vec3(0.0f, 0.0f, -3.0f)),
-	input_handler(window.get(), &camera, SCR_WIDTH, SCR_HEIGHT){
+	window(SCR_WIDTH, SCR_HEIGHT),
+	camera(std::make_shared<general::Camera>()),
+	input_handler(window.get(), camera, SCR_WIDTH, SCR_HEIGHT){
 
 	attach_menu();
 }
@@ -28,18 +27,18 @@ void app::Application::start(){
 
 	while (!glfwWindowShouldClose(window.get()))
 	{
-		rasterizer::InputHandler::process();
+		rasterizer::Input_handler::process();
 
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		auto shader = shader_manager.reload(shader_type);
 
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), ASPECT, 0.1f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(camera->fov), ASPECT, 0.1f, 100.0f);
 
 		shader->setMat4("projection", projection);
-		shader->setMat4("view", camera.GetViewMatrix());
-		shader->setVec3("camera_position", camera.Position);
+		shader->setMat4("view", camera->get_view_matrix());
+		shader->setVec3("camera_position", camera->position);
 
 		model.reload_model(model_type);
 		model.draw(shader, wireframe);
