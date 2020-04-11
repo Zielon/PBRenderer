@@ -1,12 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 #include "../core/camera.h"
-#include <iostream>
 
 namespace pbr
 {
@@ -22,8 +22,6 @@ namespace pbr
 		float far = 100.f;
 
 		glm::mat4 camera_to_screen{};
-		glm::mat4 screen_to_raster{};
-		glm::mat4 raster_to_screen{};
 
 		Ray cast_ray(glm::vec2 screen, glm::vec2 offset) override{
 
@@ -52,11 +50,6 @@ namespace pbr
 		glm::mat4 world_to_camera() const{
 
 			return lookAt(position, position + direction, up);
-		}
-
-		glm::mat4 raster_to_camera() const{
-
-			return inverse(camera_to_screen) * raster_to_screen;
 		}
 
 		void set_fov(float fovxy) override{
