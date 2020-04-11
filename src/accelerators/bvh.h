@@ -12,7 +12,7 @@
 namespace pbr
 {
 	/*
-	 * Auxiliary structure for SAH method
+	 * Auxiliary structure for SAH method.
 	 */
 	struct Bucket
 	{
@@ -24,6 +24,9 @@ namespace pbr
 		BBox bbox;
 	};
 
+	/**
+	 * Node comparator structure for intersection method with priority queue.
+	 */
 	struct Comparator
 	{
 		bool operator()(const Node* lhs, const Node* rhs) const{
@@ -41,6 +44,7 @@ namespace pbr
 		BVH() = default;
 
 		void add(std::shared_ptr<T> object){
+
 			primitives.push_back(object);
 		}
 

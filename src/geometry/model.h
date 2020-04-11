@@ -19,7 +19,7 @@ namespace general
 
 		void reload_model(int model);
 
-	private:
+	//private:
 		std::vector<GL_Texture> textures_loaded;
 		std::vector<Mesh> meshes;
 		std::string directory;

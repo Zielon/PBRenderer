@@ -1,13 +1,14 @@
 #include "input_handler.h"
 #include "camera_handler.h"
 
+rasterizer::Camera_handler rasterizer::Input_handler::camera_handler;
 GLFWwindow* rasterizer::Input_handler::window = nullptr;
 float rasterizer::Input_handler::last_x = 0;
-float rasterizer::Input_handler::last_y = 0;
+float rasterizer::Input_handler::last_y = 0; 
 float rasterizer::Input_handler::delta_time = 0;
 float rasterizer::Input_handler::last_frame = 0;
 bool rasterizer::Input_handler::first_mouse = false;
-rasterizer::Camera_handler rasterizer::Input_handler::camera_handler;
+
 std::shared_ptr<general::Camera> rasterizer::Camera_handler::camera;
 
 rasterizer::Input_handler::Input_handler(

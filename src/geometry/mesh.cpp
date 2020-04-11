@@ -1,7 +1,9 @@
 #include "mesh.h"
+
 #include <utility>
 #include <iostream>
-#include <glm/ext/matrix_transform.inl>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                     std::vector<unsigned> indices,
@@ -16,10 +18,10 @@ general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 
 	bvh->build(pbr::Split::SAH);
 
-	// Hard-coded for now
+	// Hard-coded for now [no translation]
 	glm::mat4 world = glm::mat4(1.0f);
-	world = translate(world, glm::vec3(0.0f, -1.75f, 0.0f));
 	world = scale(world, glm::vec3(0.01f, 0.01f, 0.01f));
+	world = rotate(world, glm::radians(180.f), glm::vec3(0, 1, 0));
 
 	toWorld = world;
 	toLocal = inverse(world);
@@ -58,6 +60,7 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool
 
 	shader->setMat4("model", toWorld);
 	shader->setVec3("color", glm::vec3(0.75f, 0.75f, 0.75f));
+
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 
 	if (wireframe)
@@ -75,7 +78,10 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool
 
 bool general::Mesh::intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const{
 
-	return bvh->intersect(ray, intersection);
+	const auto d = toLocal * glm::vec4(ray.d.x, ray.d.y, ray.d.z, 1.f);
+	const auto o = toLocal * glm::vec4(ray.o.x, ray.o.y, ray.o.z, 1.f);
+
+	return bvh->intersect(pbr::Ray(glm::vec3(o.x, o.y, o.z), glm::vec3(d.x, d.y, d.z)), intersection);
 }
 
 pbr::BBox general::Mesh::get_bbox() const{
@@ -94,7 +100,7 @@ void general::Mesh::generate_triangle(){
 		const auto min = glm::min(glm::min(v1, v2), v0);
 		const auto max = glm::max(glm::max(v1, v2), v0);
 
-		auto ids = glm::ivec3(i, i + 1, i + 2);
+		auto ids = glm::ivec3(indices[i], indices[i + 1], indices[i + 2]);
 
 		bvh->add(std::make_shared<pbr::Triangle>(ids, v0, v1, v2, min, max));
 

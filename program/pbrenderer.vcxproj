@@ -32,7 +32,7 @@
     <ClInclude Include="..\src\application\application.h" />
     <ClInclude Include="..\src\application\menu.h" />
     <ClInclude Include="..\src\application\window.h" />
-    <ClInclude Include="..\src\cameras\perspective.h" />
+    <ClInclude Include="..\src\cameras\projective.h" />
     <ClInclude Include="..\src\core\aggregate.h" />
     <ClInclude Include="..\src\core\camera.h" />
     <ClInclude Include="..\src\core\light.h" />

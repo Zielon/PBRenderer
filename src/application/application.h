@@ -5,6 +5,12 @@
 
 #include "../rasterizer/input_handler.h"
 #include "../rasterizer/shader_manager.h"
+#include "../cameras/projective.h"
+
+namespace general
+{
+	class Mesh;
+}
 
 namespace app
 {
@@ -20,13 +26,21 @@ namespace app
 	private:
 		Menu menu;
 		Window window;
-		std::shared_ptr<general::Camera> camera;
+		std::shared_ptr<pbr::ProjectiveCamera> camera;
 		rasterizer::Shader_manager shader_manager;
 		rasterizer::Input_handler input_handler;
+
+		bool saving = false;
+
+		// Menu options
 		int shader_type = 0;
 		int model_type = 0;
 		bool wireframe = false;
 
 		void attach_menu();
+
+		void ray_cast_frame(const general::Mesh& mesh);
+
+		void pick(const general::Mesh& mesh, const std::shared_ptr<rasterizer::Shader>& shader) const;
 	};
 }

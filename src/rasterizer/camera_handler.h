@@ -23,12 +23,11 @@ namespace rasterizer
 	class Camera_handler final
 	{
 	public:
-
 		void set_camera_handler(std::shared_ptr<general::Camera> camera){
 
 			Camera_handler::camera = std::move(camera);
 
-			yaw = 90.0f;
+			yaw = -90.0f;
 			pitch = 0.0f;
 			movement_speed = SPEED;
 			mouse_sensitivity = SENSITIVITY;
@@ -36,7 +35,7 @@ namespace rasterizer
 			update_camera();
 		}
 
-		void process_keyboard(Movement type, float deltaTime){
+		void process_keyboard(Movement type, float deltaTime) const{
 
 			const float velocity = movement_speed * deltaTime;
 
@@ -63,20 +62,18 @@ namespace rasterizer
 			update_camera();
 		}
 
-		void process_mouse_scroll(float yoffset){
+		static void process_mouse_scroll(float yoffset){
 
-			if (camera->fov >= 1.0f && camera->fov <= 45.0f) camera->fov -= yoffset;
-			if (camera->fov <= 1.0f) camera->fov = 1.0f;
-			if (camera->fov >= 45.0f) camera->fov = 45.0f;
+			if (camera->get_fov() >= 1.0f && camera->get_fov() <= 45.0f) camera->set_fov(camera->get_fov() - yoffset);
+			if (camera->get_fov() <= 1.0f) camera->set_fov(1.0f);
+			if (camera->get_fov() >= 45.0f) camera->set_fov(45.0f);
 		}
 
 	private:
-
 		static std::shared_ptr<general::Camera> camera;
 
 		float yaw{};
 		float pitch{};
-
 		float movement_speed{};
 		float mouse_sensitivity{};
 

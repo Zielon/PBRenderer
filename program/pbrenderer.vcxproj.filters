@@ -78,9 +78,6 @@
     <ClInclude Include="..\src\geometry\triangle.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cameras\perspective.h">
-      <Filter>cameras</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\camera.h">
       <Filter>core</Filter>
     </ClInclude>
@@ -140,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="..\src\rasterizer\camera_handler.h">
       <Filter>rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cameras\projective.h">
+      <Filter>cameras</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

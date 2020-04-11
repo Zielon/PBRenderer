@@ -2,7 +2,7 @@
 
 out vec4 FragColor;
 
-uniform vec3 camera_position;
+uniform vec3 direction;
 uniform vec3 color;
 uniform ivec3 triangle;
 
@@ -24,7 +24,7 @@ void main()
 	}
 
 	vec3 normal = normalize(frag.normal);
-	vec3 lightDir = normalize(camera_position);
+	vec3 lightDir = normalize(-direction);
 
 	diffuse += diffuse * max(dot(normal, lightDir), 0.0) * color;
 	
