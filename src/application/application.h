@@ -34,6 +34,7 @@ namespace app
 		// Menu options
 		int shader_type = 0;
 		bool wireframe = false;
+		bool picking = false;
 
 		void attach_menu();
 	};

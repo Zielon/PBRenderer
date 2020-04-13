@@ -35,7 +35,7 @@ void app::Application::start(){
 
 		auto shader = shader_manager.reload(shader_type);
 
-		ray_caster->pick(shader);
+		ray_caster->pick(shader, picking);
 
 		if (glfwGetKey(window.get(), GLFW_KEY_R) == GLFW_PRESS)
 			ray_caster->ray_cast_frame();
@@ -73,5 +73,6 @@ void app::Application::attach_menu(){
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		ImGui::Checkbox("Show wireframe", &wireframe);
+		ImGui::Checkbox("Picking", &picking);
 	});
 }

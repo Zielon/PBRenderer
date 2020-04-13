@@ -6,7 +6,7 @@
 
 #include "input_handler.h"
 
-void rasterizer::RayCaster::pick(const std::shared_ptr<Shader>& shader) const{
+void rasterizer::RayCaster::pick(const std::shared_ptr<Shader>& shader, bool picking) const{
 
 	auto x = InputHandler::last_x;
 	auto y = InputHandler::last_y;
@@ -14,7 +14,7 @@ void rasterizer::RayCaster::pick(const std::shared_ptr<Shader>& shader) const{
 	pbr::Intersection intersection;
 	pbr::Ray ray = camera->cast_ray(glm::vec2(x, y), glm::vec2(0));
 
-	if (scene->intersect(ray, intersection))
+	if (scene->intersect(ray, intersection) && picking)
 	{
 		const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
 		shader->setIVec4("triangle", glm::ivec4(triangle->ids, triangle->object->id));

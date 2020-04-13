@@ -20,7 +20,7 @@ namespace rasterizer
 		RayCaster(std::shared_ptr<pbr::Scene> scene, std::shared_ptr<general::Camera> camera):
 			scene(std::move(scene)), camera(std::move(camera)){}
 
-		void pick(const std::shared_ptr<Shader>& shader) const;
+		void pick(const std::shared_ptr<Shader>& shader, bool picking) const;
 
 		void ray_cast_frame();
 
