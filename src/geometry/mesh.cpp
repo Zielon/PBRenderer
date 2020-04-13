@@ -84,15 +84,22 @@ void general::Mesh::generate_triangle(){
 
 	for (auto i = 0; i < indices.size(); i += 3)
 	{
-		auto v0 = transformation.to_world * glm::vec4(vertices[indices[i]].position.xyz(), 1.f);
-		auto v1 = transformation.to_world * glm::vec4(vertices[indices[i + 1]].position.xyz(), 1.f);
-		auto v2 = transformation.to_world * glm::vec4(vertices[indices[i + 2]].position.xyz(), 1.f);
+		auto a = vertices[indices[i]].position;
+		auto b = vertices[indices[i + 1]].position;
+		auto c = vertices[indices[i + 2]].position;
+
+		auto n = normalize(cross(b - a, c - a));
+		n = normalize(transpose(inverse(transformation.to_world)) * glm::vec4(n, 1.f));
+
+		auto v0 = transformation.to_world * glm::vec4(a, 1.f);
+		auto v1 = transformation.to_world * glm::vec4(b, 1.f);
+		auto v2 = transformation.to_world * glm::vec4(c, 1.f);
 
 		const auto min = glm::min(glm::min(v1, v2), v0);
 		const auto max = glm::max(glm::max(v1, v2), v0);
 
 		auto ids = glm::ivec3(indices[i], indices[i + 1], indices[i + 2]);
-		auto triangle = std::make_shared<pbr::Triangle>(ids, v0, v1, v2, min, max, this);
+		auto triangle = std::make_shared<pbr::Triangle>(ids, v0, v1, v2, n, min, max, this);
 
 		bvh->add(triangle);
 

@@ -49,8 +49,10 @@ void rasterizer::RayCaster::ray_cast_frame(){
 				if (scene->intersect(ray, intersection))
 				{
 					const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
-					*pix = glm::abs(camera->world_to_camera() * glm::vec4(triangle->n.xyz(), 1.f));
+					*pix = glm::abs(glm::vec4(triangle->n.xyz(), 1.f));
 				}
+				else
+					*pix = glm::vec4(1.f);
 
 				pix++;
 			}
