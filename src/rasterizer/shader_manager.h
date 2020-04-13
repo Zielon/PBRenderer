@@ -5,10 +5,10 @@
 
 namespace rasterizer
 {
-	class Shader_manager final
+	class ShaderManager final
 	{
 	public:
-		Shader_manager();
+		ShaderManager();
 
 		std::shared_ptr<Shader> reload(int index);
 

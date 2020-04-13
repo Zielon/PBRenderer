@@ -5,17 +5,17 @@
 
 namespace rasterizer
 {
-	class Input_handler
+	class InputHandler
 	{
 	public:
-		Input_handler(GLFWwindow* window, std::shared_ptr<general::Camera> camera, int width, int height);
+		InputHandler(GLFWwindow* window, std::shared_ptr<general::Camera> camera, int width, int height);
 
 		static void process();
 		static float last_x;
 		static float last_y;
 	private:
 		static GLFWwindow* window;
-		static Camera_handler camera_handler;
+		static CameraHandler camera_handler;
 
 		static bool first_mouse;
 		static float delta_time;

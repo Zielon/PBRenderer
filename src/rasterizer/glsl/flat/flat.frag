@@ -4,12 +4,12 @@ out vec4 FragColor;
 
 uniform vec3 direction;
 uniform vec3 color;
-uniform ivec3 triangle;
+uniform ivec4 triangle;
 
 in G2P
 {
 	vec3 normal;
-	flat ivec3 ids;
+	flat ivec4 ids;
 } frag;
 
 void main()
@@ -17,7 +17,7 @@ void main()
     vec3 ambient = vec3(0.05f, 0.05f, 0.05f);
     vec3 diffuse = vec3(0.4f, 0.4f, 0.4f);
    
-	if (frag.ids.x == triangle.x && frag.ids.y == triangle.y && frag.ids.z == triangle.z)
+	if (all(equal(frag.ids, triangle)))
 	{
 		FragColor = vec4(1.0f, 0.f, 0.f, 0.f);
 		return;

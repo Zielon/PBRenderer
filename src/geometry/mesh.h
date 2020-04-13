@@ -31,6 +31,7 @@ namespace general
 		glm::vec2 tex_coords;
 		glm::vec3 tangent;
 		glm::vec3 bitangent;
+		float mesh_id;
 	};
 
 	/**
@@ -41,9 +42,11 @@ namespace general
 	public:
 		Mesh(std::vector<GL_Vertex> vertices,
 		     std::vector<unsigned int> indices,
-		     std::vector<GL_Texture> textures);
+		     std::vector<GL_Texture> textures,
+		     pbr::Transformation transformation,
+		     int id);
 
-		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe);
+		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) override;
 
 		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const override;
 
@@ -54,6 +57,7 @@ namespace general
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
 
+		std::string name;
 		pbr::BBox bbox;
 		std::shared_ptr<pbr::BVH<pbr::Triangle>> bvh;
 		std::vector<GL_Vertex> vertices;

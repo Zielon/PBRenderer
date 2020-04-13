@@ -4,7 +4,7 @@
 #include <queue>
 #include <functional>
 
-#include "node.h"
+#include "Node.h"
 #include "../core/aggregate.h"
 #include "../geometry/ray.h"
 #include "../geometry/intersection.h"
@@ -72,8 +72,6 @@ namespace pbr
 
 			queue.push(root.get());
 
-			intersection.distance = std::numeric_limits<float>::max();
-
 			while (!queue.empty())
 			{
 				auto node = queue.top();
@@ -115,7 +113,7 @@ namespace pbr
 				node->bbox.extend(primitives[i]->get_bbox());
 
 			// Leaf condition and finish recursion.
-			if (node->elements < 64)
+			if (node->elements < 16)
 			{
 				node->isLeaf = true;
 				return;
@@ -147,7 +145,7 @@ namespace pbr
 		void sah_split(Node* node){
 
 			// Leaf condition and finish recursion.
-			if (node->elements < 64)
+			if (node->elements < 16)
 			{
 				node->isLeaf = true;
 				return;

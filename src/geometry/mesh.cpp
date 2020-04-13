@@ -7,19 +7,20 @@
 
 general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                     std::vector<unsigned> indices,
-                    std::vector<GL_Texture> textures):
-	transformation(glm::vec3(0, 1, 0), 180.f, glm::vec3(0.01f, 0.01f, 0.01f), glm::vec3(0.14f, 0.15f, 0.f)),
+                    std::vector<GL_Texture> textures,
+                    pbr::Transformation transformation, int _id):
+	transformation(transformation),
 	bvh(std::make_shared<pbr::BVH<pbr::Triangle>>()),
 	vertices(std::move(vertices)),
 	textures(std::move(textures)),
 	indices(std::move(indices)){
 
+	id = _id;
+
 	generate_triangle();
 	generate_gl_buffers();
 
 	bvh->build(pbr::Split::SAH);
-
-	std::cout << "INFO::MESH INITIALIZED" << std::endl;
 }
 
 void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
@@ -91,8 +92,9 @@ void general::Mesh::generate_triangle(){
 		const auto max = glm::max(glm::max(v1, v2), v0);
 
 		auto ids = glm::ivec3(indices[i], indices[i + 1], indices[i + 2]);
+		auto triangle = std::make_shared<pbr::Triangle>(ids, v0, v1, v2, min, max, this);
 
-		bvh->add(std::make_shared<pbr::Triangle>(ids, v0, v1, v2, min, max));
+		bvh->add(triangle);
 
 		bbox.extend(min, max);
 	}
@@ -135,6 +137,11 @@ void general::Mesh::generate_gl_buffers(){
 	glEnableVertexAttribArray(4);
 	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(GL_Vertex),
 	                      reinterpret_cast<void*>(offsetof(GL_Vertex, bitangent)));
+
+	// vertex ids
+	glEnableVertexAttribArray(5);
+	glVertexAttribPointer(5, 1, GL_FLOAT, GL_FALSE, sizeof(GL_Vertex),
+	                      reinterpret_cast<void*>(offsetof(GL_Vertex, mesh_id)));
 
 	glBindVertexArray(0);
 }

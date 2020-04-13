@@ -1,0 +1,67 @@
+{
+  "meshes": [
+    {
+      "id": 1,
+      "name": "cbox_back",
+      "path": "..\\resoruces\\cbox\\cbox_back.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    },
+    {
+      "id": 2,
+      "name": "cbox_ceiling",
+      "path": "..\\resoruces\\cbox\\cbox_ceiling.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    },
+    {
+      "id": 3,
+      "name": "cbox_floor",
+      "path": "..\\resoruces\\cbox\\cbox_floor.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    },
+    {
+      "id": 4,
+      "name": "cbox_greenwall",
+      "path": "..\\resoruces\\cbox\\cbox_greenwall.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    },
+    {
+      "id": 5,
+      "name": "cbox_redwall",
+      "path": "..\\resoruces\\cbox\\cbox_redwall.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    },
+    {
+      "id": 6,
+      "name": "cbox_luminaire",
+      "path": "..\\resoruces\\cbox\\cbox_luminaire.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    },
+    {
+      "id": 7,
+      "name": "armadillo",
+      "path": "..\\resoruces\\armadillo\\armadillo.ply",
+      "scaling": "0.002 0.002 0.002",
+      "translation": "-.27 .108 -.25",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    }
+  ]
+}

@@ -7,18 +7,19 @@ in V2G
 {
 	vec4 position; 
 	vec3 normal;
-	int id;
+	flat int id;
+	flat float mesh_id;
 } vertices[3];
 
 out G2P
 {
 	vec3 normal;
-	flat ivec3 ids; 
+	flat ivec4 ids;
 } vertex;
 
 void main()
 {	
-	vertex.ids = ivec3(vertices[0].id, vertices[1].id, vertices[2].id); 
+	vertex.ids = ivec4(vertices[0].id, vertices[1].id, vertices[2].id, int(vertices[2].mesh_id));
 
 	// Average normal for face to achieve flat shading 
 	vec3 n = normalize((vertices[0].normal + vertices[1].normal + vertices[2].normal) / 3.0);

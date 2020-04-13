@@ -52,6 +52,7 @@
     <ClInclude Include="..\src\materials\plastic.h" />
     <ClInclude Include="..\src\rasterizer\camera_handler.h" />
     <ClInclude Include="..\src\rasterizer\input_handler.h" />
+    <ClInclude Include="..\src\rasterizer\ray_caster.h" />
     <ClInclude Include="..\src\rasterizer\shader.h" />
     <ClInclude Include="..\src\rasterizer\shader_manager.h" />
   </ItemGroup>
@@ -74,6 +75,7 @@
     <ClCompile Include="..\src\geometry\triangle.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
+    <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
   </ItemGroup>
@@ -150,7 +152,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\jsoncpp\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\rapidjson\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)3rd_party\glfw-3.3\lib\lib-vc2017-64bit;$(SolutionDir)3rd_party\glfw-3.3\bin\lib-vc2017-64bit;$(SolutionDir)3rd_party\assimp\lib;$(SolutionDir)3rd_party\glad\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -183,7 +185,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\jsoncpp\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\rapidjson\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

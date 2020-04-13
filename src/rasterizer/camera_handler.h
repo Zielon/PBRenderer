@@ -17,15 +17,15 @@ namespace rasterizer
 		RIGHT
 	};
 
-	const float SPEED = 3.5f;
+	const float SPEED = 2.5f;
 	const float SENSITIVITY = 0.10f;
 
-	class Camera_handler final
+	class CameraHandler final
 	{
 	public:
 		void set_camera_handler(std::shared_ptr<general::Camera> camera){
 
-			Camera_handler::camera = std::move(camera);
+			CameraHandler::camera = std::move(camera);
 
 			yaw = -90.0f;
 			pitch = 0.0f;

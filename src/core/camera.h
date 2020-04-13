@@ -15,6 +15,8 @@ namespace general
 
 		virtual ~Camera() = default;
 
+		virtual glm::mat4 world_to_camera() const = 0;
+
 		virtual pbr::Ray cast_ray(glm::vec2 screen, glm::vec2 offset){
 
 			return {};

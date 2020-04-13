@@ -1,20 +1,20 @@
 #include "input_handler.h"
 #include "camera_handler.h"
 
-rasterizer::Camera_handler rasterizer::Input_handler::camera_handler;
-GLFWwindow* rasterizer::Input_handler::window = nullptr;
-float rasterizer::Input_handler::last_x = 0;
-float rasterizer::Input_handler::last_y = 0; 
-float rasterizer::Input_handler::delta_time = 0;
-float rasterizer::Input_handler::last_frame = 0;
-bool rasterizer::Input_handler::first_mouse = false;
+rasterizer::CameraHandler rasterizer::InputHandler::camera_handler;
+GLFWwindow* rasterizer::InputHandler::window = nullptr;
+float rasterizer::InputHandler::last_x = 0;
+float rasterizer::InputHandler::last_y = 0; 
+float rasterizer::InputHandler::delta_time = 0;
+float rasterizer::InputHandler::last_frame = 0;
+bool rasterizer::InputHandler::first_mouse = false;
 
-std::shared_ptr<general::Camera> rasterizer::Camera_handler::camera;
+std::shared_ptr<general::Camera> rasterizer::CameraHandler::camera;
 
-rasterizer::Input_handler::Input_handler(
+rasterizer::InputHandler::InputHandler(
 	GLFWwindow* window, std::shared_ptr<general::Camera> camera, int width, int height){
 
-	Input_handler::window = window;
+	InputHandler::window = window;
 
 	camera_handler.set_camera_handler(camera);
 
@@ -27,7 +27,7 @@ rasterizer::Input_handler::Input_handler(
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 }
 
-void rasterizer::Input_handler::mouse_callback(GLFWwindow* window, double xpos, double ypos){
+void rasterizer::InputHandler::mouse_callback(GLFWwindow* window, double xpos, double ypos){
 
 	if (first_mouse)
 	{
@@ -48,14 +48,14 @@ void rasterizer::Input_handler::mouse_callback(GLFWwindow* window, double xpos, 
 	}
 }
 
-void rasterizer::Input_handler::scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
+void rasterizer::InputHandler::scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 
 	camera_handler.process_mouse_scroll(yoffset);
 }
 
-void rasterizer::Input_handler::mouse_button_callback(GLFWwindow* window, int button, int action, int mods){ }
+void rasterizer::InputHandler::mouse_button_callback(GLFWwindow* window, int button, int action, int mods){ }
 
-void rasterizer::Input_handler::process(){
+void rasterizer::InputHandler::process(){
 
 	time_update();
 
@@ -75,7 +75,7 @@ void rasterizer::Input_handler::process(){
 		camera_handler.process_keyboard(Movement::RIGHT, delta_time);
 }
 
-void rasterizer::Input_handler::time_update(){
+void rasterizer::InputHandler::time_update(){
 
 	const float current_frame = glfwGetTime();
 	delta_time = current_frame - last_frame;

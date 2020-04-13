@@ -12,10 +12,10 @@
 
 namespace pbr
 {
-	class ProjectiveCamera : public general::Camera
+	class projective_camera : public general::Camera
 	{
 	public:
-		explicit ProjectiveCamera(glm::ivec2 film_size): Camera(film_size){
+		explicit projective_camera(glm::ivec2 film_size): Camera(film_size){
 
 			camera_to_screen = glm::perspective(glm::radians(fov), aspect, near, far);
 		}
@@ -37,7 +37,7 @@ namespace pbr
 			return {position, ray};
 		}
 
-		glm::mat4 world_to_camera() const{
+		glm::mat4 world_to_camera() const override{
 
 			return lookAt(position, position + direction, up);
 		}

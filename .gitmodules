@@ -7,3 +7,6 @@
 [submodule "3rd_party/stb"]
 	path = 3rd_party/stb
 	url = https://github.com/nothings/stb.git
+[submodule "3rd_party/rapidjson"]
+	path = 3rd_party/rapidjson
+	url = https://github.com/Tencent/rapidjson/

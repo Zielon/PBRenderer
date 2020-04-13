@@ -7,81 +7,76 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-general::Model_loader::Model_loader(){
-	reload_model(0);
-}
+#include <rapidjson/document.h>
+#include <rapidjson/istreamwrapper.h>
+#include <fstream>
+#include <sstream>
 
-void general::Model_loader::load_model(const std::string& path){
-
-	Json::Reader reader;
+void general::ModelLoader::load_models(const std::string& config){
 
 	textures_loaded.clear();
-	meshes.clear();
 
-	Assimp::Importer importer;
+	std::string name;
 
-	const aiScene* scene =
-		importer.ReadFile(
-			path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace);
+	std::ifstream ifs(config);
+	rapidjson::IStreamWrapper isw(ifs);
+	rapidjson::Document document;
 
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	document.ParseStream(isw);
+
+	const rapidjson::Value& meshes = document["meshes"];
+	assert(meshes.IsArray());
+
+	for (rapidjson::Value::ConstValueIterator itr = meshes.Begin(); itr != meshes.End(); ++itr)
 	{
-		std::cout << "ERROR::ASSIMP " << importer.GetErrorString() << std::endl;
-		return;
-	}
+		const rapidjson::Value& attribute = *itr;
+		assert(attribute.IsObject());
 
-	directory = path.substr(0, path.find_last_of('\\'));
-	process_node(scene->mRootNode, scene);
-}
+		std::string path = attribute["path"].GetString();
+		name = attribute["name"].GetString();
 
-void general::Model_loader::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
+		auto mesh_id = attribute["id"].GetInt();
+		auto translation = string_to_vec3(attribute["translation"].GetString());
+		auto scaling = string_to_vec3(attribute["scaling"].GetString());
+		auto rotation_axis = string_to_vec3(attribute["rotation_axis"].GetString());
+		auto rotation_degree = attribute["rotation_degree"].GetFloat();
 
-	for (auto mesh : meshes)
-	{
-		mesh.draw(shader, wireframe);
-	}
-}
+		pbr::Transformation transformation(rotation_axis, rotation_degree, scaling, translation);
 
-void general::Model_loader::reload_model(int model){
+		Assimp::Importer importer;
 
-	if (current_model == model)
-		return;
+		auto flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace;
+		const aiScene* ai_scene = importer.ReadFile(path, flags);
 
-	current_model = model;
+		if (!ai_scene || ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !ai_scene->mRootNode)
+		{
+			std::cout << "ERROR::ASSIMP " << importer.GetErrorString() << std::endl;
+			continue;
+		}
 
-	const std::string armadillo = R"(..\resoruces\armadillo\armadillo.ply)";
-	const std::string nanosuit = R"(..\resoruces\nanosuit\nanosuit.obj)";
-	const std::string cyborg = R"(..\resoruces\cyborg\cyborg.obj)";
+		directory = path.substr(0, path.find_last_of('\\'));
+		process_node(ai_scene->mRootNode, ai_scene, transformation, mesh_id);
 
-	switch (current_model)
-	{
-	case 0:
-		load_model(armadillo);
-		break;
-	case 1:
-		load_model(nanosuit);
-		break;
-	case 2:
-		load_model(cyborg);
-		break;
-	default:
-		throw std::runtime_error("");
+		std::cout << "INFO::MESH [" << name << "] LOADED" << std::endl;
 	}
 }
 
-void general::Model_loader::process_node(aiNode* node, const aiScene* scene){
+void general::ModelLoader::process_node(
+	aiNode* node, const aiScene* ai_scene, pbr::Transformation& transformation, int mesh_id){
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
-		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(process_mesh(mesh, scene));
+		auto mesh = process_mesh(ai_scene->mMeshes[node->mMeshes[i]], ai_scene, transformation, mesh_id);
+		mesh->id = mesh_id;
+		scene->add_object(mesh);
 	}
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
-		process_node(node->mChildren[i], scene);
+		process_node(node->mChildren[i], ai_scene, transformation, mesh_id);
 }
 
-general::Mesh general::Model_loader::process_mesh(aiMesh* mesh, const aiScene* scene){
+std::shared_ptr<general::Mesh> general::ModelLoader::process_mesh(
+	aiMesh* mesh, const aiScene* scene, pbr::Transformation& transformation, int mesh_id){
 
 	std::vector<GL_Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -130,6 +125,8 @@ general::Mesh general::Model_loader::process_mesh(aiMesh* mesh, const aiScene* s
 			vertex.bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
 		}
 
+		vertex.mesh_id = mesh_id;
+
 		vertices.push_back(vertex);
 	}
 
@@ -162,10 +159,10 @@ general::Mesh general::Model_loader::process_mesh(aiMesh* mesh, const aiScene* s
 		material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-	return Mesh(vertices, indices, textures);
+	return std::make_shared<Mesh>(vertices, indices, textures, transformation, mesh_id);
 }
 
-std::vector<general::GL_Texture> general::Model_loader::load_material_textures(
+std::vector<general::GL_Texture> general::ModelLoader::load_material_textures(
 	aiMaterial* mat, aiTextureType type, std::string type_name){
 
 	std::vector<GL_Texture> textures;
@@ -200,7 +197,25 @@ std::vector<general::GL_Texture> general::Model_loader::load_material_textures(
 	return textures;
 }
 
-unsigned int general::Model_loader::texture_from_file(const char* path, const std::string& directory, bool gamma){
+std::vector<std::string> general::ModelLoader::split_string(const std::string& s, char delimiter) const{
+
+	std::vector<std::string> tokens;
+	std::string token;
+	std::istringstream tokenStream(s);
+
+	while (std::getline(tokenStream, token, delimiter))
+		tokens.push_back(token);
+
+	return tokens;
+}
+
+glm::vec3 general::ModelLoader::string_to_vec3(const std::string& s) const{
+
+	auto parts = split_string(s, ' ');
+	return glm::vec3(std::stof(parts[0]), std::stof(parts[1]), std::stof(parts[2]));
+}
+
+unsigned int general::ModelLoader::texture_from_file(const char* path, const std::string& directory, bool gamma){
 
 	std::string filename = std::string(path);
 	filename = directory + "\\" + filename;

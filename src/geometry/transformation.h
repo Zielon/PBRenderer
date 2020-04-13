@@ -10,6 +10,8 @@ namespace pbr
 	class Transformation
 	{
 	public:
+		Transformation() = default;
+
 		Transformation(glm::vec3 rotation_axis, float degrees, glm::vec3 scaling, glm::vec3 translation);
 
 		glm::vec3 vector_to_world(glm::vec3 vector) const;

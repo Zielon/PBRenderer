@@ -141,6 +141,9 @@
     <ClInclude Include="..\src\geometry\transformation.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\rasterizer\ray_caster.h">
+      <Filter>rasterizer</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\geometry\model_loader.h">
       <Filter>geometry</Filter>
     </ClInclude>
@@ -200,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="..\src\geometry\transformation.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\rasterizer\ray_caster.cpp">
+      <Filter>rasterizer</Filter>
     </ClCompile>
     <ClCompile Include="..\src\geometry\model_loader.cpp">
       <Filter>geometry</Filter>
