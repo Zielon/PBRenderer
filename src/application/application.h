@@ -24,7 +24,7 @@ namespace app
 	private:
 		Menu menu;
 		Window window;
-		std::shared_ptr<pbr::projective_camera> camera;
+		std::shared_ptr<pbr::ProjectiveCamera> camera;
 		std::shared_ptr<pbr::Scene> scene;
 		std::shared_ptr<rasterizer::RayCaster> ray_caster;
 		std::shared_ptr<general::ModelLoader> model_loader;

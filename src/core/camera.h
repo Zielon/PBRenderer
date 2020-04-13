@@ -1,7 +1,10 @@
 #pragma once
 
 #include <glm/vec3.hpp>
+#include <memory>
+
 #include "../geometry/ray.h"
+#include "../rasterizer/shader.h"
 
 namespace general
 {
@@ -16,6 +19,8 @@ namespace general
 		virtual ~Camera() = default;
 
 		virtual glm::mat4 world_to_camera() const = 0;
+
+		virtual void update_shader(const std::shared_ptr<rasterizer::Shader>& shader) const = 0;
 
 		virtual pbr::Ray cast_ray(glm::vec2 screen, glm::vec2 offset){
 
