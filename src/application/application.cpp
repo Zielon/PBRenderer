@@ -57,7 +57,7 @@ void app::Application::start(){
 
 void app::Application::attach_menu(){
 
-	const char* shaders[] = {"FLAT", "TEXTURE"};
+	const char* shaders[] = {"FLAT", "NORMALS"};
 
 	menu.attach([shaders, this](){
 

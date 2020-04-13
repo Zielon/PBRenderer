@@ -37,6 +37,9 @@
     <Filter Include="accelerators">
       <UniqueIdentifier>{dc9689d1-07e8-4d34-8c66-d5279ce0ceb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rasterizer\glsl\normals">
+      <UniqueIdentifier>{cbf36899-498a-47e8-a2d4-22b059959635}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -226,6 +229,9 @@
     </None>
     <None Include="..\src\rasterizer\glsl\flat\flat.vert">
       <Filter>rasterizer\glsl\flat</Filter>
+    </None>
+    <None Include="..\src\rasterizer\glsl\normals\normals.frag">
+      <Filter>rasterizer\glsl\normals</Filter>
     </None>
   </ItemGroup>
 </Project>

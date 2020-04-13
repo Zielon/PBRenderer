@@ -3,7 +3,7 @@
 rasterizer::ShaderManager::ShaderManager(){
 
 	shaders["FLAT"] = std::make_shared<Shader>(R"(flat\flat.vert)", R"(flat\flat.frag)", R"(flat\flat.geo)");
-	shaders["TEXTURE"] = std::make_shared<Shader>(R"(texture\texture.vert)", R"(texture\texture.frag)");
+	shaders["NORMALS"] = std::make_shared<Shader>(R"(flat\flat.vert)", R"(normals\normals.frag)", R"(flat\flat.geo)");
 }
 
 std::shared_ptr<rasterizer::Shader> rasterizer::ShaderManager::reload(int index){
@@ -16,7 +16,7 @@ std::shared_ptr<rasterizer::Shader> rasterizer::ShaderManager::reload(int index)
 		type = "FLAT";
 		break;
 	case 1:
-		type = "TEXTURE";
+		type = "NORMALS";
 		break;
 	default:
 		throw std::runtime_error("");
