@@ -1,9 +1,11 @@
 #pragma once
 
-#include <iostream>
+#define GLM_FORCE_SWIZZLE 
+#define GLM_SWIZZLE_XYZW 
+#define GLM_SWIZZLE_STQP
 #include <glm/glm.hpp>
+
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 #include "../core/camera.h"
@@ -25,26 +27,14 @@ namespace pbr
 
 		Ray cast_ray(glm::vec2 screen, glm::vec2 offset) override{
 
-			// 3d Normalised Device Coordinates
-			const float x = 2.0f * (screen.x + offset.x) / film_size.x - 1.0f;
-			const float y = 1.0f - 2.0f * (screen.y + offset.y) / film_size.y;
+			const float x = screen.x / (film_size.x * 0.5f) - 1.0f;
+			const float y = screen.y / (film_size.y * 0.5f) - 1.0f;
 
-			// 4d Homogeneous Clip Coordinates
-			const glm::vec4 ray_clip = glm::vec4(x, y, -1.f, 1.f);
+			const auto ndc = glm::vec4(x, -y, -1, 1);
+			const auto unproject = inverse(camera_to_screen * lookAt(glm::vec3(0), direction, up));
+			const glm::vec3 ray = unproject * ndc;
 
-			// 4d Eye (Camera) Coordinates
-			glm::vec4 ray_eye = inverse(camera_to_screen) * ray_clip;
-			ray_eye = glm::vec4(ray_eye.x, ray_eye.y, -1.f, 0.f);
-
-			// 4d World Coordinates
-			const glm::vec4 ray_world = normalize(camera_to_world() * ray_eye);
-
-			return {position, glm::vec3(ray_world.x, ray_world.y, ray_world.z)};
-		};
-
-		glm::mat4 camera_to_world() const{
-
-			return inverse(world_to_camera());
+			return {position, ray};
 		}
 
 		glm::mat4 world_to_camera() const{

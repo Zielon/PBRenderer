@@ -42,10 +42,11 @@
     <ClInclude Include="..\src\geometry\bbox.h" />
     <ClInclude Include="..\src\geometry\intersectable.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
-    <ClInclude Include="..\src\geometry\model.h" />
+    <ClInclude Include="..\src\geometry\model_loader.h" />
     <ClInclude Include="..\src\geometry\ray.h" />
     <ClInclude Include="..\src\geometry\scene_object.h" />
     <ClInclude Include="..\src\geometry\intersection.h" />
+    <ClInclude Include="..\src\geometry\transformation.h" />
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\materials\plastic.h" />
@@ -67,8 +68,9 @@
     <ClCompile Include="..\src\core\scene.cpp" />
     <ClCompile Include="..\src\geometry\bbox.cpp" />
     <ClCompile Include="..\src\geometry\mesh.cpp" />
-    <ClCompile Include="..\src\geometry\model.cpp" />
+    <ClCompile Include="..\src\geometry\model_loader.cpp" />
     <ClCompile Include="..\src\geometry\ray.cpp" />
+    <ClCompile Include="..\src\geometry\transformation.cpp" />
     <ClCompile Include="..\src\geometry\triangle.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
@@ -148,7 +150,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\jsoncpp\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)3rd_party\glfw-3.3\lib\lib-vc2017-64bit;$(SolutionDir)3rd_party\glfw-3.3\bin\lib-vc2017-64bit;$(SolutionDir)3rd_party\assimp\lib;$(SolutionDir)3rd_party\glad\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -181,7 +183,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\jsoncpp\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

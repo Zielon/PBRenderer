@@ -8,6 +8,7 @@
 general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                     std::vector<unsigned> indices,
                     std::vector<GL_Texture> textures):
+	transformation(glm::vec3(0, 1, 0), 180.f, glm::vec3(0.01f, 0.01f, 0.01f), glm::vec3(0.14f, 0.15f, 0.f)),
 	bvh(std::make_shared<pbr::BVH<pbr::Triangle>>()),
 	vertices(std::move(vertices)),
 	textures(std::move(textures)),
@@ -17,14 +18,6 @@ general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 	generate_gl_buffers();
 
 	bvh->build(pbr::Split::SAH);
-
-	// Hard-coded for now [no translation]
-	glm::mat4 world = glm::mat4(1.0f);
-	world = scale(world, glm::vec3(0.01f, 0.01f, 0.01f));
-	world = rotate(world, glm::radians(180.f), glm::vec3(0, 1, 0));
-
-	toWorld = world;
-	toLocal = inverse(world);
 
 	std::cout << "INFO::MESH INITIALIZED" << std::endl;
 }
@@ -58,7 +51,7 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool
 
 	glBindVertexArray(VAO);
 
-	shader->setMat4("model", toWorld);
+	shader->setMat4("model", transformation.to_world);
 	shader->setVec3("color", glm::vec3(0.75f, 0.75f, 0.75f));
 
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
@@ -78,10 +71,7 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool
 
 bool general::Mesh::intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const{
 
-	const auto d = toLocal * glm::vec4(ray.d.x, ray.d.y, ray.d.z, 1.f);
-	const auto o = toLocal * glm::vec4(ray.o.x, ray.o.y, ray.o.z, 1.f);
-
-	return bvh->intersect(pbr::Ray(glm::vec3(o.x, o.y, o.z), glm::vec3(d.x, d.y, d.z)), intersection);
+	return bvh->intersect(ray, intersection);
 }
 
 pbr::BBox general::Mesh::get_bbox() const{
@@ -93,9 +83,9 @@ void general::Mesh::generate_triangle(){
 
 	for (auto i = 0; i < indices.size(); i += 3)
 	{
-		auto v0 = vertices[indices[i]].position;
-		auto v1 = vertices[indices[i + 1]].position;
-		auto v2 = vertices[indices[i + 2]].position;
+		auto v0 = transformation.to_world * glm::vec4(vertices[indices[i]].position.xyz(), 1.f);
+		auto v1 = transformation.to_world * glm::vec4(vertices[indices[i + 1]].position.xyz(), 1.f);
+		auto v2 = transformation.to_world * glm::vec4(vertices[indices[i + 2]].position.xyz(), 1.f);
 
 		const auto min = glm::min(glm::min(v1, v2), v0);
 		const auto max = glm::max(glm::max(v1, v2), v0);

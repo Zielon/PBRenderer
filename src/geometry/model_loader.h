@@ -4,16 +4,17 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <vector>
+#include "json/json.h"
 
 #include "../rasterizer/shader.h"
 #include "../geometry/mesh.h"
 
 namespace general
 {
-	class Model
+	class Model_loader
 	{
 	public:
-		Model();
+		Model_loader();
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe);
 
@@ -23,7 +24,6 @@ namespace general
 		std::vector<GL_Texture> textures_loaded;
 		std::vector<Mesh> meshes;
 		std::string directory;
-		bool gamma_correction{};
 		int current_model = -1;
 
 		void load_model(const std::string& path);

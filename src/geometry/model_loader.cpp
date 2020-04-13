@@ -1,4 +1,4 @@
-#include "model.h"
+#include "model_loader.h"
 
 #include <iostream>
 #include <direct.h>
@@ -7,11 +7,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-general::Model::Model(){
+general::Model_loader::Model_loader(){
 	reload_model(0);
 }
 
-void general::Model::load_model(const std::string& path){
+void general::Model_loader::load_model(const std::string& path){
+
+	Json::Reader reader;
 
 	textures_loaded.clear();
 	meshes.clear();
@@ -32,7 +34,7 @@ void general::Model::load_model(const std::string& path){
 	process_node(scene->mRootNode, scene);
 }
 
-void general::Model::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
+void general::Model_loader::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
 
 	for (auto mesh : meshes)
 	{
@@ -40,7 +42,7 @@ void general::Model::draw(const std::shared_ptr<rasterizer::Shader>& shader, boo
 	}
 }
 
-void general::Model::reload_model(int model){
+void general::Model_loader::reload_model(int model){
 
 	if (current_model == model)
 		return;
@@ -67,7 +69,7 @@ void general::Model::reload_model(int model){
 	}
 }
 
-void general::Model::process_node(aiNode* node, const aiScene* scene){
+void general::Model_loader::process_node(aiNode* node, const aiScene* scene){
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -79,7 +81,7 @@ void general::Model::process_node(aiNode* node, const aiScene* scene){
 		process_node(node->mChildren[i], scene);
 }
 
-general::Mesh general::Model::process_mesh(aiMesh* mesh, const aiScene* scene){
+general::Mesh general::Model_loader::process_mesh(aiMesh* mesh, const aiScene* scene){
 
 	std::vector<GL_Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -163,7 +165,7 @@ general::Mesh general::Model::process_mesh(aiMesh* mesh, const aiScene* scene){
 	return Mesh(vertices, indices, textures);
 }
 
-std::vector<general::GL_Texture> general::Model::load_material_textures(
+std::vector<general::GL_Texture> general::Model_loader::load_material_textures(
 	aiMaterial* mat, aiTextureType type, std::string type_name){
 
 	std::vector<GL_Texture> textures;
@@ -198,7 +200,7 @@ std::vector<general::GL_Texture> general::Model::load_material_textures(
 	return textures;
 }
 
-unsigned int general::Model::texture_from_file(const char* path, const std::string& directory, bool gamma){
+unsigned int general::Model_loader::texture_from_file(const char* path, const std::string& directory, bool gamma){
 
 	std::string filename = std::string(path);
 	filename = directory + "\\" + filename;

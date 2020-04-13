@@ -17,6 +17,6 @@ out V2G
 void main()
 {
 	vertex.position = projection * view * model * vec4(aPos, 1.0);
-	vertex.normal = normalize(mat3(model) * aNormal);
+	vertex.normal = normalize(transpose(inverse(mat3(model))) * aNormal);
 	vertex.id = gl_VertexID; 
 }

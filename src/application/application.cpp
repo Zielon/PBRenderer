@@ -1,12 +1,10 @@
 #include "application.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <thread>
 #include <fstream>
 
-#include "../geometry/model.h"
-#include <thread>
+#include "../geometry/model_loader.h"
+#include <iostream>
 
 const unsigned int SCR_WIDTH = 1200;
 const unsigned int SCR_HEIGHT = 900;
@@ -31,7 +29,7 @@ inline float clamp(const float& lo, const float& hi, const float& v){
  */
 void app::Application::start(){
 
-	general::Model model;
+	general::Model_loader model;
 
 	while (!glfwWindowShouldClose(window.get()))
 	{
@@ -68,7 +66,8 @@ void app::Application::pick(const general::Mesh& mesh, const std::shared_ptr<ras
 	auto x = rasterizer::Input_handler::last_x;
 	auto y = rasterizer::Input_handler::last_y;
 	pbr::Intersection intersection;
-	mesh.intersect(camera->cast_ray(glm::vec2(x, y), glm::vec2(0)), intersection);
+	pbr::Ray ray = camera->cast_ray(glm::vec2(x, y), glm::vec2(0));
+	mesh.intersect(ray, intersection);
 	const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
 
 	if (triangle)
@@ -125,7 +124,7 @@ void app::Application::ray_cast_frame(const general::Mesh& mesh){
 				if (mesh.intersect(camera->cast_ray(glm::vec2(i, j), glm::vec2(0)), intersection))
 				{
 					const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
-					*pix = normalize(glm::mat3(camera->world_to_camera()) * glm::mat3(mesh.toWorld) * triangle->n);
+					*pix = glm::vec4(triangle->n.xyz(), 1.f);
 				}
 
 				pix++;

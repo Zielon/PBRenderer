@@ -1,8 +1,11 @@
 #pragma once
 
+#define GLM_FORCE_SWIZZLE 
+#define GLM_SWIZZLE_XYZW 
+#define GLM_SWIZZLE_STQP
+#include <glm/glm.hpp>
+
 #include <string>
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
 #include <vector>
 
 #include "../rasterizer/shader.h"
@@ -10,6 +13,7 @@
 #include "../accelerators/bvh.h"
 #include "triangle.h"
 #include "scene_object.h"
+#include "transformation.h"
 
 namespace general
 {
@@ -29,6 +33,9 @@ namespace general
 		glm::vec3 bitangent;
 	};
 
+	/**
+	 * By default everything is calculated in the world space
+	 */
 	class Mesh : public pbr::SceneObject
 	{
 	public:
@@ -40,10 +47,9 @@ namespace general
 
 		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const override;
 
-		pbr::BBox get_bbox() const;
+		pbr::BBox get_bbox() const override;
 
-		glm::mat4 toWorld{};
-		glm::mat4 toLocal{};
+		pbr::Transformation transformation;
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
