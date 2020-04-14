@@ -41,7 +41,7 @@ namespace general
 		float aspect;
 
 		glm::vec2 film_size;
-		glm::vec3 position = glm::vec3(0.f, 0.f, 2.f);
+		glm::vec3 position = glm::vec3(-0.25f, 0.2f, 1.f);
 
 		// Camera coordinate system
 		glm::vec3 direction = glm::vec3(0.f, 0.f, -1.f);

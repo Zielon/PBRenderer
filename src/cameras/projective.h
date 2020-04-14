@@ -25,12 +25,10 @@ namespace pbr
 
 		glm::mat4 camera_to_screen{};
 
-		Ray cast_ray(glm::vec2 screen, glm::vec2 offset) override{
+		Ray cast_ray(glm::vec2 viewport, glm::vec2 offset) override{
 
-			const float x = screen.x / (film_size.x * 0.5f) - 1.0f;
-			const float y = screen.y / (film_size.y * 0.5f) - 1.0f;
-
-			const auto ndc = glm::vec4(x, -y, -1, 1);
+			const auto screen = (viewport + offset) / (film_size * 0.5f) - 1.f;
+			const auto ndc = glm::vec4(screen.x, -screen.y, -1, 1);
 			const auto unproject = inverse(camera_to_screen * lookAt(glm::vec3(0), direction, up));
 			const glm::vec3 ray = unproject * ndc;
 

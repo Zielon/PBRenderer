@@ -35,10 +35,12 @@
     <ClInclude Include="..\src\cameras\projective.h" />
     <ClInclude Include="..\src\core\aggregate.h" />
     <ClInclude Include="..\src\core\camera.h" />
+    <ClInclude Include="..\src\core\film.h" />
     <ClInclude Include="..\src\core\light.h" />
     <ClInclude Include="..\src\core\integrator.h" />
     <ClInclude Include="..\src\core\material.h" />
     <ClInclude Include="..\src\core\scene.h" />
+    <ClInclude Include="..\src\core\uniform_sampler.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
     <ClInclude Include="..\src\geometry\intersectable.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
@@ -66,6 +68,7 @@
     <ClCompile Include="..\src\application\application.cpp" />
     <ClCompile Include="..\src\application\menu.cpp" />
     <ClCompile Include="..\src\application\window.cpp" />
+    <ClCompile Include="..\src\core\film.cpp" />
     <ClCompile Include="..\src\core\scene.cpp" />
     <ClCompile Include="..\src\geometry\bbox.cpp" />
     <ClCompile Include="..\src\geometry\mesh.cpp" />

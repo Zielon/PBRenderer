@@ -3,11 +3,9 @@
 #include <memory>
 #include <vector>
 
+#include "light.h"
 #include "../accelerators/bvh.h"
 #include "../geometry/scene_object.h"
-
-#include "integrator.h"
-#include "light.h"
 #include "../rasterizer/shader.h"
 
 namespace pbr
@@ -27,7 +25,6 @@ namespace pbr
 
 	private:
 		std::shared_ptr<BVH<SceneObject>> bvh;
-		std::shared_ptr<Integrator> integrator;
 
 		std::vector<std::shared_ptr<Light>> lights;
 		std::vector<std::shared_ptr<SceneObject>> objects;

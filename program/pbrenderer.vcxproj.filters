@@ -150,6 +150,12 @@
     <ClInclude Include="..\src\geometry\model_loader.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\core\uniform_sampler.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\film.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -212,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="..\src\geometry\model_loader.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\film.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

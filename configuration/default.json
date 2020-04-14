@@ -59,7 +59,16 @@
       "name": "armadillo",
       "path": "..\\resoruces\\armadillo\\armadillo.ply",
       "scaling": "0.002 0.002 0.002",
-      "translation": "-.27 .108 -.25",
+      "translation": "-.27 .110 -.25",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180
+    },
+    {
+      "id": 8,
+      "name": "sphere",
+      "path": "..\\resoruces\\parametric\\sphere.obj",
+      "scaling": "0.002 0.002 0.002",
+      "translation": "-0.075 0.040 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180
     }

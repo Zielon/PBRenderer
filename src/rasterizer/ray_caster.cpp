@@ -5,6 +5,8 @@
 #include <fstream>
 
 #include "input_handler.h"
+#include "../core/uniform_sampler.h"
+#include "../core/film.h"
 
 void rasterizer::RayCaster::pick(const std::shared_ptr<Shader>& shader, bool picking) const{
 
@@ -23,11 +25,6 @@ void rasterizer::RayCaster::pick(const std::shared_ptr<Shader>& shader, bool pic
 
 }
 
-inline float clamp(const float& lo, const float& hi, const float& v){
-
-	return std::max(lo, std::min(hi, v));
-}
-
 void rasterizer::RayCaster::ray_cast_frame(){
 
 	if (saving) return;
@@ -36,40 +33,39 @@ void rasterizer::RayCaster::ray_cast_frame(){
 
 	std::thread work([this](){
 
-		glm::vec3* framebuffer = new glm::vec3[camera->film_size.x * camera->film_size.y];
-		glm::vec3* pix = framebuffer;
+		pbr::Film film(camera->film_size);
 
-		for (uint32_t y = 0; y < camera->film_size.y; ++y)
+		for (int i = 0; i < 8; i++)
 		{
-			for (uint32_t x = 0; x < camera->film_size.x; ++x)
+			pbr::UniformSampler sampler(0.f, 1.f);
+
+			const auto weight = 1.0f / (i + 1);
+
+			for (uint32_t y = 0; y < camera->film_size.y; ++y)
 			{
-				pbr::Intersection intersection;
-				pbr::Ray ray = camera->cast_ray(glm::vec2(x, y), glm::vec2(0));
-
-				if (scene->intersect(ray, intersection))
+				for (uint32_t x = 0; x < camera->film_size.x; ++x)
 				{
-					const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
-					*pix = glm::abs(glm::vec4(triangle->n.xyz(), 1.f));
-				}
-				else
-					*pix = glm::vec4(1.f);
+					pbr::Intersection intersection;
+					pbr::Ray ray = camera->cast_ray(glm::vec2(x, y), sampler.get2D());
 
-				pix++;
+					if (scene->intersect(ray, intersection))
+					{
+						const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
+
+						auto pixel = film.get_pixel(x, y).to_vec3();
+						pixel *= i * weight;
+						pixel += weight * glm::abs(triangle->n);
+
+						film.set_pixel(pixel, x, y);
+					}
+					else
+						film.set_pixel(glm::vec3(1.f), x, y);
+				}
 			}
 		}
 
-		std::ofstream ofs("./out.ppm", std::ios::out | std::ios::binary);
-		ofs << "P6\n" << camera->film_size.x << " " << camera->film_size.y << "\n255\n";
-		for (uint32_t i = 0; i < camera->film_size.y * camera->film_size.x; ++i)
-		{
-			char r = (char)(255 * clamp(0, 1, framebuffer[i].x));
-			char g = (char)(255 * clamp(0, 1, framebuffer[i].y));
-			char b = (char)(255 * clamp(0, 1, framebuffer[i].z));
-			ofs << r << g << b;
-		}
-
-		ofs.close();
-		delete[] framebuffer;
+		film.save_jpg("ray_cast.jpg");
+		//film.save_ppm("ray_cast.ppm");
 		std::cout << "FILM::SAVED" << std::endl;
 		saving = false;
 	});
