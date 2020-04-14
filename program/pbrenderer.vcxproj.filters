@@ -40,6 +40,9 @@
     <Filter Include="rasterizer\glsl\normals">
       <UniqueIdentifier>{cbf36899-498a-47e8-a2d4-22b059959635}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rasterizer\glsl\smooth">
+      <UniqueIdentifier>{295d0efb-4e42-4398-9754-1609584ea513}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -241,6 +244,12 @@
     </None>
     <None Include="..\src\rasterizer\glsl\normals\normals.frag">
       <Filter>rasterizer\glsl\normals</Filter>
+    </None>
+    <None Include="..\src\rasterizer\glsl\smooth\smooth.frag">
+      <Filter>rasterizer\glsl\smooth</Filter>
+    </None>
+    <None Include="..\src\rasterizer\glsl\smooth\smooth.vert">
+      <Filter>rasterizer\glsl\smooth</Filter>
     </None>
   </ItemGroup>
 </Project>

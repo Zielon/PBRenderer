@@ -1,12 +1,10 @@
 #include "model_loader.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 #include <iostream>
 #include <direct.h>
 #include <glm/gtc/matrix_transform.hpp>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
-
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 #include <fstream>
@@ -57,7 +55,7 @@ void general::ModelLoader::load_models(const std::string& config){
 		directory = path.substr(0, path.find_last_of('\\'));
 		process_node(ai_scene->mRootNode, ai_scene, transformation, mesh_id);
 
-		std::cout << "INFO::MESH [" << name << "] LOADED" << std::endl;
+		std::cout << "INFO::MESH LOADED -> [" << name << "]" << std::endl;
 	}
 }
 

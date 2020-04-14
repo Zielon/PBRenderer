@@ -53,7 +53,7 @@ void app::Application::start(){
 
 void app::Application::attach_menu(){
 
-	const char* shaders[] = {"FLAT", "NORMALS"};
+	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
 
 	menu.attach([shaders, this](){
 
@@ -64,7 +64,7 @@ void app::Application::attach_menu(){
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		if (ImGui::CollapsingHeader("Current shader"))
 		{
-			ImGui::ListBox("shaders", &shader_type, shaders, IM_ARRAYSIZE(shaders), 2);
+			ImGui::ListBox("shaders", &shader_type, shaders, IM_ARRAYSIZE(shaders), 3);
 		}
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());

@@ -21,7 +21,7 @@ void main()
 {	
 	vertex.ids = ivec4(vertices[0].id, vertices[1].id, vertices[2].id, int(vertices[2].mesh_id));
 
-	// Average normal for face to achieve flat shading 
+	// Average normal for face [flat shading] 
 	vec3 n = normalize((vertices[0].normal + vertices[1].normal + vertices[2].normal) / 3.0);
 
 	gl_Position = vertices[0].position;

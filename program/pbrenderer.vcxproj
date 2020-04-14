@@ -87,6 +87,8 @@
     <None Include="..\src\rasterizer\glsl\flat\flat.geo" />
     <None Include="..\src\rasterizer\glsl\flat\flat.vert" />
     <None Include="..\src\rasterizer\glsl\normals\normals.frag" />
+    <None Include="..\src\rasterizer\glsl\smooth\smooth.frag" />
+    <None Include="..\src\rasterizer\glsl\smooth\smooth.vert" />
     <None Include="..\src\rasterizer\glsl\texture\texture.frag" />
     <None Include="..\src\rasterizer\glsl\texture\texture.vert" />
   </ItemGroup>
