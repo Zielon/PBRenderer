@@ -9,5 +9,7 @@ namespace pbr
 	public:
 		WhittedIntegrator(const std::shared_ptr<Scene>& scene, const std::shared_ptr<Film>& film)
 			: Integrator(scene, film){}
+
+		void render() override;
 	};
 }

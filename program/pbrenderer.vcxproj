@@ -52,6 +52,8 @@
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\materials\plastic.h" />
+    <ClInclude Include="..\src\parser\parser.h" />
+    <ClInclude Include="..\src\parser\types.h" />
     <ClInclude Include="..\src\rasterizer\camera_handler.h" />
     <ClInclude Include="..\src\rasterizer\input_handler.h" />
     <ClInclude Include="..\src\rasterizer\ray_caster.h" />

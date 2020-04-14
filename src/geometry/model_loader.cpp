@@ -9,6 +9,7 @@
 #include <rapidjson/istreamwrapper.h>
 #include <fstream>
 #include <sstream>
+#include "../parser/types.h"
 
 void general::ModelLoader::load_models(const std::string& config){
 
@@ -25,26 +26,18 @@ void general::ModelLoader::load_models(const std::string& config){
 	const rapidjson::Value& meshes = document["meshes"];
 	assert(meshes.IsArray());
 
-	for (rapidjson::Value::ConstValueIterator itr = meshes.Begin(); itr != meshes.End(); ++itr)
+	for (auto itr = meshes.Begin(); itr != meshes.End(); ++itr)
 	{
 		const rapidjson::Value& attribute = *itr;
+
 		assert(attribute.IsObject());
 
-		std::string path = attribute["path"].GetString();
-		name = attribute["name"].GetString();
-
-		auto mesh_id = attribute["id"].GetInt();
-		auto translation = string_to_vec3(attribute["translation"].GetString());
-		auto scaling = string_to_vec3(attribute["scaling"].GetString());
-		auto rotation_axis = string_to_vec3(attribute["rotation_axis"].GetString());
-		auto rotation_degree = attribute["rotation_degree"].GetFloat();
-
-		pbr::Transformation transformation(rotation_axis, rotation_degree, scaling, translation);
+		parser::MeshConfig configuration(attribute);
 
 		Assimp::Importer importer;
 
 		auto flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace;
-		const aiScene* ai_scene = importer.ReadFile(path, flags);
+		const aiScene* ai_scene = importer.ReadFile(configuration.path, flags);
 
 		if (!ai_scene || ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !ai_scene->mRootNode)
 		{
@@ -52,29 +45,28 @@ void general::ModelLoader::load_models(const std::string& config){
 			continue;
 		}
 
-		directory = path.substr(0, path.find_last_of('\\'));
-		process_node(ai_scene->mRootNode, ai_scene, transformation, mesh_id);
+		directory = configuration.path.substr(0, configuration.path.find_last_of('\\'));
+		process_node(ai_scene->mRootNode, ai_scene, configuration);
 
 		std::cout << "INFO::MESH LOADED -> [" << name << "]" << std::endl;
 	}
 }
 
 void general::ModelLoader::process_node(
-	aiNode* node, const aiScene* ai_scene, pbr::Transformation& transformation, int mesh_id){
+	aiNode* node, const aiScene* ai_scene, parser::MeshConfig& configuration){
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
-		auto mesh = process_mesh(ai_scene->mMeshes[node->mMeshes[i]], ai_scene, transformation, mesh_id);
-		mesh->id = mesh_id;
+		auto mesh = process_mesh(ai_scene->mMeshes[node->mMeshes[i]], ai_scene, configuration);
 		scene->add_object(mesh);
 	}
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
-		process_node(node->mChildren[i], ai_scene, transformation, mesh_id);
+		process_node(node->mChildren[i], ai_scene, configuration);
 }
 
-std::shared_ptr<general::Mesh> general::ModelLoader::process_mesh(
-	aiMesh* mesh, const aiScene* scene, pbr::Transformation& transformation, int mesh_id){
+std::shared_ptr<general::Mesh> general::ModelLoader::process_mesh(aiMesh* mesh, const aiScene* scene,
+                                                                  parser::MeshConfig& configuration){
 
 	std::vector<GL_Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -123,7 +115,7 @@ std::shared_ptr<general::Mesh> general::ModelLoader::process_mesh(
 			vertex.bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
 		}
 
-		vertex.mesh_id = mesh_id;
+		vertex.mesh_id = configuration.id;
 
 		vertices.push_back(vertex);
 	}
@@ -157,7 +149,7 @@ std::shared_ptr<general::Mesh> general::ModelLoader::process_mesh(
 		material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-	return std::make_shared<Mesh>(vertices, indices, textures, transformation, mesh_id);
+	return std::make_shared<Mesh>(vertices, indices, textures, configuration);
 }
 
 std::vector<general::GL_Texture> general::ModelLoader::load_material_textures(
@@ -193,24 +185,6 @@ std::vector<general::GL_Texture> general::ModelLoader::load_material_textures(
 	}
 
 	return textures;
-}
-
-std::vector<std::string> general::ModelLoader::split_string(const std::string& s, char delimiter) const{
-
-	std::vector<std::string> tokens;
-	std::string token;
-	std::istringstream tokenStream(s);
-
-	while (std::getline(tokenStream, token, delimiter))
-		tokens.push_back(token);
-
-	return tokens;
-}
-
-glm::vec3 general::ModelLoader::string_to_vec3(const std::string& s) const{
-
-	auto parts = split_string(s, ' ');
-	return glm::vec3(std::stof(parts[0]), std::stof(parts[1]), std::stof(parts[2]));
 }
 
 unsigned int general::ModelLoader::texture_from_file(const char* path, const std::string& directory, bool gamma){

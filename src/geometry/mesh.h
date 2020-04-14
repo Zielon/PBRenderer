@@ -14,6 +14,7 @@
 #include "triangle.h"
 #include "scene_object.h"
 #include "transformation.h"
+#include "../parser/types.h"
 
 namespace general
 {
@@ -43,8 +44,7 @@ namespace general
 		Mesh(std::vector<GL_Vertex> vertices,
 		     std::vector<unsigned int> indices,
 		     std::vector<GL_Texture> textures,
-		     pbr::Transformation transformation,
-		     int id);
+			 parser::MeshConfig configuration);
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) override;
 
@@ -63,6 +63,7 @@ namespace general
 		std::vector<GL_Vertex> vertices;
 		std::vector<GL_Texture> textures;
 		std::vector<GLuint> indices;
+		parser::MeshConfig configuration;
 
 		void generate_triangle();
 

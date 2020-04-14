@@ -13,6 +13,7 @@ namespace pbr
 		Ray(glm::vec3 origin, glm::vec3 direction): o(origin), d(normalize(direction)){}
 
 		glm::vec3 point(float t) const{
+
 			return o + d * t;
 		}
 

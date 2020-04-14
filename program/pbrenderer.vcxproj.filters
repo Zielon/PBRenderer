@@ -43,6 +43,9 @@
     <Filter Include="rasterizer\glsl\smooth">
       <UniqueIdentifier>{295d0efb-4e42-4398-9754-1609584ea513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="parser">
+      <UniqueIdentifier>{4b5a2634-59b1-40af-a376-b26c90850503}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -158,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\film.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\parser.h">
+      <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\parser\types.h">
+      <Filter>parser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,14 +8,17 @@
 general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                     std::vector<unsigned> indices,
                     std::vector<GL_Texture> textures,
-                    pbr::Transformation transformation, int _id):
-	transformation(transformation),
+                    parser::MeshConfig configuration):
+	transformation(pbr::Transformation(configuration.rotation_axis, configuration.rotation_degree,
+	                                   configuration.scaling,
+	                                   configuration.translation)),
 	bvh(std::make_shared<pbr::BVH<pbr::Triangle>>()),
 	vertices(std::move(vertices)),
 	textures(std::move(textures)),
-	indices(std::move(indices)){
+	indices(std::move(indices)),
+	configuration(configuration){
 
-	id = _id;
+	id = configuration.id;
 
 	generate_triangle();
 	generate_gl_buffers();

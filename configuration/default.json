@@ -1,4 +1,20 @@
 {
+  "lights": [
+    {
+      "id": 1,
+      "name": "", 
+      "type": "",
+      "position": "",
+      "intensity": 0
+    },
+    {
+      "id": 2,
+      "name": "",
+      "type": "",
+      "position": "",
+      "intensity": 0
+    }
+  ],
   "meshes": [
     {
       "id": 1,
@@ -7,7 +23,15 @@
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "DIFFUSE_AND_GLOSSY",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     },
     {
       "id": 2,
@@ -16,7 +40,15 @@
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "DIFFUSE_AND_GLOSSY",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     },
     {
       "id": 3,
@@ -25,7 +57,15 @@
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "DIFFUSE_AND_GLOSSY",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     },
     {
       "id": 4,
@@ -34,7 +74,15 @@
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "DIFFUSE_AND_GLOSSY",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     },
     {
       "id": 5,
@@ -43,7 +91,15 @@
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "DIFFUSE_AND_GLOSSY",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     },
     {
       "id": 6,
@@ -52,7 +108,15 @@
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "DIFFUSE_AND_GLOSSY",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     },
     {
       "id": 7,
@@ -61,7 +125,15 @@
       "scaling": "0.002 0.002 0.002",
       "translation": "-.27 .110 -.25",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "DIFFUSE_AND_GLOSSY",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     },
     {
       "id": 8,
@@ -70,7 +142,15 @@
       "scaling": "0.002 0.002 0.002",
       "translation": "-0.075 0.040 -0.075",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180
+      "rotation_degree": 180,
+      "material": {
+        "type": "REFLECTION_AND_REFRACTION",
+        "ior": 0,
+        "kd": 0,
+        "ks": 0,
+        "specular": 0,
+        "color": "0 0 0"
+      }
     }
   ]
 }
