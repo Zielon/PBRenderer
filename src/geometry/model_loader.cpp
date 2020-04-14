@@ -15,8 +15,6 @@ void general::ModelLoader::load_models(const std::string& config){
 
 	textures_loaded.clear();
 
-	std::string name;
-
 	std::ifstream ifs(config);
 	rapidjson::IStreamWrapper isw(ifs);
 	rapidjson::Document document;
@@ -48,7 +46,7 @@ void general::ModelLoader::load_models(const std::string& config){
 		directory = configuration.path.substr(0, configuration.path.find_last_of('\\'));
 		process_node(ai_scene->mRootNode, ai_scene, configuration);
 
-		std::cout << "INFO::MESH LOADED -> [" << name << "]" << std::endl;
+		std::cout << "INFO::MESH LOADED -> [" << configuration.name << "]" << std::endl;
 	}
 }
 

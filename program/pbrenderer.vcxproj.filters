@@ -234,6 +234,9 @@
     <ClCompile Include="..\src\core\film.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\integrators\whitted.cpp">
+      <Filter>integrators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\rasterizer\glsl\texture\texture.frag">

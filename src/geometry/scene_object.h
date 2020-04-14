@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../rasterizer/shader.h"
+#include "../geometry/bbox.h"
 
 namespace pbr
 {

@@ -78,6 +78,7 @@
     <ClCompile Include="..\src\geometry\ray.cpp" />
     <ClCompile Include="..\src\geometry\transformation.cpp" />
     <ClCompile Include="..\src\geometry\triangle.cpp" />
+    <ClCompile Include="..\src\integrators\whitted.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />

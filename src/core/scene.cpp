@@ -11,10 +11,16 @@ void pbr::Scene::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wi
 		object->draw(shader, wireframe);
 }
 
-void pbr::Scene::add_object(const std::shared_ptr<SceneObject>& object){
+void pbr::Scene::add_object(const std::shared_ptr<SceneObject>& mesh){
 
-	bvh->add(object);
-	objects.push_back(object);
+	bvh->add(mesh);
+	objects.push_back(mesh);
+}
+
+void pbr::Scene::add_light(const std::shared_ptr<Light>& light){
+
+	bvh->add(std::dynamic_pointer_cast<SceneObject, Light>(light));
+	lights.push_back(light);
 }
 
 void pbr::Scene::build() const{
