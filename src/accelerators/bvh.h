@@ -4,7 +4,7 @@
 #include <queue>
 #include <functional>
 
-#include "Node.h"
+#include "node.h"
 #include "../core/aggregate.h"
 #include "../geometry/ray.h"
 #include "../geometry/intersection.h"
