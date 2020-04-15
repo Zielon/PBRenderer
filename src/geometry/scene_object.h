@@ -2,11 +2,38 @@
 
 #include "../rasterizer/shader.h"
 #include "../geometry/bbox.h"
+#include "transformation.h"
+
+namespace general
+{
+	struct GL_Texture
+	{
+		GL_Texture() = default;
+
+		unsigned int id;
+		std::string type;
+		std::string path;
+	};
+
+	struct GL_Vertex
+	{
+		GL_Vertex() = default;
+
+		glm::vec3 position;
+		glm::vec3 normal;
+		glm::vec2 tex_coords;
+		glm::vec3 tangent;
+		glm::vec3 bitangent;
+		float mesh_id;
+	};
+}
 
 namespace pbr
 {
 	class Intersection;
 	class Ray;
+
+	enum Type { MESH, LIGHT, NONE };
 
 	class SceneObject
 	{
@@ -19,9 +46,15 @@ namespace pbr
 
 		virtual void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) = 0;
 
+		virtual general::GL_Vertex get_vertex(int id) const = 0;
+
+		Transformation transformation;
+
 		int id{};
 
-	private:
+		Type type = NONE;
+
+	protected:
 		BBox bbox;
 	};
 }

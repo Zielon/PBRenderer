@@ -5,6 +5,7 @@
 #include "stb_image_write.h"
 #include <algorithm>
 #include <fstream>
+#include <iostream>
 
 pbr::Film::Film(glm::vec2 size):
 	pixels(std::vector<std::vector<Pixel<float>>>(size.y, std::vector<Pixel<float>>(size.x))), size(size){}
@@ -46,6 +47,8 @@ void pbr::Film::save_jpg(const std::string& file){
 
 	stbi_write_jpg(file.c_str(), size.x, size.y, 3, output, 100);
 
+	std::cout << "INFO::FILM file [" << file << "] saved" << std::endl;
+
 	delete[] output;
 }
 
@@ -67,6 +70,8 @@ void pbr::Film::save_ppm(const std::string& file){
 			ofs << r << g << b;
 		}
 	}
+
+	std::cout << "INFO::FILM file [" << file << "] saved" << std::endl;
 
 	ofs.close();
 }

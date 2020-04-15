@@ -42,15 +42,15 @@
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\core\uniform_sampler.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
-    <ClInclude Include="..\src\geometry\intersectable.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
-    <ClInclude Include="..\src\geometry\model_loader.h" />
+    <ClInclude Include="..\src\geometry\loader.h" />
     <ClInclude Include="..\src\geometry\ray.h" />
     <ClInclude Include="..\src\geometry\scene_object.h" />
     <ClInclude Include="..\src\geometry\intersection.h" />
     <ClInclude Include="..\src\geometry\transformation.h" />
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
+    <ClInclude Include="..\src\lights\point_light.h" />
     <ClInclude Include="..\src\materials\plastic.h" />
     <ClInclude Include="..\src\parser\parser.h" />
     <ClInclude Include="..\src\parser\types.h" />
@@ -74,7 +74,7 @@
     <ClCompile Include="..\src\core\scene.cpp" />
     <ClCompile Include="..\src\geometry\bbox.cpp" />
     <ClCompile Include="..\src\geometry\mesh.cpp" />
-    <ClCompile Include="..\src\geometry\model_loader.cpp" />
+    <ClCompile Include="..\src\geometry\loader.cpp" />
     <ClCompile Include="..\src\geometry\ray.cpp" />
     <ClCompile Include="..\src\geometry\transformation.cpp" />
     <ClCompile Include="..\src\geometry\triangle.cpp" />

@@ -1,22 +1,24 @@
 #pragma once
 
+#include <iostream>
+#include <utility>
+
 #include "../geometry/scene_object.h"
+#include "../parser/types.h"
 
 namespace pbr
 {
-	class Light : SceneObject
+	class Light
 	{
 	public:
-		bool intersect(const Ray& ray, Intersection& intersection) const override{
+		Light(parser::LightConfig config): configuration(std::move(config)){}
 
-			return false;
-		};
+		parser::LightConfig get_config() const{
 
-		BBox get_bbox() const override{
+			return configuration;
+		}
 
-			return {};
-		};
-
-		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) override{};
+	protected:
+		const parser::LightConfig configuration;
 	};
 }

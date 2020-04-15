@@ -7,7 +7,7 @@
 #include "../rasterizer/shader_manager.h"
 #include "../cameras/projective.h"
 #include "../core/scene.h"
-#include "../geometry/model_loader.h"
+#include "../geometry/loader.h"
 #include "../rasterizer/ray_caster.h"
 
 namespace app
@@ -27,7 +27,7 @@ namespace app
 		std::shared_ptr<pbr::ProjectiveCamera> camera;
 		std::shared_ptr<pbr::Scene> scene;
 		std::shared_ptr<rasterizer::RayCaster> ray_caster;
-		std::shared_ptr<general::ModelLoader> model_loader;
+		std::shared_ptr<general::Loader> model_loader;
 		rasterizer::ShaderManager shader_manager;
 		rasterizer::InputHandler input_handler;
 

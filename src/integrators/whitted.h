@@ -7,9 +7,12 @@ namespace pbr
 	class WhittedIntegrator : public Integrator
 	{
 	public:
-		WhittedIntegrator(const std::shared_ptr<Scene>& scene, const std::shared_ptr<Film>& film)
-			: Integrator(scene, film){}
+		WhittedIntegrator(std::shared_ptr<Scene> scene)
+			: Integrator(std::move(scene)){ }
 
 		void render() override;
+
+	private:
+		glm::vec3 process(const Ray& ray, int depth) const;
 	};
 }

@@ -12,21 +12,22 @@
 
 namespace general
 {
-	class ModelLoader
+	class Loader
 	{
 	public:
-		ModelLoader(std::shared_ptr<pbr::Scene> scene): scene(std::move(scene)){
+		Loader(std::shared_ptr<pbr::Scene> scene): scene(std::move(scene)){
 
 			load_meshes("../configuration/default.json");
+			load_lights("../configuration/default.json");
 		};
 
 		void load_meshes(const std::string& config);
 
+		void load_lights(const std::string& config) const;
+
 	private:
 		std::string directory;
 		std::vector<GL_Texture> textures_loaded;
-		int current_config = -1;
-
 		std::shared_ptr<pbr::Scene> scene;
 
 		static unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma = false);

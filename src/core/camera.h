@@ -5,13 +5,14 @@
 
 #include "../geometry/ray.h"
 #include "../rasterizer/shader.h"
+#include "film.h"
 
 namespace general
 {
 	class Camera
 	{
 	public:
-		Camera(glm::vec2 film_size): film_size(film_size){
+		Camera(glm::vec2 film_size): film(std::make_shared<pbr::Film>(film_size)), film_size(film_size){
 
 			aspect = film_size.x / film_size.y;
 		}
@@ -40,6 +41,7 @@ namespace general
 		float fov = 45.f;
 		float aspect;
 
+		std::shared_ptr<pbr::Film> film;
 		glm::vec2 film_size;
 		glm::vec3 position = glm::vec3(-0.25f, 0.2f, 1.f);
 

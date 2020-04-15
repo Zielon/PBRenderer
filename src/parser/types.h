@@ -13,11 +13,12 @@ namespace parser
 
 		explicit LightConfig(const rapidjson::Value& node){
 
-			id = node["id"].GetString();
+			id = node["id"].GetInt();
 			name = node["name"].GetString();
 			type = node["type"].GetString();
 			position = Parser::string_to_vec3(node["position"].GetString());
 			intensity = node["intensity"].GetFloat();
+			area_light = type == "AREA_LIGHT";
 		}
 
 		std::string id;
@@ -25,6 +26,7 @@ namespace parser
 		std::string type;
 		glm::vec3 position{};
 		float intensity{};
+		bool area_light;
 	};
 
 	struct MaterialConfig final

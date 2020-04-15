@@ -8,12 +8,10 @@
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 #include <fstream>
-#include <sstream>
 #include "../parser/types.h"
+#include "../lights/point_light.h"
 
-void general::ModelLoader::load_meshes(const std::string& config){
-
-	textures_loaded.clear();
+void general::Loader::load_meshes(const std::string& config){
 
 	std::ifstream ifs(config);
 	rapidjson::IStreamWrapper isw(ifs);
@@ -27,11 +25,8 @@ void general::ModelLoader::load_meshes(const std::string& config){
 	for (auto itr = meshes.Begin(); itr != meshes.End(); ++itr)
 	{
 		const rapidjson::Value& attribute = *itr;
-
 		assert(attribute.IsObject());
-
 		parser::MeshConfig configuration(attribute);
-
 		Assimp::Importer importer;
 
 		auto flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace;
@@ -46,16 +41,43 @@ void general::ModelLoader::load_meshes(const std::string& config){
 		directory = configuration.path.substr(0, configuration.path.find_last_of('\\'));
 		process_node(ai_scene->mRootNode, ai_scene, configuration);
 
-		std::cout << "INFO::MESH LOADED -> [" << configuration.name << "]" << std::endl;
+		std::cout << "INFO::LOADER Mesh loaded -> [" << configuration.name << "]" << std::endl;
 	}
 }
 
-void general::ModelLoader::process_node(
+void general::Loader::load_lights(const std::string& config) const{
+
+	std::ifstream ifs(config);
+	rapidjson::IStreamWrapper isw(ifs);
+	rapidjson::Document document;
+
+	document.ParseStream(isw);
+
+	const rapidjson::Value& meshes = document["lights"];
+	assert(meshes.IsArray());
+
+	for (auto itr = meshes.Begin(); itr != meshes.End(); ++itr)
+	{
+		const rapidjson::Value& attribute = *itr;
+		assert(attribute.IsObject());
+		parser::LightConfig configuration(attribute);
+
+		auto light = std::make_shared<pbr::PointLight>(configuration);
+
+		scene->add_light(light);
+
+		std::cout << "INFO::LOADER Light loaded -> [" << configuration.name << "]" << std::endl;
+	}
+}
+
+void general::Loader::process_node(
 	aiNode* node, const aiScene* ai_scene, parser::MeshConfig& configuration){
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		auto mesh = process_mesh(ai_scene->mMeshes[node->mMeshes[i]], ai_scene, configuration);
+		mesh->type = pbr::MESH;
+
 		scene->add_object(mesh);
 	}
 
@@ -63,8 +85,8 @@ void general::ModelLoader::process_node(
 		process_node(node->mChildren[i], ai_scene, configuration);
 }
 
-std::shared_ptr<general::Mesh> general::ModelLoader::process_mesh(aiMesh* mesh, const aiScene* scene,
-                                                                  parser::MeshConfig& configuration){
+std::shared_ptr<general::Mesh> general::Loader::process_mesh(aiMesh* mesh, const aiScene* scene,
+                                                             parser::MeshConfig& configuration){
 
 	std::vector<GL_Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -150,7 +172,7 @@ std::shared_ptr<general::Mesh> general::ModelLoader::process_mesh(aiMesh* mesh, 
 	return std::make_shared<Mesh>(vertices, indices, textures, configuration);
 }
 
-std::vector<general::GL_Texture> general::ModelLoader::load_material_textures(
+std::vector<general::GL_Texture> general::Loader::load_material_textures(
 	aiMaterial* mat, aiTextureType type, std::string type_name){
 
 	std::vector<GL_Texture> textures;
@@ -185,7 +207,7 @@ std::vector<general::GL_Texture> general::ModelLoader::load_material_textures(
 	return textures;
 }
 
-unsigned int general::ModelLoader::texture_from_file(const char* path, const std::string& directory, bool gamma){
+unsigned int general::Loader::texture_from_file(const char* path, const std::string& directory, bool gamma){
 
 	std::string filename = std::string(path);
 	filename = directory + "\\" + filename;

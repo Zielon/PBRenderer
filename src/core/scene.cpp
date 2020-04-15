@@ -19,7 +19,6 @@ void pbr::Scene::add_object(const std::shared_ptr<SceneObject>& mesh){
 
 void pbr::Scene::add_light(const std::shared_ptr<Light>& light){
 
-	bvh->add(std::dynamic_pointer_cast<SceneObject, Light>(light));
 	lights.push_back(light);
 }
 

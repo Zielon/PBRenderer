@@ -18,8 +18,8 @@ void rasterizer::RayCaster::pick(const std::shared_ptr<Shader>& shader, bool pic
 
 	if (scene->intersect(ray, intersection) && picking)
 	{
-		const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
-		shader->setIVec4("triangle", glm::ivec4(triangle->ids, triangle->object->id));
+		const pbr::Triangle* triangle = (pbr::Triangle*)intersection.triangle;
+		shader->setIVec4("triangle", glm::ivec4(triangle->ids, triangle->scene_object->id));
 	}
 	else shader->setIVec4("triangle", glm::vec4(-1));
 
@@ -50,7 +50,7 @@ void rasterizer::RayCaster::ray_cast_frame(){
 
 					if (scene->intersect(ray, intersection))
 					{
-						const pbr::Triangle* triangle = (pbr::Triangle*)intersection.object;
+						const pbr::Triangle* triangle = (pbr::Triangle*)intersection.triangle;
 
 						auto pixel = film.get_pixel(x, y).to_vec3();
 						pixel *= i * weight;

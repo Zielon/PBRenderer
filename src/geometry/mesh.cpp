@@ -9,9 +9,6 @@ general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                     std::vector<unsigned> indices,
                     std::vector<GL_Texture> textures,
                     parser::MeshConfig configuration):
-	transformation(pbr::Transformation(configuration.rotation_axis, configuration.rotation_degree,
-	                                   configuration.scaling,
-	                                   configuration.translation)),
 	bvh(std::make_shared<pbr::BVH<pbr::Triangle>>()),
 	vertices(std::move(vertices)),
 	textures(std::move(textures)),
@@ -19,7 +16,9 @@ general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 	configuration(configuration){
 
 	id = configuration.id;
-
+	transformation = pbr::Transformation(configuration.rotation_axis, configuration.rotation_degree,
+	                                     configuration.scaling,
+	                                     configuration.translation);
 	generate_triangle();
 	generate_gl_buffers();
 
@@ -81,6 +80,16 @@ bool general::Mesh::intersect(const pbr::Ray& ray, pbr::Intersection& intersecti
 pbr::BBox general::Mesh::get_bbox() const{
 
 	return bbox;
+}
+
+parser::MeshConfig general::Mesh::get_config() const{
+
+	return configuration;
+}
+
+general::GL_Vertex general::Mesh::get_vertex(int id) const{
+
+	return vertices[id];
 }
 
 void general::Mesh::generate_triangle(){

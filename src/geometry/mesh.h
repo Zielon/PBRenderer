@@ -18,23 +18,6 @@
 
 namespace general
 {
-	struct GL_Texture
-	{
-		unsigned int id;
-		std::string type;
-		std::string path;
-	};
-
-	struct GL_Vertex
-	{
-		glm::vec3 position;
-		glm::vec3 normal;
-		glm::vec2 tex_coords;
-		glm::vec3 tangent;
-		glm::vec3 bitangent;
-		float mesh_id;
-	};
-
 	/**
 	 * By default everything is calculated in the world space
 	 */
@@ -44,7 +27,7 @@ namespace general
 		Mesh(std::vector<GL_Vertex> vertices,
 		     std::vector<unsigned int> indices,
 		     std::vector<GL_Texture> textures,
-			 parser::MeshConfig configuration);
+		     parser::MeshConfig configuration);
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) override;
 
@@ -52,7 +35,9 @@ namespace general
 
 		pbr::BBox get_bbox() const override;
 
-		pbr::Transformation transformation;
+		parser::MeshConfig get_config() const;
+
+		GL_Vertex get_vertex(int id) const override;
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
@@ -63,7 +48,7 @@ namespace general
 		std::vector<GL_Vertex> vertices;
 		std::vector<GL_Texture> textures;
 		std::vector<GLuint> indices;
-		parser::MeshConfig configuration;
+		const parser::MeshConfig configuration;
 
 		void generate_triangle();
 

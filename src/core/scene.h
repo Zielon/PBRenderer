@@ -27,7 +27,7 @@ namespace pbr
 
 		void build() const;
 
-	private:
+	//private:
 		std::shared_ptr<BVH<SceneObject>> bvh;
 		std::shared_ptr<general::Camera> camera;
 		std::vector<std::shared_ptr<Light>> lights;

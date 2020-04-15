@@ -46,6 +46,9 @@
     <Filter Include="parser">
       <UniqueIdentifier>{4b5a2634-59b1-40af-a376-b26c90850503}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lights">
+      <UniqueIdentifier>{71d25bd0-115f-4dfb-b82b-65ace380d874}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -138,9 +141,6 @@
     <ClInclude Include="..\src\geometry\intersection.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\intersectable.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\rasterizer\camera_handler.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
@@ -153,9 +153,6 @@
     <ClInclude Include="..\src\rasterizer\ray_caster.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\model_loader.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\uniform_sampler.h">
       <Filter>core</Filter>
     </ClInclude>
@@ -167,6 +164,12 @@
     </ClInclude>
     <ClInclude Include="..\src\parser\types.h">
       <Filter>parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\loader.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lights\point_light.h">
+      <Filter>lights</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,14 +231,14 @@
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp">
       <Filter>rasterizer</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\geometry\model_loader.cpp">
-      <Filter>geometry</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\core\film.cpp">
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\integrators\whitted.cpp">
       <Filter>integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\geometry\loader.cpp">
+      <Filter>geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
