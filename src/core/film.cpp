@@ -75,3 +75,8 @@ void pbr::Film::save_ppm(const std::string& file){
 
 	ofs.close();
 }
+
+glm::vec2 pbr::Film::get_size() const{
+
+	return size;
+}

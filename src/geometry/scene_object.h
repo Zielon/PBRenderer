@@ -4,7 +4,7 @@
 #include "../geometry/bbox.h"
 #include "transformation.h"
 
-namespace general
+namespace pbr
 {
 	struct GL_Texture
 	{
@@ -46,7 +46,7 @@ namespace pbr
 
 		virtual void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) = 0;
 
-		virtual general::GL_Vertex get_vertex(int id) const = 0;
+		virtual GL_Vertex get_vertex(int id) const = 0;
 
 		Transformation transformation;
 

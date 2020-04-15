@@ -171,6 +171,9 @@
     <ClInclude Include="..\src\lights\point_light.h">
       <Filter>lights</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\geometry\coordinate_system.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -239,6 +242,15 @@
     </ClCompile>
     <ClCompile Include="..\src\geometry\loader.cpp">
       <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\camera.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cameras\projective.cpp">
+      <Filter>cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\integrator.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

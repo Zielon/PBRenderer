@@ -8,26 +8,19 @@ namespace pbr
 	class Integrator
 	{
 	public:
-		Integrator(std::shared_ptr<Scene> scene):
-			scene(std::move(scene)){}
+		Integrator(std::shared_ptr<Scene> scene): scene(std::move(scene)){}
 
 		virtual ~Integrator() = default;
 
 		virtual void render() = 0;
 
-		virtual Film* get_film(){
+		virtual std::shared_ptr<Film> get_film() const;
 
-			return scene->camera->film.get();
-		}
-
-		virtual general::Camera* get_camera(){
-
-			return scene->camera.get();
-		}
+		virtual std::shared_ptr<Camera> get_camera() const;
 
 	protected:
 		std::shared_ptr<Scene> scene;
 		std::shared_ptr<Film> film;
-		std::shared_ptr<general::Camera> camera;
+		std::shared_ptr<Camera> camera;
 	};
 }

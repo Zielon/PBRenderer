@@ -1,9 +1,7 @@
 #include"menu.h"
 #include "window.h"
 
-app::Menu::Menu(const glm::ivec2& position, const glm::ivec2& size): position(position), size(size){
-
-}
+app::Menu::Menu(const glm::ivec2& position, const glm::ivec2& size): position(position), size(size){}
 
 void app::Menu::attach(std::function<void()> func){
 

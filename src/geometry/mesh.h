@@ -16,24 +16,24 @@
 #include "transformation.h"
 #include "../parser/types.h"
 
-namespace general
+namespace pbr
 {
 	/**
 	 * By default everything is calculated in the world space
 	 */
-	class Mesh : public pbr::SceneObject
+	class Mesh : public SceneObject
 	{
 	public:
 		Mesh(std::vector<GL_Vertex> vertices,
 		     std::vector<unsigned int> indices,
 		     std::vector<GL_Texture> textures,
-		     parser::MeshConfig configuration);
+		     parser::MeshConfig config);
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) override;
 
-		bool intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const override;
+		bool intersect(const Ray& ray, Intersection& intersection) const override;
 
-		pbr::BBox get_bbox() const override;
+		BBox get_bbox() const override;
 
 		parser::MeshConfig get_config() const;
 
@@ -43,8 +43,8 @@ namespace general
 		GLuint VAO{}, VBO{}, EBO{};
 
 		std::string name;
-		pbr::BBox bbox;
-		std::shared_ptr<pbr::BVH<pbr::Triangle>> bvh;
+		BBox bbox;
+		std::shared_ptr<BVH<Triangle>> bvh;
 		std::vector<GL_Vertex> vertices;
 		std::vector<GL_Texture> textures;
 		std::vector<GLuint> indices;

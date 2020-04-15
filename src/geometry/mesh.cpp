@@ -5,27 +5,26 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-general::Mesh::Mesh(std::vector<GL_Vertex> vertices,
-                    std::vector<unsigned> indices,
-                    std::vector<GL_Texture> textures,
-                    parser::MeshConfig configuration):
-	bvh(std::make_shared<pbr::BVH<pbr::Triangle>>()),
+pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
+                std::vector<unsigned> indices,
+                std::vector<GL_Texture> textures,
+                parser::MeshConfig config):
+	bvh(std::make_shared<BVH<Triangle>>()),
 	vertices(std::move(vertices)),
 	textures(std::move(textures)),
 	indices(std::move(indices)),
-	configuration(configuration){
+	configuration(config){
 
-	id = configuration.id;
-	transformation = pbr::Transformation(configuration.rotation_axis, configuration.rotation_degree,
-	                                     configuration.scaling,
-	                                     configuration.translation);
+	id = config.id;
+	transformation = Transformation(config.rotation_axis, config.rotation_degree, config.scaling, config.translation);
+
 	generate_triangle();
 	generate_gl_buffers();
 
-	bvh->build(pbr::Split::SAH);
+	bvh->build(Split::SAH);
 }
 
-void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
+void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
 
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -72,27 +71,27 @@ void general::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool
 	glActiveTexture(GL_TEXTURE0);
 }
 
-bool general::Mesh::intersect(const pbr::Ray& ray, pbr::Intersection& intersection) const{
+bool pbr::Mesh::intersect(const Ray& ray, Intersection& intersection) const{
 
 	return bvh->intersect(ray, intersection);
 }
 
-pbr::BBox general::Mesh::get_bbox() const{
+pbr::BBox pbr::Mesh::get_bbox() const{
 
 	return bbox;
 }
 
-parser::MeshConfig general::Mesh::get_config() const{
+parser::MeshConfig pbr::Mesh::get_config() const{
 
 	return configuration;
 }
 
-general::GL_Vertex general::Mesh::get_vertex(int id) const{
+pbr::GL_Vertex pbr::Mesh::get_vertex(int id) const{
 
 	return vertices[id];
 }
 
-void general::Mesh::generate_triangle(){
+void pbr::Mesh::generate_triangle(){
 
 	for (auto i = 0; i < indices.size(); i += 3)
 	{
@@ -111,7 +110,7 @@ void general::Mesh::generate_triangle(){
 		const auto max = glm::max(glm::max(v1, v2), v0);
 
 		auto ids = glm::ivec3(indices[i], indices[i + 1], indices[i + 2]);
-		auto triangle = std::make_shared<pbr::Triangle>(ids, v0, v1, v2, n, min, max, this);
+		auto triangle = std::make_shared<Triangle>(ids, v0, v1, v2, n, min, max, this);
 
 		bvh->add(triangle);
 
@@ -119,7 +118,7 @@ void general::Mesh::generate_triangle(){
 	}
 }
 
-void general::Mesh::generate_gl_buffers(){
+void pbr::Mesh::generate_gl_buffers(){
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);

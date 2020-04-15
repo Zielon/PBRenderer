@@ -17,7 +17,7 @@ namespace rasterizer
 	class RayCaster
 	{
 	public:
-		RayCaster(std::shared_ptr<pbr::Scene> scene, std::shared_ptr<general::Camera> camera):
+		RayCaster(std::shared_ptr<pbr::Scene> scene, std::shared_ptr<pbr::Camera> camera):
 			scene(std::move(scene)), camera(std::move(camera)){}
 
 		void pick(const std::shared_ptr<Shader>& shader, bool picking) const;
@@ -26,7 +26,7 @@ namespace rasterizer
 
 	private:
 		std::shared_ptr<pbr::Scene> scene;
-		std::shared_ptr<general::Camera> camera;
+		std::shared_ptr<pbr::Camera> camera;
 		bool saving = false;
 	};
 }

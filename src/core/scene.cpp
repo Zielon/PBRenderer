@@ -26,3 +26,18 @@ void pbr::Scene::build() const{
 
 	bvh->build(Split::SAH);
 }
+
+std::shared_ptr<pbr::Camera> pbr::Scene::get_camera() const{
+
+	return camera;
+}
+
+std::reference_wrapper<std::vector<std::shared_ptr<pbr::SceneObject>>> pbr::Scene::get_objects(){
+
+	return std::ref(objects);
+}
+
+std::reference_wrapper<std::vector<std::shared_ptr<pbr::Light>>> pbr::Scene::get_lights(){
+
+	return std::ref(lights);
+}

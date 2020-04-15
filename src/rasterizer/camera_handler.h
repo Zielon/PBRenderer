@@ -23,7 +23,7 @@ namespace rasterizer
 	class CameraHandler final
 	{
 	public:
-		void set_camera_handler(std::shared_ptr<general::Camera> camera){
+		void set_camera_handler(std::shared_ptr<pbr::Camera> camera){
 
 			CameraHandler::camera = std::move(camera);
 
@@ -38,11 +38,12 @@ namespace rasterizer
 		void process_keyboard(Movement type, float deltaTime) const{
 
 			const float velocity = movement_speed * deltaTime;
+			auto& coordinate = camera->get_coordinate().get();
 
-			if (type == Movement::FORWARD) camera->position += camera->direction * velocity;
-			if (type == Movement::BACKWARD) camera->position -= camera->direction * velocity;
-			if (type == Movement::LEFT) camera->position -= camera->right * velocity;
-			if (type == Movement::RIGHT) camera->position += camera->right * velocity;
+			if (type == Movement::FORWARD) coordinate.position += coordinate.direction * velocity;
+			if (type == Movement::BACKWARD) coordinate.position -= coordinate.direction * velocity;
+			if (type == Movement::LEFT) coordinate.position -= coordinate.right * velocity;
+			if (type == Movement::RIGHT) coordinate.position += coordinate.right * velocity;
 		}
 
 		void process_mouse_movement(float xoffset, float yoffset, GLboolean constrainPitch = true){
@@ -70,7 +71,7 @@ namespace rasterizer
 		}
 
 	private:
-		static std::shared_ptr<general::Camera> camera;
+		static std::shared_ptr<pbr::Camera> camera;
 
 		float yaw{};
 		float pitch{};
@@ -84,10 +85,7 @@ namespace rasterizer
 			front.y = sin(glm::radians(pitch));
 			front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 
-			// Camera coordinate system
-			camera->direction = normalize(front);
-			camera->right = normalize(cross(camera->direction, glm::vec3(0.0f, 1.0f, 0.0f)));
-			camera->up = normalize(cross(camera->right, camera->direction));
+			camera->get_coordinate().get().update(front);
 		}
 	};
 }

@@ -10,12 +10,12 @@
 #include "../geometry/mesh.h"
 #include "../core/scene.h"
 
-namespace general
+namespace pbr
 {
 	class Loader
 	{
 	public:
-		Loader(std::shared_ptr<pbr::Scene> scene): scene(std::move(scene)){
+		Loader(std::shared_ptr<Scene> scene): scene(std::move(scene)){
 
 			load_meshes("../configuration/default.json");
 			load_lights("../configuration/default.json");
@@ -28,7 +28,7 @@ namespace general
 	private:
 		std::string directory;
 		std::vector<GL_Texture> textures_loaded;
-		std::shared_ptr<pbr::Scene> scene;
+		std::shared_ptr<Scene> scene;
 
 		static unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma = false);
 

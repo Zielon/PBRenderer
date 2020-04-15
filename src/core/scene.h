@@ -14,8 +14,8 @@ namespace pbr
 	class Scene
 	{
 	public:
-		Scene(std::shared_ptr<general::Camera> camera): bvh(std::make_shared<BVH<SceneObject>>()),
-		                                                camera(std::move(camera)){};
+		Scene(std::shared_ptr<Camera> camera): bvh(std::make_shared<BVH<SceneObject>>()),
+		                                       camera(std::move(camera)){};
 
 		bool intersect(const Ray& ray, Intersection& intersection) const;
 
@@ -27,9 +27,15 @@ namespace pbr
 
 		void build() const;
 
-	//private:
+		std::shared_ptr<Camera> get_camera() const;
+
+		std::reference_wrapper<std::vector<std::shared_ptr<SceneObject>>> get_objects();
+
+		std::reference_wrapper<std::vector<std::shared_ptr<Light>>> get_lights();
+
+	private:
 		std::shared_ptr<BVH<SceneObject>> bvh;
-		std::shared_ptr<general::Camera> camera;
+		std::shared_ptr<Camera> camera;
 		std::vector<std::shared_ptr<Light>> lights;
 		std::vector<std::shared_ptr<SceneObject>> objects;
 	};

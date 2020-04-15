@@ -12,7 +12,7 @@ app::Application::Application():
 	camera(std::make_shared<pbr::ProjectiveCamera>(glm::ivec2(SCR_WIDTH, SCR_HEIGHT))),
 	scene(std::make_shared<pbr::Scene>(camera)),
 	ray_caster(std::make_shared<rasterizer::RayCaster>(scene, camera)),
-	model_loader(std::make_shared<general::Loader>(scene)),
+	model_loader(std::make_shared<pbr::Loader>(scene)),
 	input_handler(window.get(), camera, SCR_WIDTH, SCR_HEIGHT){
 
 	attach_menu();

@@ -8,9 +8,10 @@ namespace rasterizer
 	class InputHandler
 	{
 	public:
-		InputHandler(GLFWwindow* window, std::shared_ptr<general::Camera> camera, int width, int height);
+		InputHandler(GLFWwindow* window, std::shared_ptr<pbr::Camera> camera, int width, int height);
 
 		static void process();
+
 		static float last_x;
 		static float last_y;
 	private:

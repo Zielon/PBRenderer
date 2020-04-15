@@ -13,7 +13,7 @@ namespace pbr
 
 		Pixel(T r, T g, T b): r(r), g(g), b(b){}
 
-		T r, g, b = 0.f;
+		T r{}, g{}, b = 0.f;
 		T filter_weight_sum = 0.f;
 
 		glm::vec<3, T> to_vec3(){
@@ -37,8 +37,10 @@ namespace pbr
 
 		void save_ppm(const std::string& file);
 
+		glm::vec2 get_size() const;
+
 	private:
 		std::vector<std::vector<Pixel<float>>> pixels;
-		glm::ivec2 size{};
+		glm::vec2 size{};
 	};
 }

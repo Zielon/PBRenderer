@@ -4,15 +4,15 @@
 rasterizer::CameraHandler rasterizer::InputHandler::camera_handler;
 GLFWwindow* rasterizer::InputHandler::window = nullptr;
 float rasterizer::InputHandler::last_x = 0;
-float rasterizer::InputHandler::last_y = 0; 
+float rasterizer::InputHandler::last_y = 0;
 float rasterizer::InputHandler::delta_time = 0;
 float rasterizer::InputHandler::last_frame = 0;
 bool rasterizer::InputHandler::first_mouse = false;
 
-std::shared_ptr<general::Camera> rasterizer::CameraHandler::camera;
+std::shared_ptr<pbr::Camera> rasterizer::CameraHandler::camera;
 
 rasterizer::InputHandler::InputHandler(
-	GLFWwindow* window, std::shared_ptr<general::Camera> camera, int width, int height){
+	GLFWwindow* window, std::shared_ptr<pbr::Camera> camera, int width, int height){
 
 	InputHandler::window = window;
 

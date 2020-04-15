@@ -3,16 +3,17 @@
 #include <glm/vec3.hpp>
 #include <memory>
 
+#include "film.h"
 #include "../geometry/ray.h"
 #include "../rasterizer/shader.h"
-#include "film.h"
+#include "../geometry/coordinate_system.h"
 
-namespace general
+namespace pbr
 {
 	class Camera
 	{
 	public:
-		Camera(glm::vec2 film_size): film(std::make_shared<pbr::Film>(film_size)), film_size(film_size){
+		Camera(glm::vec2 film_size): film(std::make_shared<Film>(film_size)){
 
 			aspect = film_size.x / film_size.y;
 		}
@@ -23,31 +24,20 @@ namespace general
 
 		virtual void update_shader(const std::shared_ptr<rasterizer::Shader>& shader) const = 0;
 
-		virtual pbr::Ray cast_ray(glm::vec2 screen, glm::vec2 offset){
+		virtual Ray cast_ray(glm::vec2 screen, glm::vec2 offset) = 0;
 
-			return {};
-		}
+		virtual void set_fov(float fov);
 
-		virtual void set_fov(float fovxy){
+		virtual float get_fov() const;
 
-			fov = fovxy;
-		}
+		virtual std::shared_ptr<Film> get_film() const;
 
-		virtual float get_fov(){
+		std::reference_wrapper<CoordinateSystem> get_coordinate();
 
-			return fov;
-		}
-
+	protected:
 		float fov = 45.f;
 		float aspect;
-
-		std::shared_ptr<pbr::Film> film;
-		glm::vec2 film_size;
-		glm::vec3 position = glm::vec3(-0.25f, 0.2f, 1.f);
-
-		// Camera coordinate system
-		glm::vec3 direction = glm::vec3(0.f, 0.f, -1.f);
-		glm::vec3 up = glm::vec3(0.f, 1.f, 0.f);
-		glm::vec3 right{};
+		std::shared_ptr<Film> film;
+		CoordinateSystem coordinate;
 	};
 }

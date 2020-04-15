@@ -5,12 +5,14 @@
 
 void pbr::WhittedIntegrator::render(){
 
-	for (int i = 0; i < 4; i++)
+	const auto film_size = get_camera()->get_film()->get_size();
+
+	for (auto i = 0; i < 4; i++)
 	{
 		UniformSampler sampler(0.f, 1.f);
 		const auto weight = 1.0f / (i + 1);
-		for (uint32_t y = 0; y < get_camera()->film_size.y; ++y)
-			for (uint32_t x = 0; x < get_camera()->film_size.x; ++x)
+		for (uint32_t y = 0; y < film_size.y; ++y)
+			for (uint32_t x = 0; x < film_size.x; ++x)
 			{
 				auto pixel = get_film()->get_pixel(x, y).to_vec3();
 				pixel *= i * weight;
@@ -70,7 +72,7 @@ inline glm::vec3 refract_(const glm::vec3& I, const glm::vec3& N, const float& i
 
 glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
 
-	glm::vec3 color = glm::vec3(0.235294, 0.67451, 0.843137);
+	glm::vec3 color = glm::vec3(53.f / 255.f, 81.f / 255.f, 92.f / 255.f);
 
 	if (depth >= 6) return color;
 
@@ -85,7 +87,7 @@ glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
 
 	if (triangle->scene_object->type == MESH)
 	{
-		const auto mesh = (general::Mesh*)triangle->scene_object;
+		const auto mesh = (Mesh*)triangle->scene_object;
 
 		auto N = intersection.shading.n;
 
@@ -112,7 +114,7 @@ glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
 			glm::vec3 specularColor = glm::vec3(0);
 			glm::vec3 shadowPointOrig = (dot(ray.d, N) < 0) ? hit + N * bias : hit - N * bias;
 
-			for (auto& light : scene->lights)
+			for (auto& light : scene->get_lights().get())
 			{
 				glm::vec3 lightDir = light->get_config().position - hit;
 				float lightDistance2 = dot(lightDir, lightDir);

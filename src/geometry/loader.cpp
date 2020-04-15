@@ -11,7 +11,7 @@
 #include "../parser/types.h"
 #include "../lights/point_light.h"
 
-void general::Loader::load_meshes(const std::string& config){
+void pbr::Loader::load_meshes(const std::string& config){
 
 	std::ifstream ifs(config);
 	rapidjson::IStreamWrapper isw(ifs);
@@ -45,7 +45,7 @@ void general::Loader::load_meshes(const std::string& config){
 	}
 }
 
-void general::Loader::load_lights(const std::string& config) const{
+void pbr::Loader::load_lights(const std::string& config) const{
 
 	std::ifstream ifs(config);
 	rapidjson::IStreamWrapper isw(ifs);
@@ -62,7 +62,7 @@ void general::Loader::load_lights(const std::string& config) const{
 		assert(attribute.IsObject());
 		parser::LightConfig configuration(attribute);
 
-		auto light = std::make_shared<pbr::PointLight>(configuration);
+		auto light = std::make_shared<PointLight>(configuration);
 
 		scene->add_light(light);
 
@@ -70,13 +70,13 @@ void general::Loader::load_lights(const std::string& config) const{
 	}
 }
 
-void general::Loader::process_node(
+void pbr::Loader::process_node(
 	aiNode* node, const aiScene* ai_scene, parser::MeshConfig& configuration){
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		auto mesh = process_mesh(ai_scene->mMeshes[node->mMeshes[i]], ai_scene, configuration);
-		mesh->type = pbr::MESH;
+		mesh->type = MESH;
 
 		scene->add_object(mesh);
 	}
@@ -85,8 +85,8 @@ void general::Loader::process_node(
 		process_node(node->mChildren[i], ai_scene, configuration);
 }
 
-std::shared_ptr<general::Mesh> general::Loader::process_mesh(aiMesh* mesh, const aiScene* scene,
-                                                             parser::MeshConfig& configuration){
+std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene* scene,
+                                                     parser::MeshConfig& configuration){
 
 	std::vector<GL_Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -172,7 +172,7 @@ std::shared_ptr<general::Mesh> general::Loader::process_mesh(aiMesh* mesh, const
 	return std::make_shared<Mesh>(vertices, indices, textures, configuration);
 }
 
-std::vector<general::GL_Texture> general::Loader::load_material_textures(
+std::vector<pbr::GL_Texture> pbr::Loader::load_material_textures(
 	aiMaterial* mat, aiTextureType type, std::string type_name){
 
 	std::vector<GL_Texture> textures;
@@ -207,7 +207,7 @@ std::vector<general::GL_Texture> general::Loader::load_material_textures(
 	return textures;
 }
 
-unsigned int general::Loader::texture_from_file(const char* path, const std::string& directory, bool gamma){
+unsigned int pbr::Loader::texture_from_file(const char* path, const std::string& directory, bool gamma){
 
 	std::string filename = std::string(path);
 	filename = directory + "\\" + filename;

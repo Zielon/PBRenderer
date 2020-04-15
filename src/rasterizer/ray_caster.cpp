@@ -33,7 +33,9 @@ void rasterizer::RayCaster::ray_cast_frame(){
 
 	std::thread work([this](){
 
-		pbr::Film film(camera->film_size);
+		const auto film_size = camera->get_film()->get_size();
+
+		pbr::Film film(film_size);
 
 		for (int i = 0; i < 8; i++)
 		{
@@ -41,9 +43,9 @@ void rasterizer::RayCaster::ray_cast_frame(){
 
 			const auto weight = 1.0f / (i + 1);
 
-			for (uint32_t y = 0; y < camera->film_size.y; ++y)
+			for (uint32_t y = 0; y < film_size.y; ++y)
 			{
-				for (uint32_t x = 0; x < camera->film_size.x; ++x)
+				for (uint32_t x = 0; x < film_size.x; ++x)
 				{
 					pbr::Intersection intersection;
 					pbr::Ray ray = camera->cast_ray(glm::vec2(x, y), sampler.get2D());
