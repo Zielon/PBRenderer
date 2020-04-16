@@ -52,6 +52,9 @@
     <Filter Include="configuration">
       <UniqueIdentifier>{2e3fbc28-457e-43ff-bd80-b73dff8ef6b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{809b451a-d5ef-418d-8f18-e90304c82741}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="..\src\geometry\coordinate_system.h">
       <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\reflection.h">
+      <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

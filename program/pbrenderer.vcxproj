@@ -53,6 +53,7 @@
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\lights\point_light.h" />
     <ClInclude Include="..\src\materials\plastic.h" />
+    <ClInclude Include="..\src\math\reflection.h" />
     <ClInclude Include="..\src\parser\parser.h" />
     <ClInclude Include="..\src\parser\types.h" />
     <ClInclude Include="..\src\rasterizer\camera_handler.h" />
