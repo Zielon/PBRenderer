@@ -17,10 +17,14 @@ pbr::Pixel<float> pbr::Film::get_pixel(int x, int y){
 
 void pbr::Film::set_pixel(Pixel<float> pixel, int x, int y){
 
+	if (x >= size.x || y >= size.y) return;
+
 	pixels[y][x] = pixel;
 }
 
 void pbr::Film::set_pixel(glm::vec3 pixel, int x, int y){
+
+	if (x >= size.x || y >= size.y) return;
 
 	pixels[y][x] = Pixel<float>(pixel.x, pixel.y, pixel.z);
 }

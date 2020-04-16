@@ -10,9 +10,7 @@ namespace pbr
 		WhittedIntegrator(std::shared_ptr<Scene> scene)
 			: Integrator(std::move(scene)){ }
 
-		void render() override;
-
 	private:
-		glm::vec3 process(const Ray& ray, int depth) const;
+		glm::vec3 process(const Ray& ray, int depth) const override;
 	};
 }

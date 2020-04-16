@@ -35,6 +35,7 @@ namespace app
 		int shader_type = 0;
 		bool wireframe = false;
 		bool picking = false;
+		float progress_fraction = 0.f;
 
 		void attach_menu();
 	};

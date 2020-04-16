@@ -17,6 +17,8 @@ namespace pbr
 	public:
 		explicit ProjectiveCamera(glm::ivec2 film_size);
 
+		ProjectiveCamera copy() const;
+
 		Ray cast_ray(glm::vec2 viewport, glm::vec2 offset) override;
 
 		void update_shader(const std::shared_ptr<rasterizer::Shader>& shader) const override;

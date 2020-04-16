@@ -1,28 +1,11 @@
 #include "whitted.h"
+
+#include <chrono>
+#include <thread>
+
 #include "../geometry/triangle.h"
 #include "../geometry/mesh.h"
 #include "../core/uniform_sampler.h"
-
-void pbr::WhittedIntegrator::render(){
-
-	const auto film_size = get_camera()->get_film()->get_size();
-
-	for (auto i = 0; i < 4; i++)
-	{
-		UniformSampler sampler(0.f, 1.f);
-		const auto weight = 1.0f / (i + 1);
-		for (uint32_t y = 0; y < film_size.y; ++y)
-			for (uint32_t x = 0; x < film_size.x; ++x)
-			{
-				auto pixel = get_film()->get_pixel(x, y).to_vec3();
-				pixel *= i * weight;
-				pixel += weight * process(get_camera()->cast_ray(glm::vec2(x, y), sampler.get2D()), 0);
-				get_film()->set_pixel(pixel, x, y);
-			}
-	}
-
-	get_film()->save_ppm("whitted.ppm");
-}
 
 inline float clamp(const float& lo, const float& hi, const float& v){
 	return std::max(lo, std::min(hi, v));
@@ -72,7 +55,7 @@ inline glm::vec3 refract_(const glm::vec3& I, const glm::vec3& N, const float& i
 
 glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
 
-	glm::vec3 color = glm::vec3(53.f / 255.f, 81.f / 255.f, 92.f / 255.f);
+	glm::vec3 color = glm::vec3(0.235294, 0.67451, 0.843137);
 
 	if (depth >= 6) return color;
 

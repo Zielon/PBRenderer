@@ -49,6 +49,9 @@
     <Filter Include="lights">
       <UniqueIdentifier>{71d25bd0-115f-4dfb-b82b-65ace380d874}</UniqueIdentifier>
     </Filter>
+    <Filter Include="configuration">
+      <UniqueIdentifier>{2e3fbc28-457e-43ff-bd80-b73dff8ef6b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -277,6 +280,9 @@
     </None>
     <None Include="..\src\rasterizer\glsl\smooth\smooth.vert">
       <Filter>rasterizer\glsl\smooth</Filter>
+    </None>
+    <None Include="..\configuration\default.json">
+      <Filter>configuration</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -11,6 +11,8 @@ namespace pbr
 	{
 		Pixel() = default;
 
+		Pixel(glm::vec3 color): r(color.x), g(color.y), b(color.z){}
+
 		Pixel(T r, T g, T b): r(r), g(g), b(b){}
 
 		T r{}, g{}, b = 0.f;

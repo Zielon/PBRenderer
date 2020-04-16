@@ -12,15 +12,16 @@ namespace pbr
 
 		virtual ~Integrator() = default;
 
-		virtual void render() = 0;
+		virtual void render();
+
+	protected:
+		virtual glm::vec3 process(const Ray& ray, int depth) const = 0;
 
 		virtual std::shared_ptr<Film> get_film() const;
 
 		virtual std::shared_ptr<Camera> get_camera() const;
 
-	protected:
+		int samples = 4;
 		std::shared_ptr<Scene> scene;
-		std::shared_ptr<Film> film;
-		std::shared_ptr<Camera> camera;
 	};
 }

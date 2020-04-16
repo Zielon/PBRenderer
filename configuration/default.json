@@ -77,7 +77,7 @@
       "rotation_degree": 180,
       "material": {
         "type": "REFLECTION_AND_REFRACTION",
-        "ior": 1.5,
+        "ior": 1.7,
         "kd": 0.8,
         "ks": 0.2,
         "specular": 25,

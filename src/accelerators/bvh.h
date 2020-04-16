@@ -8,6 +8,7 @@
 #include "../core/aggregate.h"
 #include "../geometry/ray.h"
 #include "../geometry/intersection.h"
+#include <iostream>
 
 namespace pbr
 {
@@ -229,7 +230,10 @@ namespace pbr
 			middle_split(node->right.get());
 		}
 
-		void equal_split(Node* node){}
+		void equal_split(Node* node) const{
+
+			std::cerr << "NOT IMPLEMENTED" << std::endl;
+		}
 
 		void initialize(){
 

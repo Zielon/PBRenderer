@@ -90,6 +90,7 @@
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\configuration\default.json" />
     <None Include="..\src\rasterizer\glsl\flat\flat.frag" />
     <None Include="..\src\rasterizer\glsl\flat\flat.geo" />
     <None Include="..\src\rasterizer\glsl\flat\flat.vert" />
@@ -166,6 +167,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\rapidjson\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)3rd_party\glfw-3.3\lib\lib-vc2017-64bit;$(SolutionDir)3rd_party\glfw-3.3\bin\lib-vc2017-64bit;$(SolutionDir)3rd_party\assimp\lib;$(SolutionDir)3rd_party\glad\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -199,6 +201,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\rapidjson\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

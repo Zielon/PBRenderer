@@ -5,6 +5,11 @@ pbr::ProjectiveCamera::ProjectiveCamera(glm::ivec2 film_size) : Camera(film_size
 	camera_to_screen = glm::perspective(glm::radians(fov), aspect, near, far);
 }
 
+pbr::ProjectiveCamera pbr::ProjectiveCamera::copy() const{
+
+	return *this;
+}
+
 pbr::Ray pbr::ProjectiveCamera::cast_ray(glm::vec2 viewport, glm::vec2 offset){
 
 	const auto screen = (viewport + offset) / (get_film()->get_size() * 0.5f) - 1.f;

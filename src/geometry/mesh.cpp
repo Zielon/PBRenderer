@@ -16,7 +16,12 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 	configuration(config){
 
 	id = config.id;
-	transformation = Transformation(config.rotation_axis, config.rotation_degree, config.scaling, config.translation);
+	transformation = Transformation(
+		config.rotation_axis,
+		config.rotation_degree,
+		config.scaling,
+		config.translation
+	);
 
 	generate_triangle();
 	generate_gl_buffers();
