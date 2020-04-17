@@ -27,23 +27,25 @@
     {
       "id": 2,
       "type": "REFLECTION_AND_REFRACTION",
-      "ior": 1.7,
-      "kd": 0.8,
-      "ks": 0.2,
-      "specular": 25
+      "ior": 1.5
+    },
+    {
+      "id": 3,
+      "type": "REFLECTION",
+      "ior": 1.5
     }
   ],
   "meshes": [
     {
       "id": 1,
-      "name": "cbox_back",
+      "name": "cbox_redwall",
       "path": "..\\resources\\cbox\\cbox_redwall.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
-      "color": "0 1 0",
-      "material_id": 1
+      "color": "1 0 0",
+      "material_id": 3
     },
     {
       "id": 3,
@@ -53,8 +55,8 @@
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
-      "color": "1 0 0",
-      "material_id": 1
+      "color": "0 0 1",
+      "material_id": 3
     },
     {
       "id": 7,
@@ -70,13 +72,24 @@
     {
       "id": 8,
       "name": "sphere",
-      "path": "..\\resources\\parametric\\sphere.obj",
-      "scaling": "0.002 0.002 0.002",
+      "path": "..\\resources\\parametric\\sphere.ply",
+      "scaling": "0.02 0.02 0.02",
       "translation": "-0.075 0.340 -0.45",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "color": "0.9 0.9 0.9",
       "material_id": 2
+    },
+    {
+      "id": 9,
+      "name": "sphere",
+      "path": "..\\resources\\parametric\\sphere.ply",
+      "scaling": "0.01 0.01 0.01",
+      "translation": "-0.475 0.040 -0.075",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180,
+      "color": "0.9 0.9 0.9",
+      "material_id": 3
     }
   ]
 }

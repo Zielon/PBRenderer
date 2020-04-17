@@ -8,6 +8,11 @@ namespace math
 		return std::max(lo, std::min(hi, v));
 	}
 
+	inline glm::vec3 reflect(const glm::vec3& I, const glm::vec3& N){
+
+		return I - 2 * dot(I, N) * N;
+	}
+
 	inline glm::vec3 refract(const glm::vec3& I, const glm::vec3& N, const float& ior){
 
 		float cosi = clamp(-1, 1, dot(I, N));

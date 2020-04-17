@@ -38,9 +38,9 @@ namespace parser
 			id = node["id"].GetInt();
 			type = node["type"].GetString();
 			ior = node["ior"].GetFloat();
-			kd = node["kd"].GetFloat();
-			ks = node["ks"].GetFloat();
-			specular = node["specular"].GetFloat();
+			kd = node.HasMember("kd") ? node["kd"].GetFloat() : 0.f;
+			ks = node.HasMember("ks") ? node["ks"].GetFloat() : 0.f;
+			specular = node.HasMember("specular") ? node["specular"].GetFloat() : 0.f;
 		}
 
 		int id{};

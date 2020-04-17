@@ -8,7 +8,7 @@
 #include "../core/uniform_sampler.h"
 #include "../math/reflection.h"
 
-glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
+glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const{
 
 	glm::vec3 color = glm::vec3(0.235294, 0.67451, 0.843137);
 
@@ -35,23 +35,34 @@ glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
 		{
 			float kr;
 			math::fresnel(ray.d, N, material.ior, kr);
-			glm::vec3 reflectionDirection = reflect(ray.d, N);
-			glm::vec3 reflectionRayOrig = (dot(reflectionDirection, N) < 0) ? hit + N * bias : hit - N * bias;
-			color = process(Ray(reflectionRayOrig, reflectionDirection), depth + 1) * kr;
+			glm::vec3 bias_n = bias * N;
+			glm::vec3 reflectionDirection = normalize(math::reflect(ray.d, N));
+			bool outside = dot(ray.d, N) < 0;
+			glm::vec3 reflectionRayOrig = outside ? hit + bias_n : hit - bias_n;
+			glm::vec3 reflectionColor = Li(Ray(reflectionRayOrig, reflectionDirection), sampler, depth + 1);
+
+			color = reflectionColor * mesh->get_config().color;
 		}
 		else if (material.type == "REFLECTION_AND_REFRACTION")
 		{
-			glm::vec3 reflectionDirection = normalize(reflect(ray.d, N));
-			glm::vec3 refractionDirection = normalize(math::refract(ray.d, N, material.ior));
-
-			glm::vec3 reflectionRayOrig = (dot(reflectionDirection, N) < 0) ? hit - N * bias : hit + N * bias;
-			glm::vec3 refractionRayOrig = (dot(refractionDirection, N) < 0) ? hit - N * bias : hit + N * bias;
-
-			glm::vec3 reflectionColor = process(Ray(reflectionRayOrig, reflectionDirection), depth + 1);
-			glm::vec3 refractionColor = process(Ray(refractionRayOrig, refractionDirection), depth + 1);
+			glm::vec3 refractionColor = glm::vec3(0);
 
 			float kr;
 			math::fresnel(ray.d, N, material.ior, kr);
+			bool outside = dot(ray.d, N) < 0;
+			glm::vec3 bias_n = bias * N;
+
+			if (kr < 1)
+			{
+				glm::vec3 refractionDirection = normalize(math::refract(ray.d, N, material.ior));
+				glm::vec3 refractionRayOrig = outside ? hit - bias_n : hit + bias_n;
+				refractionColor = Li(Ray(refractionRayOrig, refractionDirection), sampler, depth + 1);
+			}
+
+			glm::vec3 reflectionDirection = normalize(math::reflect(ray.d, N));
+			glm::vec3 reflectionRayOrig = outside ? hit + bias_n : hit - bias_n;
+			glm::vec3 reflectionColor = Li(Ray(reflectionRayOrig, reflectionDirection), sampler, depth + 1);
+
 			color = reflectionColor * kr + refractionColor * (1 - kr);
 		}
 		else if (material.type == "DIFFUSE_AND_GLOSSY")

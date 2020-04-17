@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <glm/vec3.hpp>
+#include <mutex>
 
 namespace pbr
 {
@@ -44,5 +45,6 @@ namespace pbr
 	private:
 		std::vector<std::vector<Pixel<float>>> pixels;
 		glm::vec2 size{};
+		std::mutex mtx;
 	};
 }

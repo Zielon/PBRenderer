@@ -11,6 +11,6 @@ namespace pbr
 			: Integrator(std::move(scene)){ }
 
 	private:
-		glm::vec3 process(const Ray& ray, int depth) const override;
+		glm::vec3 Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const override;
 	};
 }

@@ -18,7 +18,6 @@ namespace pbr
 	class UniformSampler : public Sampler
 	{
 	public:
-
 		UniformSampler(float min = 0.f, float max = 1.f): generator(std::random_device()()), distribution(min, max){}
 
 		float get1D() override{
