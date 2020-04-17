@@ -9,6 +9,7 @@
 #include "../rasterizer/shader.h"
 #include "../geometry/mesh.h"
 #include "../core/scene.h"
+#include <map>
 
 namespace pbr
 {
@@ -27,8 +28,11 @@ namespace pbr
 
 	private:
 		std::string directory;
+		std::map<int, parser::MaterialConfig> materials;
 		std::vector<GL_Texture> textures_loaded;
 		std::shared_ptr<Scene> scene;
+
+		void load_materials(const rapidjson::Value& materials);
 
 		static unsigned int texture_from_file(const char* path, const std::string& directory, bool gamma = false);
 

@@ -35,20 +35,20 @@ namespace parser
 
 		explicit MaterialConfig(const rapidjson::Value& node){
 
+			id = node["id"].GetInt();
 			type = node["type"].GetString();
 			ior = node["ior"].GetFloat();
 			kd = node["kd"].GetFloat();
 			ks = node["ks"].GetFloat();
 			specular = node["specular"].GetFloat();
-			color = Parser::string_to_vec3(node["color"].GetString());
 		}
 
+		int id{};
 		std::string type;
 		float ior{};
 		float kd{};
 		float ks{};
 		float specular{};
-		glm::vec3 color{};
 	};
 
 	struct MeshConfig final
@@ -64,7 +64,8 @@ namespace parser
 			translation = Parser::string_to_vec3(node["translation"].GetString());
 			rotation_axis = Parser::string_to_vec3(node["rotation_axis"].GetString());
 			rotation_degree = node["rotation_degree"].GetFloat();
-			material = MaterialConfig(node["material"]);
+			color = Parser::string_to_vec3(node["color"].GetString());
+			material_id = node["material_id"].GetInt();
 		}
 
 		int id{};
@@ -74,6 +75,8 @@ namespace parser
 		glm::vec3 translation{};
 		glm::vec3 rotation_axis{};
 		float rotation_degree{};
+		glm::vec3 color{};
+		int material_id{};
 		MaterialConfig material{};
 	};
 }

@@ -31,7 +31,15 @@ glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
 
 		const parser::MaterialConfig material = mesh->get_config().material;
 
-		if (material.type == "REFLECTION_AND_REFRACTION")
+		if (material.type == "REFLECTION")
+		{
+			float kr;
+			math::fresnel(ray.d, N, material.ior, kr);
+			glm::vec3 reflectionDirection = reflect(ray.d, N);
+			glm::vec3 reflectionRayOrig = (dot(reflectionDirection, N) < 0) ? hit + N * bias : hit - N * bias;
+			color = process(Ray(reflectionRayOrig, reflectionDirection), depth + 1) * kr;
+		}
+		else if (material.type == "REFLECTION_AND_REFRACTION")
 		{
 			glm::vec3 reflectionDirection = normalize(reflect(ray.d, N));
 			glm::vec3 refractionDirection = normalize(math::refract(ray.d, N, material.ior));
@@ -69,7 +77,7 @@ glm::vec3 pbr::WhittedIntegrator::process(const Ray& ray, int depth) const{
 					* light->get_config().intensity;
 			}
 
-			color = lightAmt * material.color * material.kd + specularColor * material.ks;
+			color = lightAmt * mesh->get_config().color * material.kd + specularColor * material.ks;
 		}
 	}
 

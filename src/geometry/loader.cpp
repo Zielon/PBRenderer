@@ -11,6 +11,19 @@
 #include "../parser/types.h"
 #include "../lights/point_light.h"
 
+void pbr::Loader::load_materials(const rapidjson::Value& json){
+
+	assert(json.IsArray());
+
+	for (auto itr = json.Begin(); itr != json.End(); ++itr)
+	{
+		const rapidjson::Value& attribute = *itr;
+		assert(attribute.IsObject());
+		parser::MaterialConfig configuration(attribute);
+		materials[configuration.id] = configuration;
+	}
+}
+
 void pbr::Loader::load_meshes(const std::string& config){
 
 	std::ifstream ifs(config);
@@ -18,6 +31,8 @@ void pbr::Loader::load_meshes(const std::string& config){
 	rapidjson::Document document;
 
 	document.ParseStream(isw);
+
+	load_materials(document["materials"]);
 
 	const rapidjson::Value& meshes = document["meshes"];
 	assert(meshes.IsArray());
@@ -27,6 +42,7 @@ void pbr::Loader::load_meshes(const std::string& config){
 		const rapidjson::Value& attribute = *itr;
 		assert(attribute.IsObject());
 		parser::MeshConfig configuration(attribute);
+		configuration.material = materials[configuration.material_id];
 		Assimp::Importer importer;
 
 		auto flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace;
