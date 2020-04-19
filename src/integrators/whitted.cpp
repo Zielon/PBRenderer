@@ -82,13 +82,13 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 				bool inShadow = scene->intersect(Ray(shadowPointOrig, lightDir), i);
 
 				lightAmt += (1 - inShadow) * light->get_config().intensity * LdotN;
-				glm::vec3 reflectionDirection = reflect(-lightDir, N);
+				glm::vec3 reflectionDirection = math::reflect(-lightDir, N);
 				specularColor +=
 					powf(std::max(0.f, -dot(reflectionDirection, ray.d)), material.specular)
 					* light->get_config().intensity;
 			}
 
-			color = lightAmt * mesh->get_config().color * material.kd + specularColor * material.ks;
+			color = lightAmt * mesh->texture->get(intersection.uv).to_vec3() * material.kd + specularColor * material.ks;
 		}
 	}
 

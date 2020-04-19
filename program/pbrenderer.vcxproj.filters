@@ -55,6 +55,9 @@
     <Filter Include="math">
       <UniqueIdentifier>{809b451a-d5ef-418d-8f18-e90304c82741}</UniqueIdentifier>
     </Filter>
+    <Filter Include="textures">
+      <UniqueIdentifier>{d04a2e5e-ad34-4991-9a7d-c4613f2fc9bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -183,6 +186,24 @@
     <ClInclude Include="..\src\math\reflection.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\textures\texture.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\textures\image_texture.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\reflection.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\textures\constant_texture.h">
+      <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\materials\lambertian.h">
+      <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\bxdf.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -260,6 +281,15 @@
     </ClCompile>
     <ClCompile Include="..\src\core\integrator.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\reflection.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\textures\image_texture.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\materials\lambertian.cpp">
+      <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

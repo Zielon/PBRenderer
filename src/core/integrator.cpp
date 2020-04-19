@@ -20,7 +20,7 @@ void pbr::Integrator::render(){
 
 		#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 		{
-			#pragma omp for schedule(dynamic, 8)
+			#pragma omp for schedule(dynamic, 4)
 			for (int j = 0; j < height * width; ++j)
 			{
 				const auto y = int(j / width);
@@ -40,10 +40,20 @@ void pbr::Integrator::render(){
 	get_film()->save_ppm("output.ppm");
 
 	const auto end = std::chrono::steady_clock::now();
+	const auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	std::cout << "INFO::INTEGRATOR Render time: [" << millis << " ms]" << std::endl;
+}
 
-	std::cout << "INFO::RENDER Time: [" <<
-		std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() <<
-		" ms]" << std::endl;
+glm::vec3 pbr::Integrator::reflect(const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect,
+                                   int depth) const{
+
+	return {};
+}
+
+glm::vec3 pbr::Integrator::refract(const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect,
+                                   int depth) const{
+
+	return {};
 }
 
 std::shared_ptr<pbr::Film> pbr::Integrator::get_film() const{

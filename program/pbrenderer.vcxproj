@@ -34,11 +34,13 @@
     <ClInclude Include="..\src\application\window.h" />
     <ClInclude Include="..\src\cameras\projective.h" />
     <ClInclude Include="..\src\core\aggregate.h" />
+    <ClInclude Include="..\src\core\bxdf.h" />
     <ClInclude Include="..\src\core\camera.h" />
     <ClInclude Include="..\src\core\film.h" />
     <ClInclude Include="..\src\core\light.h" />
     <ClInclude Include="..\src\core\integrator.h" />
     <ClInclude Include="..\src\core\material.h" />
+    <ClInclude Include="..\src\core\reflection.h" />
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\core\uniform_sampler.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
@@ -52,6 +54,7 @@
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\lights\point_light.h" />
+    <ClInclude Include="..\src\materials\lambertian.h" />
     <ClInclude Include="..\src\materials\plastic.h" />
     <ClInclude Include="..\src\math\reflection.h" />
     <ClInclude Include="..\src\parser\parser.h" />
@@ -61,6 +64,9 @@
     <ClInclude Include="..\src\rasterizer\ray_caster.h" />
     <ClInclude Include="..\src\rasterizer\shader.h" />
     <ClInclude Include="..\src\rasterizer\shader_manager.h" />
+    <ClInclude Include="..\src\textures\constant_texture.h" />
+    <ClInclude Include="..\src\textures\image_texture.h" />
+    <ClInclude Include="..\src\textures\texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rd_party\imgui\examples\imgui_impl_glfw.cpp" />
@@ -76,6 +82,7 @@
     <ClCompile Include="..\src\core\camera.cpp" />
     <ClCompile Include="..\src\core\film.cpp" />
     <ClCompile Include="..\src\core\integrator.cpp" />
+    <ClCompile Include="..\src\core\reflection.cpp" />
     <ClCompile Include="..\src\core\scene.cpp" />
     <ClCompile Include="..\src\geometry\bbox.cpp" />
     <ClCompile Include="..\src\geometry\mesh.cpp" />
@@ -85,10 +92,12 @@
     <ClCompile Include="..\src\geometry\triangle.cpp" />
     <ClCompile Include="..\src\integrators\whitted.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\materials\lambertian.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
+    <ClCompile Include="..\src\textures\image_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\configuration\default.json" />

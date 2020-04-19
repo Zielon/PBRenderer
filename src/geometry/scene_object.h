@@ -25,11 +25,15 @@ namespace pbr
 		glm::vec3 tangent;
 		glm::vec3 bitangent;
 		float mesh_id;
-	};
-}
 
-namespace pbr
-{
+		GL_Vertex operator*(float s){
+
+			normal *= s;
+			tex_coords *= s;
+			return *this;
+		};
+	};
+
 	class Intersection;
 	class Ray;
 

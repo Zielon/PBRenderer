@@ -28,20 +28,20 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 
 	if (t > 0.0f && intersection.distance > t)
 	{
-		intersection.distance = t;
-		intersection.triangle = this;
-		intersection.uv = v0 * w0 + v1 * w1 + v2 * w2;
-		intersection.barycentric = glm::vec3(w0, w1, w2);
-
 		Shading shading{};
 
-		auto v0 = scene_object->get_vertex(ids.x).normal * w0;
-		auto v1 = scene_object->get_vertex(ids.y).normal * w1;
-		auto v2 = scene_object->get_vertex(ids.z).normal * w2;
+		auto v0 = scene_object->get_vertex(ids.x) * w0;
+		auto v1 = scene_object->get_vertex(ids.y) * w1;
+		auto v2 = scene_object->get_vertex(ids.z) * w2;
 
-		shading.n = normalize(transpose(inverse(scene_object->transformation.to_world)) * glm::vec4(v0 + v1 + v2, 1.f));
+		shading.n = normalize(
+			transpose(inverse(scene_object->transformation.to_world)) * glm::vec4(
+				v0.normal + v1.normal + v2.normal, 1.f));
 
 		intersection.shading = shading;
+		intersection.distance = t;
+		intersection.triangle = this;
+		intersection.uv = v0.tex_coords + v1.tex_coords + v2.tex_coords;
 
 		return true;
 	}

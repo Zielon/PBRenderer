@@ -10,6 +10,7 @@
 #include "../geometry/mesh.h"
 #include "../core/scene.h"
 #include <map>
+#include "../textures/image_texture.h"
 
 namespace pbr
 {

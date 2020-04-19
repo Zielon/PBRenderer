@@ -23,6 +23,12 @@ namespace pbr
 	protected:
 		virtual glm::vec3 Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const = 0;
 
+		virtual glm::vec3 reflect(
+			const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const;
+
+		virtual glm::vec3 refract(
+			const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const;
+
 		virtual std::shared_ptr<Film> get_film() const;
 
 		virtual std::shared_ptr<Camera> get_camera() const;

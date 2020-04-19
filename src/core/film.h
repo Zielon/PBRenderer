@@ -1,8 +1,8 @@
 #pragma once
-#include <glm/vec2.hpp>
+
+#include <glm/glm.hpp>
 #include <string>
 #include <vector>
-#include <glm/vec3.hpp>
 #include <mutex>
 
 namespace pbr
@@ -14,10 +14,29 @@ namespace pbr
 
 		Pixel(glm::vec3 color): r(color.x), g(color.y), b(color.z){}
 
+		Pixel(glm::vec4 color) : r(color.x), g(color.y), b(color.z), a(color.w){}
+
 		Pixel(T r, T g, T b): r(r), g(g), b(b){}
 
-		T r{}, g{}, b = 0.f;
+		Pixel(T r, T g, T b, T a) : r(r), g(g), b(b), a(a){}
+
+		T r{}, g{}, b{}, a = 0.f;
 		T filter_weight_sum = 0.f;
+
+		float operator[](int i) const{
+
+			return to_vec4()[i];
+		};
+
+		float& operator[](int i){
+
+			return to_vec4()[i];
+		};
+
+		glm::vec<4, T> to_vec4(){
+
+			return glm::vec<4, T>(r, g, b, a);
+		}
 
 		glm::vec<3, T> to_vec3(){
 

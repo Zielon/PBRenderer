@@ -10,8 +10,8 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                 std::vector<GL_Texture> textures,
                 parser::MeshConfig config):
 	bvh(std::make_shared<BVH<Triangle>>()),
-	vertices(std::move(vertices)),
-	textures(std::move(textures)),
+	gl_vertices(std::move(vertices)),
+	gl_textures(std::move(textures)),
 	indices(std::move(indices)),
 	configuration(config){
 
@@ -36,12 +36,12 @@ void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wir
 	unsigned int normalNr = 1;
 	unsigned int heightNr = 1;
 
-	for (unsigned int i = 0; i < textures.size(); i++)
+	for (unsigned int i = 0; i < gl_textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 
 		std::string number;
-		std::string name = textures[i].type;
+		std::string name = gl_textures[i].type;
 
 		if (name == "texture_diffuse")
 			number = std::to_string(diffuseNr++);
@@ -53,7 +53,7 @@ void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wir
 			number = std::to_string(heightNr++);
 
 		glUniform1i(glGetUniformLocation(shader->ID, (name + number).c_str()), i);
-		glBindTexture(GL_TEXTURE_2D, textures[i].id);
+		glBindTexture(GL_TEXTURE_2D, gl_textures[i].id);
 	}
 
 	glBindVertexArray(VAO);
@@ -93,16 +93,16 @@ parser::MeshConfig pbr::Mesh::get_config() const{
 
 pbr::GL_Vertex pbr::Mesh::get_vertex(int id) const{
 
-	return vertices[id];
+	return gl_vertices[id];
 }
 
 void pbr::Mesh::generate_triangle(){
 
 	for (auto i = 0; i < indices.size(); i += 3)
 	{
-		auto a = vertices[indices[i]].position;
-		auto b = vertices[indices[i + 1]].position;
-		auto c = vertices[indices[i + 2]].position;
+		auto a = gl_vertices[indices[i]].position;
+		auto b = gl_vertices[indices[i + 1]].position;
+		auto c = gl_vertices[indices[i + 2]].position;
 
 		auto n = normalize(cross(b - a, c - a));
 		n = normalize(transpose(inverse(transformation.to_world)) * glm::vec4(n, 1.f));
@@ -132,7 +132,7 @@ void pbr::Mesh::generate_gl_buffers(){
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GL_Vertex), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, gl_vertices.size() * sizeof(GL_Vertex), &gl_vertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);

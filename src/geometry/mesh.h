@@ -15,6 +15,9 @@
 #include "scene_object.h"
 #include "transformation.h"
 #include "../parser/types.h"
+#include "../textures/texture.h"
+#include "../core/material.h"
+#include "../textures/image_texture.h"
 
 namespace pbr
 {
@@ -45,9 +48,12 @@ namespace pbr
 		std::string name;
 		BBox bbox;
 		std::shared_ptr<BVH<Triangle>> bvh;
-		std::vector<GL_Vertex> vertices;
-		std::vector<GL_Texture> textures;
+		std::vector<GL_Vertex> gl_vertices;
+		std::vector<GL_Texture> gl_textures;
 		std::vector<GLuint> indices;
+
+		std::shared_ptr<Image> texture;
+
 		const parser::MeshConfig configuration;
 
 		void generate_triangle();
