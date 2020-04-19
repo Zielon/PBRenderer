@@ -6,6 +6,7 @@
 #include "parser.h"
 #include "../textures/texture.h"
 #include <map>
+#include "../materials/lambertian.h"
 
 namespace parser
 {
@@ -39,7 +40,7 @@ namespace parser
 
 			type = node["type"].GetString();
 			ior = node.HasMember("ior") ? node["ior"].GetFloat() : 0.f;
-			
+
 			const rapidjson::Value& t = node["textures"];
 
 			assert(t.IsArray());
@@ -71,6 +72,7 @@ namespace parser
 			translation = Parser::string_to_vec3(node["translation"].GetString());
 			rotation_axis = Parser::string_to_vec3(node["rotation_axis"].GetString());
 			rotation_degree = node["rotation_degree"].GetFloat();
+			material_config = MaterialConfig(node["material"]);
 		}
 
 		int id{};
@@ -80,6 +82,12 @@ namespace parser
 		glm::vec3 translation{};
 		glm::vec3 rotation_axis{};
 		float rotation_degree{};
-		MaterialConfig material{};
+		MaterialConfig material_config;
+
+		std::shared_ptr<pbr::Material> create_material() const{
+
+			auto texture = (*material_config.textures.begin()).second;
+			return std::make_shared<pbr::LambertianMaterial>(texture);
+		}
 	};
 }

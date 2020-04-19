@@ -3,6 +3,7 @@
 #include "../rasterizer/shader.h"
 #include "../geometry/bbox.h"
 #include "transformation.h"
+#include "../core/material.h"
 
 namespace pbr
 {
@@ -48,6 +49,8 @@ namespace pbr
 
 		virtual BBox get_bbox() const = 0;
 
+		virtual std::shared_ptr<Material> get_material() const = 0;
+
 		virtual void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) = 0;
 
 		virtual GL_Vertex get_vertex(int id) const = 0;
@@ -60,5 +63,6 @@ namespace pbr
 
 	protected:
 		BBox bbox;
+		std::shared_ptr<Material> material;
 	};
 }

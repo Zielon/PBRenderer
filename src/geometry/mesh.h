@@ -40,6 +40,8 @@ namespace pbr
 
 		parser::MeshConfig get_config() const;
 
+		std::shared_ptr<Material> get_material() const override;
+
 		GL_Vertex get_vertex(int id) const override;
 
 	private:
@@ -48,7 +50,6 @@ namespace pbr
 		std::string name;
 		BBox bbox;
 		std::shared_ptr<BVH<Triangle>> bvh;
-		std::shared_ptr<Image> texture;
 		std::vector<GL_Vertex> gl_vertices;
 		std::vector<GL_Texture> gl_textures;
 		std::vector<GLuint> indices;

@@ -21,7 +21,7 @@ void pbr::Integrator::render(){
 		#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 		{
 			#pragma omp for schedule(dynamic, 4)
-			for (int j = 0; j < height * width; ++j)
+			for (auto j = 0; j < height * width; ++j)
 			{
 				const auto y = int(j / width);
 				const auto x = j - y * width;

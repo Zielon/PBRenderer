@@ -43,6 +43,8 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 		intersection.triangle = this;
 		intersection.uv = v0.tex_coords + v1.tex_coords + v2.tex_coords;
 
+		scene_object->get_material()->compute_BxDF(intersection, TransportMode::Radiance, false);
+
 		return true;
 	}
 

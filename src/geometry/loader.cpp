@@ -27,7 +27,6 @@ void pbr::Loader::load_meshes(const std::string& config){
 		const rapidjson::Value& attribute = *itr;
 		assert(attribute.IsObject());
 		parser::MeshConfig configuration(attribute);
-		configuration.material = parser::MaterialConfig(attribute["material"]);
 		Assimp::Importer importer;
 
 		auto flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace;

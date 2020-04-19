@@ -12,19 +12,24 @@ pbr::Film::Film(glm::vec2 size):
 
 pbr::Pixel<float> pbr::Film::get_pixel(int x, int y){
 
+	if (x >= size.x || y >= size.y)
+		throw std::runtime_error("Out of range!");
+
 	return pixels[y][x];
 }
 
 void pbr::Film::set_pixel(Pixel<float> pixel, int x, int y){
 
-	if (x >= size.x || y >= size.y) return;
+	if (x >= size.x || y >= size.y)
+		throw std::runtime_error("Out of range!");
 
 	pixels[y][x] = pixel;
 }
 
 void pbr::Film::set_pixel(glm::vec3 pixel, int x, int y){
 
-	if (x >= size.x || y >= size.y) return;
+	if (x >= size.x || y >= size.y)
+		throw std::runtime_error("Out of range!");
 
 	pixels[y][x] = Pixel<float>(pixel.x, pixel.y, pixel.z);
 }

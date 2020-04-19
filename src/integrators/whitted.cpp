@@ -6,13 +6,13 @@
 #include "../geometry/triangle.h"
 #include "../geometry/mesh.h"
 #include "../core/uniform_sampler.h"
-#include "../math/reflection.h"
+#include "../math/math.h"
 
 glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const{
 
 	glm::vec3 color = glm::vec3(0.235294, 0.67451, 0.843137);
 
-	if (depth >= 6) return color;
+	if (depth >= 8) return color;
 
 	Intersection intersection;
 
@@ -29,7 +29,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 
 		auto N = intersection.shading.n;
 
-		const parser::MaterialConfig material = mesh->get_config().material;
+		const parser::MaterialConfig material = mesh->get_config().material_config;
 
 		if (material.type == "REFLECTION")
 		{
@@ -87,9 +87,9 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 					* light->get_config().intensity;
 			}
 
-			auto c = glm::vec3(0);
+			auto kd = intersection.bsdf->f(lightAmt, lightAmt);
 
-			color = lightAmt * (*material.textures.begin()).second->evaluate(intersection) * 0.8f + specularColor * 0.2f;
+			color = lightAmt * kd;
 		}
 	}
 

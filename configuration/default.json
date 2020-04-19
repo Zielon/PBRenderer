@@ -68,7 +68,7 @@
         "textures": [
           {
             "type": "CONSTANT",
-            "value": "0.75 0.75 0.75"
+            "value": "1.000 0.766 0.336"
           }
         ]
       }

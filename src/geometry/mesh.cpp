@@ -15,6 +15,7 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 	indices(std::move(indices)),
 	configuration(config){
 
+	material = configuration.create_material();
 	id = config.id;
 	transformation = Transformation(
 		config.rotation_axis,
@@ -89,6 +90,11 @@ pbr::BBox pbr::Mesh::get_bbox() const{
 parser::MeshConfig pbr::Mesh::get_config() const{
 
 	return configuration;
+}
+
+std::shared_ptr<pbr::Material> pbr::Mesh::get_material() const{
+
+	return material;
 }
 
 pbr::GL_Vertex pbr::Mesh::get_vertex(int id) const{

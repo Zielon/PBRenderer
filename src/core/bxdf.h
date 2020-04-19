@@ -17,15 +17,4 @@ namespace pbr
 
 		const BxDFType type;
 	};
-
-	class LambertianReflection : public BxDF
-	{
-	public:
-		LambertianReflection(const glm::vec3& r): BxDF(BxDFType(BSDF_REFLECTION | BSDF_DIFFUSE)), r(r){}
-
-		glm::vec3 f(const glm::vec3& wo, const glm::vec3& wi) const override;
-
-	private:
-		const glm::vec3 r;
-	};
 }

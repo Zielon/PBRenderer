@@ -1,4 +1,5 @@
 #include "reflection.h"
+#include "bxdf.h"
 
 pbr::BSDF::BSDF(Intersection& intersection){ }
 
@@ -9,7 +10,7 @@ void pbr::BSDF::add(std::shared_ptr<BxDF> bxdf){
 
 glm::vec3 pbr::BSDF::f(const glm::vec3& woW, const glm::vec3& wiW, BxDFType flags) const{
 
-	return {};
+	return bxdfs[0]->f(woW, wiW);
 }
 
 glm::vec3 pbr::BSDF::sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& u, float* pdf, BxDFType type,
