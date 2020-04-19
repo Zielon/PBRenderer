@@ -15,33 +15,6 @@
       "intensity": 0.5
     }
   ],
-  "materials": [
-    {
-      "id": 1,
-      "type": "LAMBERTIAN",
-      "kd": 0.8,
-      "ks": 0.2,
-      "specular": 25,
-      "textures": [
-        {
-          "type": "image",
-          "width": 0,
-          "height": 0,
-          "path": "" 
-        }
-      ] 
-    },
-    {
-      "id": 2,
-      "type": "REFLECTION_AND_REFRACTION",
-      "ior": 1.5
-    },
-    {
-      "id": 3,
-      "type": "REFLECTION",
-      "ior": 1.5
-    }
-  ],
   "meshes": [
     {
       "id": 1,
@@ -51,8 +24,16 @@
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
-      "color": "1 0 0",
-      "material_id": 3
+      "material": {
+        "type": "REFLECTION",
+        "ior": 1.5,
+        "textures": [
+          {
+            "type": "CONSTANT",
+            "value": "1 0 0"
+          }
+        ]
+      }
     },
     {
       "id": 3,
@@ -62,8 +43,17 @@
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
-      "color": "0 0 1",
-      "material_id": 1
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "type": "IMAGE",
+            "width": 4096,
+            "height": 4096,
+            "path": "..\\resources\\textures\\checker.jpg"
+          }
+        ]
+      }
     },
     {
       "id": 7,
@@ -73,8 +63,15 @@
       "translation": "-.27 .110 -.25",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
-      "color": "0.75 0.75 0.75",
-      "material_id": 1
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "type": "CONSTANT",
+            "value": "0.75 0.75 0.75"
+          }
+        ]
+      }
     },
     {
       "id": 8,
@@ -84,8 +81,16 @@
       "translation": "-0.075 0.340 -0.45",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
-      "color": "0.9 0.9 0.9",
-      "material_id": 2
+      "material": {
+        "type": "REFLECTION_AND_REFRACTION",
+        "ior": 1.5,
+        "textures": [
+          {
+            "type": "CONSTANT",
+            "value": "0.9 0.9 0.9"
+          }
+        ]
+      }
     },
     {
       "id": 9,
@@ -95,8 +100,16 @@
       "translation": "-0.475 0.040 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
-      "color": "0.9 0.9 0.9",
-      "material_id": 3
+      "material": {
+        "type": "REFLECTION",
+        "ior": 1.5,
+        "textures": [
+          {
+            "type": "CONSTANT",
+            "value": "0.9 0.9 0.9"
+          }
+        ]
+      }
     }
   ]
 }

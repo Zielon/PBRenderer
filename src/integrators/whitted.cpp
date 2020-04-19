@@ -41,7 +41,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 			glm::vec3 reflectionRayOrig = outside ? hit + bias_n : hit - bias_n;
 			glm::vec3 reflectionColor = Li(Ray(reflectionRayOrig, reflectionDirection), sampler, depth + 1);
 
-			color = reflectionColor * mesh->get_config().color;
+			color = reflectionColor * material.textures.at("CONSTANT")->evaluate(intersection);
 		}
 		else if (material.type == "REFLECTION_AND_REFRACTION")
 		{
@@ -65,7 +65,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 
 			color = reflectionColor * kr + refractionColor * (1 - kr);
 		}
-		else if (material.type == "DIFFUSE_AND_GLOSSY")
+		else if (material.type == "LAMBERTIAN")
 		{
 			glm::vec3 lightAmt = glm::vec3(0);
 			glm::vec3 specularColor = glm::vec3(0);
@@ -74,7 +74,6 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 			for (auto& light : scene->get_lights().get())
 			{
 				glm::vec3 lightDir = light->get_config().position - hit;
-				float lightDistance2 = dot(lightDir, lightDir);
 				lightDir = normalize(lightDir);
 				float LdotN = std::max(0.f, dot(lightDir, N));
 
@@ -84,11 +83,13 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 				lightAmt += (1 - inShadow) * light->get_config().intensity * LdotN;
 				glm::vec3 reflectionDirection = math::reflect(-lightDir, N);
 				specularColor +=
-					powf(std::max(0.f, -dot(reflectionDirection, ray.d)), material.specular)
+					powf(std::max(0.f, -dot(reflectionDirection, ray.d)), 25)
 					* light->get_config().intensity;
 			}
 
-			color = lightAmt * mesh->texture->get(intersection.uv).to_vec3() * material.kd + specularColor * material.ks;
+			auto c = glm::vec3(0);
+
+			color = lightAmt * (*material.textures.begin()).second->evaluate(intersection) * 0.8f + specularColor * 0.2f;
 		}
 	}
 

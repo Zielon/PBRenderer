@@ -48,12 +48,10 @@ namespace pbr
 		std::string name;
 		BBox bbox;
 		std::shared_ptr<BVH<Triangle>> bvh;
+		std::shared_ptr<Image> texture;
 		std::vector<GL_Vertex> gl_vertices;
 		std::vector<GL_Texture> gl_textures;
 		std::vector<GLuint> indices;
-
-		std::shared_ptr<Image> texture;
-
 		const parser::MeshConfig configuration;
 
 		void generate_triangle();

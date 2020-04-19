@@ -1,15 +1,18 @@
 #pragma once
 
+#include <rapidjson/document.h>
+
 #include "../geometry/intersection.h"
 
 namespace pbr
 {
-	template <typename T>
 	class Texture
 	{
 	public:
 		virtual ~Texture() = default;
 
-		virtual T evaluate(Intersection& intersection) const = 0;
+		virtual glm::vec3 evaluate(Intersection& intersection) const = 0;
+
+		static std::shared_ptr<Texture> create(const rapidjson::Value& node);
 	};
 }

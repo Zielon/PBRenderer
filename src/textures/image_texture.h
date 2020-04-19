@@ -39,7 +39,7 @@ namespace pbr
 		void load();
 	};
 
-	class ImageTexture : public Texture<glm::vec3>
+	class ImageTexture : public Texture
 	{
 	public:
 		ImageTexture(std::shared_ptr<Image> image) : image(std::move(image)){}

@@ -291,6 +291,12 @@
     <ClCompile Include="..\src\materials\lambertian.cpp">
       <Filter>materials</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\bxdf.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\textures\texture.cpp">
+      <Filter>textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\rasterizer\glsl\texture\texture.frag">

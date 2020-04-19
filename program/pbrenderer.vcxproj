@@ -79,6 +79,7 @@
     <ClCompile Include="..\src\application\menu.cpp" />
     <ClCompile Include="..\src\application\window.cpp" />
     <ClCompile Include="..\src\cameras\projective.cpp" />
+    <ClCompile Include="..\src\core\bxdf.cpp" />
     <ClCompile Include="..\src\core\camera.cpp" />
     <ClCompile Include="..\src\core\film.cpp" />
     <ClCompile Include="..\src\core\integrator.cpp" />
@@ -98,6 +99,7 @@
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
     <ClCompile Include="..\src\textures\image_texture.cpp" />
+    <ClCompile Include="..\src\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\configuration\default.json" />

@@ -13,6 +13,6 @@ namespace pbr
 		void compute(Intersection& intersection, TransportMode mode, bool multiple_lobes) const override;
 
 	private:
-		std::unique_ptr<Texture<glm::vec3>> kd;
+		std::shared_ptr<Texture> kd;
 	};
 }

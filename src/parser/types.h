@@ -4,6 +4,8 @@
 #include <glm/vec3.hpp>
 #include <rapidjson/document.h>
 #include "parser.h"
+#include "../textures/texture.h"
+#include <map>
 
 namespace parser
 {
@@ -35,20 +37,25 @@ namespace parser
 
 		explicit MaterialConfig(const rapidjson::Value& node){
 
-			id = node["id"].GetInt();
 			type = node["type"].GetString();
-			ior = node["ior"].GetFloat();
-			kd = node.HasMember("kd") ? node["kd"].GetFloat() : 0.f;
-			ks = node.HasMember("ks") ? node["ks"].GetFloat() : 0.f;
-			specular = node.HasMember("specular") ? node["specular"].GetFloat() : 0.f;
+			ior = node.HasMember("ior") ? node["ior"].GetFloat() : 0.f;
+			
+			const rapidjson::Value& t = node["textures"];
+
+			assert(t.IsArray());
+
+			for (auto itr = t.Begin(); itr != t.End(); ++itr)
+			{
+				const rapidjson::Value& attribute = *itr;
+				assert(attribute.IsObject());
+				const std::string t_type = attribute["type"].GetString();
+				textures[t_type] = pbr::Texture::create(attribute);
+			}
 		}
 
-		int id{};
 		std::string type;
 		float ior{};
-		float kd{};
-		float ks{};
-		float specular{};
+		std::map<std::string, std::shared_ptr<pbr::Texture>> textures;
 	};
 
 	struct MeshConfig final
@@ -64,8 +71,6 @@ namespace parser
 			translation = Parser::string_to_vec3(node["translation"].GetString());
 			rotation_axis = Parser::string_to_vec3(node["rotation_axis"].GetString());
 			rotation_degree = node["rotation_degree"].GetFloat();
-			color = Parser::string_to_vec3(node["color"].GetString());
-			material_id = node["material_id"].GetInt();
 		}
 
 		int id{};
@@ -75,8 +80,6 @@ namespace parser
 		glm::vec3 translation{};
 		glm::vec3 rotation_axis{};
 		float rotation_degree{};
-		glm::vec3 color{};
-		int material_id{};
 		MaterialConfig material{};
 	};
 }

@@ -4,7 +4,7 @@
 
 namespace pbr
 {
-	class ConstantTexture : public Texture<glm::vec3>
+	class ConstantTexture : public Texture
 	{
 	public:
 

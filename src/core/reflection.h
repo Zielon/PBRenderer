@@ -1,10 +1,13 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <memory>
+#include <vector>
 
 namespace pbr
 {
 	class Intersection;
+	class BxDF;
 
 	enum BxDFType
 	{
@@ -20,11 +23,19 @@ namespace pbr
 	class BSDF
 	{
 	public:
-		BSDF(Intersection& intersection);
+		explicit BSDF(Intersection& intersection);
 
-		glm::vec3 f(const glm::vec3& wo, const glm::vec3& wi, const glm::vec2& sample, float& pdf,
-		            BxDFType type = BSDF_ALL);
+		void add(std::shared_ptr<BxDF> bx);
 
 		virtual float pdf(const glm::vec3& wo, const glm::vec3& wi) const;
+
+		glm::vec3 f(const glm::vec3& woW, const glm::vec3& wiW, BxDFType flags = BSDF_ALL) const;
+
+		glm::vec3 sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& u,
+		                   float* pdf, BxDFType type = BSDF_ALL,
+		                   BxDFType* sampledType = nullptr) const;
+
+	private:
+		std::vector<std::shared_ptr<BxDF>> bxdfs;
 	};
 }
