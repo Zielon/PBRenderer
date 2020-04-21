@@ -29,8 +29,6 @@ void app::Application::start(){
 
 	while (!glfwWindowShouldClose(window.get()))
 	{
-		rasterizer::InputHandler::process();
-
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -40,15 +38,16 @@ void app::Application::start(){
 			ray_caster->ray_cast_frame();
 
 		if (glfwGetKey(window.get(), GLFW_KEY_R) == GLFW_PRESS)
+			render();
+
+		if (!is_rendering)
 		{
-			pbr::WhittedIntegrator whitted(scene);
-			whitted.render();
+			rasterizer::InputHandler::process();
+			camera->update_shader(shader);
 		}
 
-		ray_caster->pick(shader, picking);
-		camera->update_shader(shader);
-		scene->draw(shader, wireframe);
-
+		ray_caster->pick(shader, is_picking);
+		scene->draw(shader, is_wireframe);
 		menu.draw();
 
 		glfwSwapBuffers(window.get());
@@ -75,7 +74,25 @@ void app::Application::attach_menu(){
 		}
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
-		ImGui::Checkbox("Show wireframe", &wireframe);
-		ImGui::Checkbox("Picking", &picking);
+		ImGui::Checkbox("Show wireframe", &is_wireframe);
+		ImGui::Checkbox("Picking", &is_picking);
+
+		if (is_rendering)
+			ImGui::Text("Rendering %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
 	});
+}
+
+void app::Application::render(){
+
+	if (is_rendering) return;
+
+	is_rendering = true;
+
+	std::thread work([this](){
+		pbr::WhittedIntegrator whitted(scene);
+		whitted.render();
+		is_rendering = false;
+	});
+
+	work.detach();
 }

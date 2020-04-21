@@ -33,10 +33,12 @@ namespace app
 
 		// Menu options
 		int shader_type = 0;
-		bool wireframe = false;
-		bool picking = false;
-		float progress_fraction = 0.f;
+		bool is_wireframe = false;
+		bool is_picking = false;
+		bool is_rendering = false;
 
 		void attach_menu();
+
+		void render();
 	};
 }

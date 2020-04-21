@@ -7,7 +7,7 @@ glm::vec3 pbr::PointLight::sample_Li(
 	const auto direction = position - intersection.point;
 	*wi = normalize(direction);
 	*pdf = 1.f;
-	return intensity;// / dot(direction, direction);
+	return intensity; // / dot(direction, direction);
 }
 
 glm::vec3 pbr::PointLight::power() const{

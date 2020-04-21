@@ -43,8 +43,6 @@ namespace pbr
 
 		int num_components(BxDFType flags = ALL) const;
 
-
-
 	private:
 		std::vector<std::shared_ptr<BxDF>> bxdfs;
 		std::shared_ptr<SceneObject> object;
