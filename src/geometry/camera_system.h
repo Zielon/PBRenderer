@@ -7,10 +7,10 @@ namespace pbr
 	/**
 	 * Camera local coordinate system
 	 */
-	class CoordinateSystem
+	class CameraSystem
 	{
 	public:
-		CoordinateSystem() = default;
+		CameraSystem() = default;
 
 		void update(glm::vec3 front){
 			direction = normalize(front);

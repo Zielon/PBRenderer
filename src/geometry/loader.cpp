@@ -29,7 +29,7 @@ void pbr::Loader::load_meshes(const std::string& config){
 		parser::MeshConfig configuration(attribute);
 		Assimp::Importer importer;
 
-		auto flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace;
+		auto flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_GenNormals;
 		const aiScene* ai_scene = importer.ReadFile(configuration.path, flags);
 
 		if (!ai_scene || ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !ai_scene->mRootNode)
@@ -101,11 +101,13 @@ std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene
 		vector.x = mesh->mVertices[i].x;
 		vector.y = mesh->mVertices[i].y;
 		vector.z = mesh->mVertices[i].z;
+
 		vertex.position = vector;
 
 		vector.x = mesh->mNormals[i].x;
 		vector.y = mesh->mNormals[i].y;
 		vector.z = mesh->mNormals[i].z;
+
 		vertex.normal = vector;
 
 		if (mesh->mTextureCoords[0])
@@ -113,6 +115,7 @@ std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene
 			glm::vec2 vec;
 			vec.x = mesh->mTextureCoords[0][i].x;
 			vec.y = mesh->mTextureCoords[0][i].y;
+
 			vertex.tex_coords = vec;
 		}
 		else
@@ -124,7 +127,8 @@ std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene
 			vector.x = mesh->mTangents[i].x;
 			vector.y = mesh->mTangents[i].y;
 			vector.z = mesh->mTangents[i].z;
-			vertex.tangent = glm::vec3(0.0f, 0.0f, 0.0f);
+
+			vertex.tangent = vector;
 		}
 
 		if (mesh->mBitangents)
@@ -132,7 +136,8 @@ std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene
 			vector.x = mesh->mBitangents[i].x;
 			vector.y = mesh->mBitangents[i].y;
 			vector.z = mesh->mBitangents[i].z;
-			vertex.bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
+
+			vertex.bitangent = vector;
 		}
 
 		vertex.mesh_id = configuration.id;

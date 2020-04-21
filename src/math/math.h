@@ -1,5 +1,6 @@
 #include <glm/glm.hpp>
 #include <algorithm>
+#include "../core/uniform_sampler.h"
 
 namespace math
 {
@@ -81,6 +82,13 @@ namespace math
 	inline bool same_hemisphere(const glm::vec3& w, const glm::vec3& wp){
 
 		return w.z * wp.z > 0;
+	}
+
+	inline glm::vec3 cosine_sample_hemisphere(const glm::vec2& u){
+
+		glm::vec2 d = pbr::concentric_sample_disk(u);
+		float z = std::sqrt(std::max(float(0), 1 - d.x * d.x - d.y * d.y));
+		return glm::vec3(d.x, d.y, z);
 	}
 
 	inline glm::vec3 refract(const glm::vec3& I, const glm::vec3& N, const float& ior){

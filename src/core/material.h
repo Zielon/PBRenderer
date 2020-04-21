@@ -11,6 +11,8 @@ namespace pbr
 	public:
 		virtual ~Material() = default;
 
-		virtual void compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const = 0;
+		virtual void compute_BxDF(Intersection& intersection,
+		                          TransportMode mode = TransportMode::Radiance,
+		                          bool multiple_lobes = false) const = 0;
 	};
 }

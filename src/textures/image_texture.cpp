@@ -53,7 +53,7 @@ void pbr::Image::save(const std::string& file){
 
 pbr::Pixel<float> pbr::Image::get(float u, float v){
 
-	return pixels[int(height * v)][int(width * u)];
+	return pixels[int((height - 1) * v)][int((width - 1) * u)];
 }
 
 pbr::Pixel<float> pbr::Image::get(glm::vec2 uv){
@@ -63,5 +63,5 @@ pbr::Pixel<float> pbr::Image::get(glm::vec2 uv){
 
 glm::vec3 pbr::ImageTexture::evaluate(Intersection& intersection) const{
 
-	return image->get(intersection.uv.x, intersection.uv.y).to_vec3();
+	return image->get(intersection.shading.uv.x, intersection.shading.uv.y).to_vec3();
 }

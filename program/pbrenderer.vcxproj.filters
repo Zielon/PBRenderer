@@ -114,9 +114,6 @@
     <ClInclude Include="..\src\rasterizer\shader_manager.h">
       <Filter>rasterizer</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\materials\plastic.h">
-      <Filter>materials</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\geometry\bbox.h">
       <Filter>geometry</Filter>
     </ClInclude>
@@ -183,9 +180,6 @@
     <ClInclude Include="..\src\lights\point_light.h">
       <Filter>lights</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\coordinate_system.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\textures\texture.h">
       <Filter>textures</Filter>
     </ClInclude>
@@ -209,6 +203,21 @@
     </ClInclude>
     <ClInclude Include="..\src\bxdfs\lambertian_reflection.h">
       <Filter>bxdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\bxdfs\specular_reflection.h">
+      <Filter>bxdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\bxdfs\fresnel.h">
+      <Filter>bxdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\bxdfs\specular_transmission.h">
+      <Filter>bxdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\materials\mirror.h">
+      <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\geometry\camera_system.h">
+      <Filter>geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +314,21 @@
     </ClCompile>
     <ClCompile Include="..\src\bxdfs\lambertian_reflection.cpp">
       <Filter>bxdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bxdfs\specular_reflection.cpp">
+      <Filter>bxdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bxdfs\fresnel.cpp">
+      <Filter>bxdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bxdfs\specular_transmission.cpp">
+      <Filter>bxdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\materials\mirror.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lights\point_light.cpp">
+      <Filter>lights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

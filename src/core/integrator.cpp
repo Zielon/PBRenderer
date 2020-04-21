@@ -44,16 +44,40 @@ void pbr::Integrator::render(){
 	std::cout << "INFO::INTEGRATOR Render time: [" << millis << " ms]" << std::endl;
 }
 
-glm::vec3 pbr::Integrator::reflect(const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect,
-                                   int depth) const{
+glm::vec3 pbr::Integrator::reflect(
+	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
 
-	return {};
+	auto ns = isect.shading.n;
+	float pdf;
+	glm::vec3 wi;
+	glm::vec3 L(0);
+	auto o = ray.point(isect.distance);
+	glm::vec3 f = isect.bsdf->sample_f(ray.d, &wi, sampler->get2D(), &pdf, BxDFType(REFLECTION | SPECULAR));
+
+	if (pdf > 0.f && !(f == glm::vec3(0.f)) && glm::abs(dot(wi, ns)) != 0.f)
+	{
+		L = f * Li(ray.spawn(wi, o, ns), sampler, depth + 1) * glm::abs(dot(wi, ns)) / pdf;
+	}
+
+	return L;
 }
 
-glm::vec3 pbr::Integrator::refract(const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect,
-                                   int depth) const{
+glm::vec3 pbr::Integrator::transmit(
+	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
 
-	return {};
+	auto ns = isect.shading.n;
+	float pdf;
+	glm::vec3 wi;
+	glm::vec3 L(0);
+	auto o = ray.point(isect.distance);
+	glm::vec3 f = isect.bsdf->sample_f(ray.d, &wi, sampler->get2D(), &pdf, BxDFType(TRANSMISSION | SPECULAR));
+
+	if (pdf > 0.f && !(f == glm::vec3(0.f)) && glm::abs(dot(wi, ns)) != 0.f)
+	{
+		L = f * Li(ray.spawn(wi, o, ns), sampler, depth + 1) * glm::abs(dot(wi, ns)) / pdf;
+	}
+
+	return L;
 }
 
 std::shared_ptr<pbr::Film> pbr::Integrator::get_film() const{

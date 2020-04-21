@@ -15,7 +15,7 @@ std::shared_ptr<pbr::Film> pbr::Camera::get_film() const{
 	return film;
 }
 
-std::reference_wrapper<pbr::CoordinateSystem> pbr::Camera::get_coordinate(){
+std::reference_wrapper<pbr::CameraSystem> pbr::Camera::get_coordinate(){
 
 	return std::ref(coordinate);
 }

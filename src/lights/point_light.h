@@ -7,7 +7,17 @@ namespace pbr
 	class PointLight final : public Light
 	{
 	public:
-		explicit PointLight(const parser::LightConfig& config)
-			: Light(config){}
+		PointLight(const parser::LightConfig& config)
+			: Light(config),
+			  position(config.position),
+			  intensity(config.intensity){}
+
+		glm::vec3 sample_Li(
+			const Intersection& intersection, const glm::vec2& u, glm::vec3* wi, float* pdf) const override;
+
+		glm::vec3 power() const override;
+
+		const glm::vec3 position;
+		const glm::vec3 intensity;
 	};
 }

@@ -5,14 +5,14 @@
       "name": "point light 1",
       "type": "POINT_LIGHT",
       "position": "30 50 -12",
-      "intensity": 1
+      "intensity": 2.5
     },
     {
       "id": 2,
       "name": "point light 2",
       "type": "POINT_LIGHT",
       "position": "-20 70 20",
-      "intensity": 0.5
+      "intensity": 2.5
     }
   ],
   "meshes": [
@@ -25,8 +25,7 @@
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
-        "type": "REFLECTION",
-        "ior": 1.5,
+        "type": "LAMBERTIAN",
         "textures": [
           {
             "type": "CONSTANT",
@@ -48,8 +47,8 @@
         "textures": [
           {
             "type": "IMAGE",
-            "width": 4096,
-            "height": 4096,
+            "width": 768,
+            "height": 768,
             "path": "..\\resources\\textures\\checker.jpg"
           }
         ]
@@ -82,12 +81,11 @@
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
-        "type": "REFLECTION_AND_REFRACTION",
-        "ior": 1.5,
+        "type": "LAMBERTIAN",
         "textures": [
           {
             "type": "CONSTANT",
-            "value": "0.9 0.9 0.9"
+            "value": "0.5 0.5 0.5"
           }
         ]
       }
@@ -101,12 +99,11 @@
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
-        "type": "REFLECTION",
-        "ior": 1.5,
+        "type": "LAMBERTIAN",
         "textures": [
           {
             "type": "CONSTANT",
-            "value": "0.9 0.9 0.9"
+            "value": "0.5 0.5 0.5"
           }
         ]
       }

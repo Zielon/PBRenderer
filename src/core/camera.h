@@ -6,7 +6,7 @@
 #include "film.h"
 #include "../geometry/ray.h"
 #include "../rasterizer/shader.h"
-#include "../geometry/coordinate_system.h"
+#include "../geometry/camera_system.h"
 
 namespace pbr
 {
@@ -32,12 +32,12 @@ namespace pbr
 
 		virtual std::shared_ptr<Film> get_film() const;
 
-		std::reference_wrapper<CoordinateSystem> get_coordinate();
+		std::reference_wrapper<CameraSystem> get_coordinate();
 
 	protected:
 		float fov = 45.f;
 		float aspect;
 		std::shared_ptr<Film> film;
-		CoordinateSystem coordinate;
+		CameraSystem coordinate;
 	};
 }

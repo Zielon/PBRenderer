@@ -32,7 +32,7 @@ namespace pbr
 		glm::vec3 n;
 		glm::ivec3 ids;
 
-		const SceneObject* scene_object{nullptr};
+		const std::shared_ptr<SceneObject> scene_object{nullptr};
 
 	private:
 		BBox bbox;

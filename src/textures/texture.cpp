@@ -23,5 +23,5 @@ std::shared_ptr<pbr::Texture> pbr::Texture::create(const rapidjson::Value& node)
 		return std::make_shared<ImageTexture>(width, height, path);
 	}
 
-	return {};
+	return {nullptr};
 }
