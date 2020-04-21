@@ -17,6 +17,7 @@ namespace pbr
 
 		glm::vec3 power() const override;
 
+	private:
 		const glm::vec3 position;
 		const glm::vec3 intensity;
 	};

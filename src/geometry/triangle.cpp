@@ -50,12 +50,13 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 		if (v0.tex_coords == glm::vec2(0.f) && v1.tex_coords == glm::vec2(0.f) && v2.tex_coords == glm::vec2(0.f))
 			shading.uv = glm::vec2(phi * glm::one_over_two_pi<float>(), theta * glm::one_over_pi<float>());
 
-		auto dpdu = glm::vec3(-glm::two_pi<float>() * hit.y, glm::two_pi<float>() * hit.x, 0.0f);
-		auto dpdv =
+		// TODO FOR NOW OVERRIDE THE DERIVATIVES
+		shading.dpdu = glm::vec3(-glm::two_pi<float>() * hit.y, glm::two_pi<float>() * hit.x, 0.0f);
+		shading.dpdv =
 			glm::vec3(hit.z * glm::cos(phi), hit.z * glm::sin(phi), -radius * glm::sin(theta)) * glm::pi<float>();
 
 		auto w = normalize(shading.n);
-		auto u = normalize(cross(dpdu, w));
+		auto u = normalize(cross(shading.dpdu, w));
 		auto v = cross(w, u);
 
 		shading.to_local = glm::mat3(u, v, w);
