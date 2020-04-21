@@ -6,6 +6,7 @@
 
 #include <thread>
 #include <glm/glm.hpp>
+#include <atomic>
 
 namespace pbr
 {
@@ -20,7 +21,7 @@ namespace pbr
 
 		virtual ~Integrator() = default;
 
-		virtual void render();
+		virtual void render(std::atomic<float>& progress);
 
 	protected:
 		virtual glm::vec3 Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const = 0;

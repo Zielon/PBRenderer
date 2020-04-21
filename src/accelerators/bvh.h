@@ -31,7 +31,7 @@ namespace pbr
 	struct Comparator
 	{
 		bool operator()(const std::shared_ptr<Node>& lhs, const std::shared_ptr<Node>& rhs) const{
-			return lhs->distance < rhs->distance;
+			return std::tie(lhs->distance) <= std::tie(rhs->distance);
 		}
 	};
 

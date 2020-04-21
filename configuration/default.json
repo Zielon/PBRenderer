@@ -29,7 +29,7 @@
         "textures": [
           {
             "type": "CONSTANT",
-            "value": "0.8 0.8 0.8"
+            "value": "1 1 1"
           }
         ]
       }
@@ -85,7 +85,7 @@
         "textures": [
           {
             "type": "CONSTANT",
-            "value": "0.8 0.8 0.8"
+            "value": "1 1 1"
           }
         ]
       }

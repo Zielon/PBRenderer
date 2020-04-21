@@ -77,8 +77,16 @@ void app::Application::attach_menu(){
 		ImGui::Checkbox("Show wireframe", &is_wireframe);
 		ImGui::Checkbox("Picking", &is_picking);
 
+		long long millis = 0;
+
 		if (is_rendering)
-			ImGui::Text("Rendering %c", "|/-\\"[(int)(ImGui::GetTime() / 0.05f) & 3]);
+		{
+			const auto end = std::chrono::steady_clock::now();
+			millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin_rendering).count();
+		}
+
+		ImGui::Text("Rendering: %llu [ms]", millis);
+		ImGui::ProgressBar(float(progress));
 	});
 }
 
@@ -87,11 +95,13 @@ void app::Application::render(){
 	if (is_rendering) return;
 
 	is_rendering = true;
+	begin_rendering = std::chrono::steady_clock::now();
 
 	std::thread work([this](){
 		pbr::WhittedIntegrator whitted(scene);
-		whitted.render();
+		whitted.render(progress);
 		is_rendering = false;
+		progress = 0;
 	});
 
 	work.detach();

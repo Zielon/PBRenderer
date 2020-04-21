@@ -41,9 +41,6 @@ namespace pbr
 	public:
 		FresnelMirror() = default;
 
-		glm::vec3 evaluate(float) const override{
-
-			return glm::vec3(1.f);
-		}
+		glm::vec3 evaluate(float) const override;
 	};
 }

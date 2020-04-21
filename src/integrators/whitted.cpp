@@ -15,7 +15,8 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	Intersection intersection;
 	glm::vec3 L = glm::vec3(0.f);
 
-	if (!scene->intersect(ray, intersection)) return L;
+	if (!scene->intersect(ray, intersection))
+		return glm::vec3(0.235294, 0.67451, 0.843137);
 
 	const auto triangle = const_cast<Triangle*>(intersection.triangle);
 	const auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);

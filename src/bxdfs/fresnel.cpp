@@ -59,3 +59,8 @@ glm::vec3 pbr::FresnelDielectric::evaluate(float cos_theta_i) const{
 
 	return dielectric(cos_theta_i, eta_i, eta_t);
 }
+
+glm::vec3 pbr::FresnelMirror::evaluate(float) const{
+
+	return glm::vec3(1.f);
+}

@@ -9,6 +9,7 @@
 #include "../core/scene.h"
 #include "../geometry/loader.h"
 #include "../rasterizer/ray_caster.h"
+#include <atomic>
 
 namespace app
 {
@@ -33,6 +34,8 @@ namespace app
 
 		// Menu options
 		int shader_type = 0;
+		std::atomic<float> progress = 0.f;
+		std::chrono::time_point<std::chrono::steady_clock> begin_rendering;
 		bool is_wireframe = false;
 		bool is_picking = false;
 		bool is_rendering = false;

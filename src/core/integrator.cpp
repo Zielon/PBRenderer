@@ -7,13 +7,16 @@
 #include "../cameras/projective.h"
 #include "../bxdfs/specular_reflection.h"
 
-void pbr::Integrator::render(){
+void pbr::Integrator::render(std::atomic<float>& progress){
 
 	const auto start = std::chrono::steady_clock::now();
 
 	const auto film_size = get_camera()->get_film()->get_size();
 	const int width = int(film_size.x);
 	const int height = int(film_size.y);
+
+	const auto work = float(num_samples * height * width);
+	std::atomic<int> current{1};
 
 	for (auto i = 0; i < num_samples; i++)
 	{
@@ -34,6 +37,10 @@ void pbr::Integrator::render(){
 				pixel *= i * weight;
 				pixel += weight * Li(ray, sampler, 0);
 				get_film()->set_pixel(pixel, x, y);
+
+				progress = float(current) / work;
+
+				++current;
 			}
 		}
 	}
