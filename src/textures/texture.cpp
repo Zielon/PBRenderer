@@ -1,4 +1,5 @@
 #include "texture.h"
+
 #include "constant_texture.h"
 #include "../parser/parser.h"
 #include "image_texture.h"

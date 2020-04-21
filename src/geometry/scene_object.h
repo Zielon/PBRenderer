@@ -2,8 +2,9 @@
 
 #include "../rasterizer/shader.h"
 #include "../geometry/bbox.h"
-#include "transformation.h"
 #include "../core/material.h"
+#include "transformation.h"
+#include "object.h"
 
 namespace pbr
 {
@@ -38,11 +39,11 @@ namespace pbr
 	class Intersection;
 	class Ray;
 
-	enum Type { MESH, LIGHT, NONE };
-
-	class SceneObject
+	class SceneObject : public Object
 	{
 	public:
+		SceneObject(Type type, int id): Object(type, id){}
+
 		virtual ~SceneObject() = default;
 
 		virtual bool intersect(const Ray& ray, Intersection& intersection) const = 0;
@@ -56,10 +57,6 @@ namespace pbr
 		virtual GL_Vertex get_vertex(int id) const = 0;
 
 		Transformation transformation;
-
-		int id{};
-
-		Type type = NONE;
 
 	protected:
 		BBox bbox;

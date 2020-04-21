@@ -5,6 +5,7 @@
 
 #include "uniform_sampler.h"
 #include "../cameras/projective.h"
+#include "../bxdfs/specular_reflection.h"
 
 void pbr::Integrator::render(){
 
@@ -47,37 +48,35 @@ void pbr::Integrator::render(){
 glm::vec3 pbr::Integrator::reflect(
 	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
 
-	auto ns = isect.shading.n;
 	float pdf;
 	glm::vec3 wi;
-	glm::vec3 L(0);
-	auto o = ray.point(isect.distance);
-	glm::vec3 f = isect.bsdf->sample_f(ray.d, &wi, sampler->get2D(), &pdf, BxDFType(REFLECTION | SPECULAR));
 
-	if (pdf > 0.f && !(f == glm::vec3(0.f)) && glm::abs(dot(wi, ns)) != 0.f)
-	{
-		L = f * Li(ray.spawn(wi, o, ns), sampler, depth + 1) * glm::abs(dot(wi, ns)) / pdf;
-	}
+	const glm::vec3 wo = isect.wo;
+	const auto ns = isect.shading.n;
 
-	return L;
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler->get2D(), &pdf, BxDFType(REFLECTION | SPECULAR));
+
+	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
+		return Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1);
+
+	return glm::vec3(0.f);
 }
 
 glm::vec3 pbr::Integrator::transmit(
 	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
 
-	auto ns = isect.shading.n;
 	float pdf;
 	glm::vec3 wi;
-	glm::vec3 L(0);
-	auto o = ray.point(isect.distance);
-	glm::vec3 f = isect.bsdf->sample_f(ray.d, &wi, sampler->get2D(), &pdf, BxDFType(TRANSMISSION | SPECULAR));
 
-	if (pdf > 0.f && !(f == glm::vec3(0.f)) && glm::abs(dot(wi, ns)) != 0.f)
-	{
-		L = f * Li(ray.spawn(wi, o, ns), sampler, depth + 1) * glm::abs(dot(wi, ns)) / pdf;
-	}
+	const glm::vec3 wo = isect.wo;
+	const auto ns = isect.shading.n;
 
-	return L;
+	const glm::vec3 f = isect.bsdf->sample_f(ray.d, &wi, sampler->get2D(), &pdf, BxDFType(TRANSMISSION | SPECULAR));
+
+	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
+		return Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1);
+
+	return glm::vec3(0.f);
 }
 
 std::shared_ptr<pbr::Film> pbr::Integrator::get_film() const{

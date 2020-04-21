@@ -57,6 +57,7 @@
     <ClInclude Include="..\src\core\uniform_sampler.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
     <ClInclude Include="..\src\geometry\camera_system.h" />
+    <ClInclude Include="..\src\geometry\object.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
     <ClInclude Include="..\src\geometry\loader.h" />
     <ClInclude Include="..\src\geometry\ray.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="..\src\core\camera.cpp" />
     <ClCompile Include="..\src\core\film.cpp" />
     <ClCompile Include="..\src\core\integrator.cpp" />
+    <ClCompile Include="..\src\core\material.cpp" />
     <ClCompile Include="..\src\core\reflection.cpp" />
     <ClCompile Include="..\src\core\scene.cpp" />
     <ClCompile Include="..\src\geometry\bbox.cpp" />

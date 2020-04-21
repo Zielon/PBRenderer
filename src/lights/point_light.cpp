@@ -1,5 +1,7 @@
 #include "point_light.h"
-#include <glm/ext/scalar_constants.inl>
+
+#include <glm/ext/scalar_constants.hpp>
+#include "../geometry/intersection.h"
 
 glm::vec3 pbr::PointLight::sample_Li(
 	const Intersection& intersection, const glm::vec2& u, glm::vec3* wi, float* pdf) const{

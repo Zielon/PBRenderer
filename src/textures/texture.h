@@ -1,11 +1,12 @@
 #pragma once
 
+#include <glm/vec3.hpp>
 #include <rapidjson/document.h>
-
-#include "../geometry/intersection.h"
 
 namespace pbr
 {
+	class Intersection;
+
 	class Texture
 	{
 	public:

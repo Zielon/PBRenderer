@@ -19,7 +19,6 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 
 	const auto triangle = const_cast<Triangle*>(intersection.triangle);
 	const auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
-	const auto material = mesh->get_config().material_config;
 
 	auto n = intersection.shading.n;
 	auto wo = intersection.wo;
@@ -40,7 +39,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	if (depth + 1 < 8)
 	{
 		L += reflect(ray, sampler, intersection, depth);
-		L += transmit(ray, sampler, intersection, depth);
+		//L += transmit(ray, sampler, intersection, depth);
 	}
 
 	return L;

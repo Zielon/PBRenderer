@@ -219,6 +219,9 @@
     <ClInclude Include="..\src\geometry\camera_system.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\geometry\object.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="..\src\lights\point_light.cpp">
       <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\material.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

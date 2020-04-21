@@ -4,6 +4,8 @@
 #include <stb_image_write.h>
 #include <algorithm>
 
+#include "../geometry/intersection.h"
+
 void pbr::Image::load(){
 
 	unsigned char* data = stbi_load(path.c_str(), &width, &height, &num_channels, 0);

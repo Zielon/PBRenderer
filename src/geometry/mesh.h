@@ -13,9 +13,7 @@
 #include "../accelerators/bvh.h"
 #include "triangle.h"
 #include "scene_object.h"
-#include "transformation.h"
 #include "../parser/types.h"
-#include "../textures/texture.h"
 #include "../core/material.h"
 #include "../textures/image_texture.h"
 
@@ -37,8 +35,6 @@ namespace pbr
 		bool intersect(const Ray& ray, Intersection& intersection) const override;
 
 		BBox get_bbox() const override;
-
-		parser::MeshConfig get_config() const;
 
 		std::shared_ptr<Material> get_material() const override;
 

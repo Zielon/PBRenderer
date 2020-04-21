@@ -1,12 +1,11 @@
 #pragma once
 
+#include <map>
 #include <string>
 #include <glm/vec3.hpp>
 #include <rapidjson/document.h>
 #include "parser.h"
 #include "../textures/texture.h"
-#include <map>
-#include "../materials/lambertian.h"
 
 namespace parser
 {
@@ -24,7 +23,7 @@ namespace parser
 			area_light = type == "AREA_LIGHT";
 		}
 
-		std::string id;
+		int id;
 		std::string name;
 		std::string type;
 		glm::vec3 position{};
@@ -39,13 +38,11 @@ namespace parser
 		explicit MaterialConfig(const rapidjson::Value& node){
 
 			type = node["type"].GetString();
-			ior = node.HasMember("ior") ? node["ior"].GetFloat() : 0.f;
+			const rapidjson::Value& textures_map = node["textures"];
 
-			const rapidjson::Value& t = node["textures"];
+			assert(textures_map.IsArray());
 
-			assert(t.IsArray());
-
-			for (auto itr = t.Begin(); itr != t.End(); ++itr)
+			for (auto itr = textures_map.Begin(); itr != textures_map.End(); ++itr)
 			{
 				const rapidjson::Value& attribute = *itr;
 				assert(attribute.IsObject());
@@ -55,7 +52,6 @@ namespace parser
 		}
 
 		std::string type;
-		float ior{};
 		std::map<std::string, std::shared_ptr<pbr::Texture>> textures;
 	};
 
@@ -83,11 +79,5 @@ namespace parser
 		glm::vec3 rotation_axis{};
 		float rotation_degree{};
 		MaterialConfig material_config;
-
-		std::shared_ptr<pbr::Material> create_material() const{
-
-			auto texture = (*material_config.textures.begin()).second;
-			return std::make_shared<pbr::LambertianMaterial>(texture);
-		}
 	};
 }

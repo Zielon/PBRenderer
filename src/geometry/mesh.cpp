@@ -9,14 +9,14 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                 std::vector<unsigned> indices,
                 std::vector<GL_Texture> textures,
                 parser::MeshConfig config):
+	SceneObject(MESH, config.id),
 	bvh(std::make_shared<BVH<Triangle>>()),
 	gl_vertices(std::move(vertices)),
 	gl_textures(std::move(textures)),
 	indices(std::move(indices)),
 	configuration(config){
 
-	material = configuration.create_material();
-	id = config.id;
+	material = Material::create_material(config.material_config);
 	transformation = Transformation(
 		config.rotation_axis,
 		config.rotation_degree,
@@ -85,11 +85,6 @@ bool pbr::Mesh::intersect(const Ray& ray, Intersection& intersection) const{
 pbr::BBox pbr::Mesh::get_bbox() const{
 
 	return bbox;
-}
-
-parser::MeshConfig pbr::Mesh::get_config() const{
-
-	return configuration;
 }
 
 std::shared_ptr<pbr::Material> pbr::Mesh::get_material() const{

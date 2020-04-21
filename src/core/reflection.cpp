@@ -2,10 +2,10 @@
 
 #include <utility>
 
-#include "../geometry/intersection.h"
 #include "bxdf.h"
 #include <algorithm>
-#include <glm/ext/scalar_constants.inl>
+#include "../geometry/intersection.h"
+#include "../bxdfs/specular_reflection.h"
 
 pbr::BSDF::BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object):
 	object(std::move(object)),
@@ -62,7 +62,7 @@ glm::vec3 pbr::BSDF::sample_f(const glm::vec3& wo_w, glm::vec3* wi_w, const glm:
 			break;
 		}
 
-	glm::vec2 u_remapped(std::min(u[0] * components - comp, 1.f - glm::epsilon<float>()), u[1]);
+	glm::vec2 u_remapped(std::min(u[0] * components - comp, 1.f - std::numeric_limits<float>::epsilon()), u[1]);
 
 	glm::vec3 wi = glm::vec3(0.f);
 	glm::vec3 wo = to_local(wo_w);
@@ -105,12 +105,12 @@ int pbr::BSDF::num_components(BxDFType flags) const{
 
 glm::vec3 pbr::BSDF::to_world(const glm::vec3& v) const{
 
-	return object->transformation.vector_to_world(v);
+	return to_world_coordinate * v;
 }
 
 glm::vec3 pbr::BSDF::to_local(const glm::vec3& v) const{
 
-	return object->transformation.vector_to_local(v);
+	return to_local_coordinate * v;
 }
 
 float pbr::BSDF::pdf(const glm::vec3& wo, const glm::vec3& wi) const{
