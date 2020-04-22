@@ -1,8 +1,8 @@
 #pragma once
 
 #include <utility>
-#include "../core/bxdf.h"
 #include "fresnel.h"
+#include "../core/bxdf.h"
 #include "../core/microfacet.h"
 
 namespace pbr

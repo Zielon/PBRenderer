@@ -102,47 +102,16 @@ namespace math
 		return glm::vec3(d.x, d.y, z);
 	}
 
-	inline glm::vec3 refract(const glm::vec3& I, const glm::vec3& N, const float& ior){
+	inline bool refract(const glm::vec3& wi, const glm::vec3& n, const float& eta, glm::vec3* wt){
 
-		float cosi = clamp(-1, 1, dot(I, N));
-		float etai = 1, etat = ior;
-		glm::vec3 n = N;
-		if (cosi < 0)
-		{
-			cosi = -cosi;
-		}
-		else
-		{
-			std::swap(etai, etat);
-			n = -N;
-		}
-		float eta = etai / etat;
-		float k = 1 - eta * eta * (1 - cosi * cosi);
-		return k < 0 ? glm::vec3(0) : eta * I + (eta * cosi - sqrtf(k)) * n;
-	}
+		float cosThetaI = dot(n, wi);
+		float sin2ThetaI = std::max(float(0), float(1 - cosThetaI * cosThetaI));
+		float sin2ThetaT = eta * eta * sin2ThetaI;
 
-	inline void fresnel(const glm::vec3& I, const glm::vec3& N, const float& ior, float& kr){
-
-		float cosi = clamp(-1, 1, dot(I, N));
-		float etai = 1, etat = ior;
-		if (cosi > 0)
-		{
-			std::swap(etai, etat);
-		}
-		// Compute sini using Snell's law
-		float sint = etai / etat * sqrtf(std::max(0.f, 1 - cosi * cosi));
-		// Total internal reflection
-		if (sint >= 1)
-		{
-			kr = 1;
-		}
-		else
-		{
-			float cost = sqrtf(std::max(0.f, 1 - sint * sint));
-			cosi = fabsf(cosi);
-			float Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost));
-			float Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost));
-			kr = (Rs * Rs + Rp * Rp) / 2;
-		}
+		// Handle total internal reflection for transmission
+		if (sin2ThetaT >= 1) return false;
+		float cosThetaT = std::sqrt(1 - sin2ThetaT);
+		*wt = eta * -wi + (eta * cosThetaI - cosThetaT) * n;
+		return true;
 	}
 }

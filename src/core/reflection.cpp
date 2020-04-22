@@ -8,10 +8,10 @@
 #include "../bxdfs/specular_reflection.h"
 
 pbr::BSDF::BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object):
-	object(std::move(object)),
 	n(intersection.shading.n),
 	to_local_coordinate(intersection.shading.to_local),
-	to_world_coordinate(intersection.shading.to_world){ }
+	to_world_coordinate(intersection.shading.to_world),
+	object(std::move(object)){ }
 
 void pbr::BSDF::add(std::shared_ptr<BxDF> bxdf){
 
@@ -39,15 +39,17 @@ glm::vec3 pbr::BSDF::f(const glm::vec3& wo_w, const glm::vec3& wi_w, const BxDFT
 	return f;
 }
 
-glm::vec3 pbr::BSDF::sample_f(const glm::vec3& wo_w, glm::vec3* wi_w, const glm::vec2& u, float* pdf, BxDFType type,
-                              BxDFType* sampled_type) const{
+glm::vec3 pbr::BSDF::sample_f(
+	const glm::vec3& wo_w, glm::vec3* wi_w, const glm::vec2& u, float* pdf, BxDFType type,
+	BxDFType* sampled_type) const{
 
 	const int components = num_components(type);
 
 	if (components == 0)
 	{
-		*pdf = 0;
-		if (sampled_type) *sampled_type = BxDFType(0);
+		*pdf = 0.f;
+		if (sampled_type)
+			*sampled_type = BxDFType(0);
 		return glm::vec3(0.f);
 	}
 
@@ -65,10 +67,19 @@ glm::vec3 pbr::BSDF::sample_f(const glm::vec3& wo_w, glm::vec3* wi_w, const glm:
 	glm::vec2 u_remapped(std::min(u[0] * components - comp, 1.f - std::numeric_limits<float>::epsilon()), u[1]);
 
 	glm::vec3 wi = glm::vec3(0.f);
-	glm::vec3 wo = to_local(wo_w);
-
+	const glm::vec3 wo = to_local(wo_w);
+	if (wo.z == 0) return glm::vec3(0.f);
 	if (sampled_type) *sampled_type = bxdf->type;
+	*pdf = 0.f;
+
 	glm::vec3 f = bxdf->sample_f(wo, &wi, u_remapped, pdf, sampled_type);
+
+	if (*pdf == 0)
+	{
+		if (sampled_type)
+			*sampled_type = BxDFType(0);
+		return glm::vec3(0.f);
+	}
 
 	*wi_w = to_world(wi);
 

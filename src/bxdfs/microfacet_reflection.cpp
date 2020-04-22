@@ -18,10 +18,12 @@ glm::vec3 pbr::MicrofacetReflection::sample_f(const glm::vec3& wo, glm::vec3* wi
                                               BxDFType* sampledType) const{
 
 	if (wo.z == 0) return glm::vec3(0.f);
-	const glm::vec3 wh = distribution->sample_wh(wo, sample);
+	const glm::vec3 wh = normalize(distribution->sample_wh(wo, sample));
 	if (dot(wo, wh) < 0) glm::vec3(0.f);
 	*wi = math::reflect(wo, wh);
-	if (!math::same_hemisphere(wo, *wi)) return glm::vec3(0.f);
+	if (!math::same_hemisphere(wo, *wi)) 
+		return glm::vec3(0.f);
+
 	*pdf = distribution->pdf(wo, wh) / (4 * dot(wo, wh));
 
 	return f(wo, *wi);
@@ -30,6 +32,7 @@ glm::vec3 pbr::MicrofacetReflection::sample_f(const glm::vec3& wo, glm::vec3* wi
 float pbr::MicrofacetReflection::pdf(const glm::vec3& wo, const glm::vec3& wi) const{
 
 	if (!math::same_hemisphere(wo, wi)) return 0;
+
 	glm::vec3 wh = normalize(wo + wi);
 
 	return distribution->pdf(wo, wh) / (4 * dot(wo, wh));

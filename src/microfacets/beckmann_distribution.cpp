@@ -27,36 +27,27 @@ float pbr::BeckmannDistribution::lambda(const glm::vec3& w) const{
 
 glm::vec3 pbr::BeckmannDistribution::sample_wh(const glm::vec3& wo, const glm::vec2& u) const{
 
-	if (!sample_visible_normals)
+	float tan2Theta, phi;
+	if (alphax == alphay)
 	{
-		float tan2Theta, phi;
-		if (alphax == alphay)
-		{
-			float log_sample = std::log(1 - u[0]);
-			tan2Theta = -alphax * alphax * log_sample;
-			phi = u[1] * 2 * glm::pi<float>();
-		}
-		else
-		{
-			float log_sample = std::log(1 - u[0]);
-			phi = std::atan(alphay / alphax * std::tan(2 * glm::pi<float>() * u[1] + 0.5f * glm::pi<float>()));
-			if (u[1] > 0.5f) phi += glm::pi<float>();
-			float sin_phi = std::sin(phi), cosPhi = std::cos(phi);
-			float alphax2 = alphax * alphax, alphay2 = alphay * alphay;
-			tan2Theta = -log_sample /
-				(cosPhi * cosPhi / alphax2 + sin_phi * sin_phi / alphay2);
-		}
-
-		float cos_theta = 1 / std::sqrt(1 + tan2Theta);
-		float sin_theta = std::sqrt(std::max(float(0), 1 - cos_theta * cos_theta));
-		glm::vec3 wh = math::spherical_direction(sin_theta, cos_theta, phi);
-		if (!math::same_hemisphere(wo, wh)) wh = -wh;
-		return wh;
+		float log_sample = std::log(1 - u[0]);
+		tan2Theta = -alphax * alphax * log_sample;
+		phi = u[1] * 2 * glm::pi<float>();
+	}
+	else
+	{
+		float log_sample = std::log(1 - u[0]);
+		phi = std::atan(alphay / alphax * std::tan(2 * glm::pi<float>() * u[1] + 0.5f * glm::pi<float>()));
+		if (u[1] > 0.5f) phi += glm::pi<float>();
+		float sin_phi = std::sin(phi), cosPhi = std::cos(phi);
+		float alphax2 = alphax * alphax, alphay2 = alphay * alphay;
+		tan2Theta = -log_sample /
+			(cosPhi * cosPhi / alphax2 + sin_phi * sin_phi / alphay2);
 	}
 
-	glm::vec3 wh;
-	bool flip = wo.z < 0;
-	//wh = BeckmannSample(flip ? -wo : wo, alphax, alphay, u[0], u[1]);
-	if (flip) wh = -wh;
+	float cos_theta = 1 / std::sqrt(1 + tan2Theta);
+	float sin_theta = std::sqrt(std::max(float(0), 1 - cos_theta * cos_theta));
+	glm::vec3 wh = math::spherical_direction(sin_theta, cos_theta, phi);
+	if (!math::same_hemisphere(wo, wh)) wh = -wh;
 	return wh;
 }

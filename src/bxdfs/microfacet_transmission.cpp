@@ -12,35 +12,36 @@ glm::vec3 pbr::MicrofacetTransmission::f(const glm::vec3& wo, const glm::vec3& w
 	glm::vec3 wh = normalize(wo + wi * eta);
 	if (wh.z < 0) wh = -wh;
 
-	glm::vec3 f = fresnel->evaluate(dot(wo, wh));
+	const glm::vec3 f = fresnel->evaluate(dot(wo, wh));
 
 	const float sqrt_denom = dot(wo, wh) + eta * dot(wi, wh);
 	const float factor = (mode == TransportMode::Radiance) ? (1 / eta) : 1;
 
-	return (glm::vec3(1.f) - f) * t *
-		std::abs(distribution->D(wh) * distribution->G(wo, wi) * eta * eta *
-			std::abs(dot(wi, wh)) * std::abs(dot(wo, wh)) * factor * factor /
-			(cos_theta_i * cos_theta_o * sqrt_denom * sqrt_denom));
+	return (glm::vec3(1.f) - f) * t * std::abs(distribution->D(wh) * distribution->G(wo, wi) * eta * eta *
+		std::abs(dot(wi, wh)) * std::abs(dot(wo, wh)) * factor * factor
+		/ (cos_theta_i * cos_theta_o * sqrt_denom * sqrt_denom));
 
 }
 
-glm::vec3 pbr::MicrofacetTransmission::sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* _pdf,
+glm::vec3 pbr::MicrofacetTransmission::sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* pdf,
                                                 BxDFType* sampledType) const{
 
 	if (wo.z == 0) return glm::vec3(0.f);
-	glm::vec3 wh = distribution->sample_wh(wo, sample);
+	const glm::vec3 wh = normalize(distribution->sample_wh(wo, sample));
 	if (dot(wo, wh) < 0) return glm::vec3(0.f);
 	float eta = math::cos_theta(wo) > 0 ? (eta_a / eta_b) : (eta_b / eta_a);
-	glm::vec3 result = math::refract(wo, wh, eta);
-	wi = &result;
-	*_pdf = pdf(wo, *wi);
+	if (!math::refract(wo, wh, eta, wi)) 
+		return glm::vec3(0.f);
+
+	*pdf = this->pdf(wo, *wi);
 
 	return f(wo, *wi);
 }
 
 float pbr::MicrofacetTransmission::pdf(const glm::vec3& wo, const glm::vec3& wi) const{
 
-	if (math::same_hemisphere(wo, wi)) glm::vec3(0.f);
+	if (math::same_hemisphere(wo, wi)) return 0;
+
 	float eta = math::cos_theta(wo) > 0 ? (eta_b / eta_a) : (eta_a / eta_b);
 	const glm::vec3 wh = normalize(wo + wi * eta);
 	const float sqrt_denom = dot(wo, wh) + eta * dot(wi, wh);

@@ -127,6 +127,7 @@ void app::Application::attach_menu(){
 		ImGui::Separator();
 		ImGui::Text("\n Program usage: \n"
 			" 1) Camera keys: \n   W - forward \n   D - right \n   A - left \n   S - back \n"
-			" 2) Rendering: \n   R - [pbr] render \n   C - [normal] ray cast \n");
+			" 2) Mouse: \n   use scroll \n   press left button [move] \n"
+			" 3) Rendering: \n   R - [pbr] render \n   C - [normal] ray cast \n");
 	});
 }

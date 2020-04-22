@@ -7,11 +7,8 @@ glm::vec3 pbr::SpecularTransmission::sample_f(
 	float eta_i = entering ? eta_a : eta_b;
 	float eta_t = entering ? eta_b : eta_a;
 
-	glm::vec3 n = glm::vec3(0, 0, 1);
-	n = (dot(n, wo) < 0.f) ? -n : n;
-
-	auto r = math::refract(wo, n, eta_i / eta_t);
-	wi = &r;
+	if (!math::refract(wo, math::face_forward(glm::vec3(0, 0, 1), wo), eta_i / eta_t, wi))
+		return glm::vec3(0.f);
 
 	*pdf = 1.f;
 	glm::vec3 ft = t * (glm::vec3(1.f) - fresnel->evaluate(math::cos_theta(*wi)));

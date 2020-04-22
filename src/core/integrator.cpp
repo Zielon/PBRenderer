@@ -58,14 +58,12 @@ glm::vec3 pbr::Integrator::reflect(
 
 	float pdf;
 	glm::vec3 wi;
-
 	const glm::vec3 wo = isect.wo;
 	const auto ns = isect.shading.n;
-
 	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler->get2D(), &pdf, BxDFType(REFLECTION | SPECULAR));
 
 	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
-		return Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1);
+		return f * Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
 
 	return glm::vec3(0.f);
 }
@@ -75,14 +73,12 @@ glm::vec3 pbr::Integrator::transmit(
 
 	float pdf;
 	glm::vec3 wi;
-
 	const glm::vec3 wo = isect.wo;
 	const auto ns = isect.shading.n;
-
-	const glm::vec3 f = isect.bsdf->sample_f(ray.d, &wi, sampler->get2D(), &pdf, BxDFType(TRANSMISSION | SPECULAR));
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler->get2D(), &pdf, BxDFType(TRANSMISSION | SPECULAR));
 
 	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
-		return Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1);
+		return f * Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
 
 	return glm::vec3(0.f);
 }

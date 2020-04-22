@@ -7,16 +7,15 @@
 
 namespace pbr
 {
-	class SpecularTransmission : BxDF
+	class SpecularTransmission : public BxDF
 	{
 	public:
 		SpecularTransmission(
 			const glm::vec3& t,
 			float eta_a,
 			float eta_b,
-			std::shared_ptr<Fresnel> fresnel,
 			TransportMode mode): BxDF(BxDFType(TRANSMISSION | SPECULAR)), t(t), eta_a(eta_a), eta_b(eta_b),
-			                     fresnel(std::move(fresnel)),
+			                     fresnel(std::make_shared<FresnelDielectric>(eta_a, eta_b)),
 			                     mode(mode){}
 
 		glm::vec3 sample_f(const glm::vec3& wo, glm::vec3* wi,
