@@ -30,8 +30,8 @@ namespace pbr
 	 */
 	struct Comparator
 	{
-		bool operator()(const std::shared_ptr<Node>& lhs, const std::shared_ptr<Node>& rhs) const{
-			return std::tie(lhs->distance) <= std::tie(rhs->distance);
+		bool operator()(const Node* lhs, const Node* rhs) const{
+			return lhs->distance < rhs->distance;
 		}
 	};
 
@@ -69,13 +69,13 @@ namespace pbr
 
 		bool intersect(const Ray& ray, Intersection& intersection) const override{
 
-			std::priority_queue<std::shared_ptr<Node>, std::vector<std::shared_ptr<Node>>, Comparator> queue;
+			std::priority_queue<Node*, std::vector<Node*>, Comparator> queue;
 
-			queue.push(root);
+			queue.push(root.get());
 
 			while (!queue.empty())
 			{
-				auto node = queue.top();
+				Node* node = queue.top();
 				queue.pop();
 
 				if (node->isLeaf)
@@ -88,8 +88,8 @@ namespace pbr
 
 				if (node->intersect(ray))
 				{
-					if (node->left && node->left->intersect(ray)) queue.push(node->left);
-					if (node->right && node->right->intersect(ray)) queue.push(node->right);
+					if (node->left && node->left->intersect(ray)) queue.push(node->left.get());
+					if (node->right && node->right->intersect(ray)) queue.push(node->right.get());
 				}
 			}
 

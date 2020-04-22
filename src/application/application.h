@@ -33,15 +33,20 @@ namespace app
 		rasterizer::InputHandler input_handler;
 
 		// Menu options
-		int shader_type = 0;
-		std::atomic<float> progress = 0.f;
+		int shader_type{0};
+		std::atomic<float> progress{0.f};
 		std::chrono::time_point<std::chrono::steady_clock> begin_rendering;
+		std::chrono::time_point<std::chrono::steady_clock> begin_frame;
 		bool is_wireframe = false;
 		bool is_picking = false;
 		bool is_rendering = false;
+		float fps_rate{0.f};
+		int frames{0};
 
 		void attach_menu();
 
 		void render();
+
+		void fps();
 	};
 }

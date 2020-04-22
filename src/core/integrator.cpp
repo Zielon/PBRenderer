@@ -24,7 +24,7 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 
 		#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 		{
-			#pragma omp for schedule(dynamic, 4)
+			#pragma omp for schedule(dynamic, 128)
 			for (auto j = 0; j < height * width; ++j)
 			{
 				const auto y = int(j / width);
@@ -46,6 +46,7 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 	}
 
 	get_film()->save_ppm("output.ppm");
+	//get_film()->save_jpg("output.jpg");
 
 	const auto end = std::chrono::steady_clock::now();
 	const auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();

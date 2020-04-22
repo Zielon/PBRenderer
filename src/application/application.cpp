@@ -27,6 +27,8 @@ void app::Application::start(){
 
 	scene->build();
 
+	begin_frame = std::chrono::high_resolution_clock::now();
+
 	while (!glfwWindowShouldClose(window.get()))
 	{
 		glClear(GL_DEPTH_BUFFER_BIT);
@@ -52,9 +54,42 @@ void app::Application::start(){
 
 		glfwSwapBuffers(window.get());
 		glfwPollEvents();
+
+		fps();
 	}
 
 	glfwTerminate();
+}
+
+void app::Application::render(){
+
+	if (is_rendering) return;
+
+	is_rendering = true;
+	begin_rendering = std::chrono::steady_clock::now();
+
+	std::thread work([this](){
+		pbr::WhittedIntegrator whitted(scene);
+		whitted.render(progress);
+		is_rendering = false;
+		progress = 0;
+	});
+
+	work.detach();
+}
+
+void app::Application::fps(){
+
+	const auto end_frame = std::chrono::high_resolution_clock::now();
+	const auto seconds = std::chrono::duration_cast<std::chrono::seconds>(end_frame - begin_frame).count();
+	frames++;
+
+	if (seconds >= 1.f)
+	{
+		fps_rate = float(frames);
+		frames = 0;
+		begin_frame = std::chrono::high_resolution_clock::now();
+	}
 }
 
 void app::Application::attach_menu(){
@@ -87,22 +122,11 @@ void app::Application::attach_menu(){
 
 		ImGui::Text("Rendering: %llu [ms]", millis);
 		ImGui::ProgressBar(float(progress));
+		ImGui::Text("FPS             [%.1f]", fps_rate);
+		ImGui::Text("Camera movement [%s]", is_rendering ? "OFF" : "ON");
+		ImGui::Separator();
+		ImGui::Text("\n Program usage: \n"
+			" 1) Camera keys: \n   W - forward \n   D - right \n   A - left \n   S - back \n"
+			" 2) Rendering: \n   R - [pbr] render \n   C - [normal] ray cast \n");
 	});
-}
-
-void app::Application::render(){
-
-	if (is_rendering) return;
-
-	is_rendering = true;
-	begin_rendering = std::chrono::steady_clock::now();
-
-	std::thread work([this](){
-		pbr::WhittedIntegrator whitted(scene);
-		whitted.render(progress);
-		is_rendering = false;
-		progress = 0;
-	});
-
-	work.detach();
 }

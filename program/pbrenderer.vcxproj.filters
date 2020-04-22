@@ -222,6 +222,9 @@
     <ClInclude Include="..\src\geometry\object.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\materials\glass.h">
+      <Filter>materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -335,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\material.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\materials\glass.cpp">
+      <Filter>materials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

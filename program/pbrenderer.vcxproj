@@ -67,6 +67,7 @@
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\lights\point_light.h" />
+    <ClInclude Include="..\src\materials\glass.h" />
     <ClInclude Include="..\src\materials\lambertian.h" />
     <ClInclude Include="..\src\materials\mirror.h" />
     <ClInclude Include="..\src\math\math.h" />
@@ -112,6 +113,7 @@
     <ClCompile Include="..\src\integrators\whitted.cpp" />
     <ClCompile Include="..\src\lights\point_light.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\materials\glass.cpp" />
     <ClCompile Include="..\src\materials\lambertian.cpp" />
     <ClCompile Include="..\src\materials\mirror.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />

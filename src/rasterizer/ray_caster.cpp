@@ -40,11 +40,9 @@ void rasterizer::RayCaster::ray_cast_frame(){
 		for (int i = 0; i < 8; i++)
 		{
 			pbr::UniformSampler sampler(0.f, 1.f);
-
 			const auto weight = 1.0f / (i + 1);
 
 			for (uint32_t y = 0; y < film_size.y; ++y)
-			{
 				for (uint32_t x = 0; x < film_size.x; ++x)
 				{
 					pbr::Intersection intersection;
@@ -63,7 +61,6 @@ void rasterizer::RayCaster::ray_cast_frame(){
 					else
 						film.set_pixel(glm::vec3(1.f), x, y);
 				}
-			}
 		}
 
 		film.save_jpg("ray_cast.jpg");

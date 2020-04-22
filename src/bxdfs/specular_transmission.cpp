@@ -13,8 +13,8 @@ glm::vec3 pbr::SpecularTransmission::sample_f(
 	auto r = math::refract(wo, n, eta_i / eta_t);
 	wi = &r;
 
-	*pdf = 1;
-	glm::vec3 ft = t * (glm::vec3(1.) - fresnel->evaluate(math::cos_theta(*wi)));
+	*pdf = 1.f;
+	glm::vec3 ft = t * (glm::vec3(1.f) - fresnel->evaluate(math::cos_theta(*wi)));
 
 	if (mode == TransportMode::Radiance)
 		ft *= (eta_i * eta_i) / (eta_t * eta_t);
