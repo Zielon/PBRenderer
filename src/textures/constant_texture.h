@@ -4,19 +4,21 @@
 
 namespace pbr
 {
-	class ConstantTexture : public Texture
+	template <typename T>
+	class ConstantTexture : public Texture<T>
 	{
 	public:
 
-		ConstantTexture(glm::vec3 value): value(value){}
+		ConstantTexture(std::string name, T value): Texture<T>(name), value(value){}
 
-		glm::vec3 evaluate(Intersection& intersection) const override;
+		T evaluate(Intersection& intersection) const override;
 
 	private:
-		glm::vec3 value{};
+		T value{};
 	};
 
-	inline glm::vec3 ConstantTexture::evaluate(Intersection& intersection) const{
+	template <typename T>
+	T ConstantTexture<T>::evaluate(Intersection& intersection) const{
 
 		return value;
 	}

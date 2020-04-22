@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <memory>
 #include <vector>
+
 #include "../geometry/scene_object.h"
 
 namespace pbr
@@ -44,11 +45,11 @@ namespace pbr
 		int num_components(BxDFType flags = ALL) const;
 
 	private:
-		std::vector<std::shared_ptr<BxDF>> bxdfs;
-		std::shared_ptr<SceneObject> object;
 		glm::vec3 n;
 		glm::mat3 to_local_coordinate;
 		glm::mat3 to_world_coordinate;
+		std::vector<std::shared_ptr<BxDF>> bxdfs;
+		std::shared_ptr<SceneObject> object;
 
 		glm::vec3 to_world(const glm::vec3& v) const;
 

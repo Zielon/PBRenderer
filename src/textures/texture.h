@@ -1,19 +1,23 @@
 #pragma once
 
 #include <glm/vec3.hpp>
+#include <utility>
 #include <rapidjson/document.h>
 
 namespace pbr
 {
 	class Intersection;
 
+	template <typename T>
 	class Texture
 	{
 	public:
+		Texture<T>(std::string name): name(std::move(name)){}
+
 		virtual ~Texture() = default;
 
-		virtual glm::vec3 evaluate(Intersection& intersection) const = 0;
+		virtual T evaluate(Intersection& intersection) const = 0;
 
-		static std::shared_ptr<Texture> create(const rapidjson::Value& node);
+		std::string name;
 	};
 }

@@ -6,6 +6,8 @@
 #include <rapidjson/document.h>
 #include "parser.h"
 #include "../textures/texture.h"
+#include "../textures/constant_texture.h"
+#include "../textures/image_texture.h"
 
 namespace parser
 {
@@ -46,13 +48,38 @@ namespace parser
 			{
 				const rapidjson::Value& attribute = *itr;
 				assert(attribute.IsObject());
-				const std::string t_type = attribute["type"].GetString();
-				textures[t_type] = pbr::Texture::create(attribute);
+				const std::string name = attribute["name"].GetString();
+				const std::string type = attribute["type"].GetString();
+				const bool is_float = attribute.HasMember("float") ? attribute["float"].GetBool() : false;
+
+				if (type == "CONSTANT")
+				{
+					if (is_float)
+					{
+						auto const_value = attribute["value"].GetFloat();
+						textures_float[name] = std::make_shared<pbr::ConstantTexture<float>>(name, const_value);
+					}
+					else
+					{
+						auto const_value = Parser::string_to_vec3(attribute["value"].GetString());
+						textures_vec3[name] = std::make_shared<pbr::ConstantTexture<glm::vec3>>(name, const_value);
+					}
+				}
+
+				if (type == "IMAGE")
+				{
+					auto path = attribute["path"].GetString();
+					auto width = attribute["width"].GetInt();
+					auto height = attribute["height"].GetInt();
+
+					textures_vec3[name] = std::make_shared<pbr::ImageTexture>(name, width, height, path);
+				}
 			}
 		}
 
 		std::string type;
-		std::map<std::string, std::shared_ptr<pbr::Texture>> textures;
+		std::map<std::string, std::shared_ptr<pbr::Texture<float>>> textures_float;
+		std::map<std::string, std::shared_ptr<pbr::Texture<glm::vec3>>> textures_vec3;
 	};
 
 	struct MeshConfig final

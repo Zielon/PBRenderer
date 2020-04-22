@@ -42,6 +42,8 @@
     <ClInclude Include="..\src\application\window.h" />
     <ClInclude Include="..\src\bxdfs\fresnel.h" />
     <ClInclude Include="..\src\bxdfs\lambertian_reflection.h" />
+    <ClInclude Include="..\src\bxdfs\microfacet_reflection.h" />
+    <ClInclude Include="..\src\bxdfs\microfacet_transmission.h" />
     <ClInclude Include="..\src\bxdfs\specular_reflection.h" />
     <ClInclude Include="..\src\bxdfs\specular_transmission.h" />
     <ClInclude Include="..\src\cameras\projective.h" />
@@ -52,6 +54,7 @@
     <ClInclude Include="..\src\core\light.h" />
     <ClInclude Include="..\src\core\integrator.h" />
     <ClInclude Include="..\src\core\material.h" />
+    <ClInclude Include="..\src\core\microfacet.h" />
     <ClInclude Include="..\src\core\reflection.h" />
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\core\uniform_sampler.h" />
@@ -71,6 +74,7 @@
     <ClInclude Include="..\src\materials\lambertian.h" />
     <ClInclude Include="..\src\materials\mirror.h" />
     <ClInclude Include="..\src\math\math.h" />
+    <ClInclude Include="..\src\microfacets\beckmann_distribution.h" />
     <ClInclude Include="..\src\parser\parser.h" />
     <ClInclude Include="..\src\parser\types.h" />
     <ClInclude Include="..\src\rasterizer\camera_handler.h" />
@@ -94,6 +98,8 @@
     <ClCompile Include="..\src\application\window.cpp" />
     <ClCompile Include="..\src\bxdfs\fresnel.cpp" />
     <ClCompile Include="..\src\bxdfs\lambertian_reflection.cpp" />
+    <ClCompile Include="..\src\bxdfs\microfacet_reflection.cpp" />
+    <ClCompile Include="..\src\bxdfs\microfacet_transmission.cpp" />
     <ClCompile Include="..\src\bxdfs\specular_reflection.cpp" />
     <ClCompile Include="..\src\bxdfs\specular_transmission.cpp" />
     <ClCompile Include="..\src\cameras\projective.cpp" />
@@ -102,6 +108,7 @@
     <ClCompile Include="..\src\core\film.cpp" />
     <ClCompile Include="..\src\core\integrator.cpp" />
     <ClCompile Include="..\src\core\material.cpp" />
+    <ClCompile Include="..\src\core\microfacet.cpp" />
     <ClCompile Include="..\src\core\reflection.cpp" />
     <ClCompile Include="..\src\core\scene.cpp" />
     <ClCompile Include="..\src\geometry\bbox.cpp" />
@@ -116,6 +123,7 @@
     <ClCompile Include="..\src\materials\glass.cpp" />
     <ClCompile Include="..\src\materials\lambertian.cpp" />
     <ClCompile Include="..\src\materials\mirror.cpp" />
+    <ClCompile Include="..\src\microfacets\beckmann_distribution.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />

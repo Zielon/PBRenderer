@@ -40,7 +40,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	if (depth + 1 < 8)
 	{
 		L += reflect(ray, sampler, intersection, depth);
-		//L += transmit(ray, sampler, intersection, depth);
+		L += transmit(ray, sampler, intersection, depth);
 	}
 
 	return L;

@@ -84,6 +84,17 @@ namespace math
 		return w.z * wp.z > 0;
 	}
 
+	inline glm::vec3 spherical_direction(float sinTheta, float cosTheta, float phi){
+
+		return glm::vec3(sinTheta * std::cos(phi), sinTheta * std::sin(phi),
+		                 cosTheta);
+	}
+
+	inline glm::vec3 face_forward(const glm::vec3& v, const glm::vec3& n){
+
+		return (dot(v, n) < 0.f) ? -v : v;
+	}
+
 	inline glm::vec3 cosine_sample_hemisphere(const glm::vec2& u){
 
 		glm::vec2 d = pbr::concentric_sample_disk(u);

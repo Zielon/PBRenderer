@@ -61,6 +61,9 @@
     <Filter Include="bxdfs">
       <UniqueIdentifier>{ac487eee-a6c0-40ed-a23d-2685138ef92a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="microfacets">
+      <UniqueIdentifier>{5f1f1300-fd41-4e87-9e7b-483814b2b1bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -225,6 +228,18 @@
     <ClInclude Include="..\src\materials\glass.h">
       <Filter>materials</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\microfacets\beckmann_distribution.h">
+      <Filter>microfacets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\microfacet.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\bxdfs\microfacet_reflection.h">
+      <Filter>bxdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\bxdfs\microfacet_transmission.h">
+      <Filter>bxdfs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -341,6 +356,18 @@
     </ClCompile>
     <ClCompile Include="..\src\materials\glass.cpp">
       <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\microfacets\beckmann_distribution.cpp">
+      <Filter>microfacets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\microfacet.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bxdfs\microfacet_reflection.cpp">
+      <Filter>bxdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\bxdfs\microfacet_transmission.cpp">
+      <Filter>bxdfs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

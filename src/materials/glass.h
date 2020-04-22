@@ -11,11 +11,11 @@ namespace pbr
 	class GlassMaterial : public Material
 	{
 	public:
-		GlassMaterial(std::shared_ptr<Texture> kr,
-		              std::shared_ptr<Texture> kt,
-		              std::shared_ptr<Texture> u_roughness,
-		              std::shared_ptr<Texture> v_roughness,
-		              std::shared_ptr<Texture> index):
+		GlassMaterial(std::shared_ptr<Texture<glm::vec3>> kr,
+		              std::shared_ptr<Texture<glm::vec3>> kt,
+		              std::shared_ptr<Texture<float>> u_roughness,
+		              std::shared_ptr<Texture<float>> v_roughness,
+		              std::shared_ptr<Texture<float>> index):
 			kr(std::move(kr)),
 			kt(std::move(kt)),
 			u_roughness(std::move(u_roughness)),
@@ -25,10 +25,10 @@ namespace pbr
 		void compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const override;
 
 	private:
-		std::shared_ptr<Texture> kr;
-		std::shared_ptr<Texture> kt;
-		std::shared_ptr<Texture> u_roughness;
-		std::shared_ptr<Texture> v_roughness;
-		std::shared_ptr<Texture> index;
+		std::shared_ptr<Texture<glm::vec3>> kr;
+		std::shared_ptr<Texture<glm::vec3>> kt;
+		std::shared_ptr<Texture<float>> u_roughness;
+		std::shared_ptr<Texture<float>> v_roughness;
+		std::shared_ptr<Texture<float>> index;
 	};
 }

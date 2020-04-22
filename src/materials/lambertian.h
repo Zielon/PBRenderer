@@ -10,11 +10,11 @@ namespace pbr
 	class LambertianMaterial : public Material
 	{
 	public:
-		LambertianMaterial(std::shared_ptr<Texture> kd): kd(std::move(kd)){}
+		LambertianMaterial(std::shared_ptr<Texture<glm::vec3>> kd): kd(std::move(kd)){}
 
 		void compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const override;
 
 	private:
-		std::shared_ptr<Texture> kd;
+		std::shared_ptr<Texture<glm::vec3>> kd;
 	};
 }
