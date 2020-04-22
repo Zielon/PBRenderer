@@ -11,6 +11,8 @@
 #include "../rasterizer/ray_caster.h"
 #include <atomic>
 
+using namespace std::chrono;
+
 namespace app
 {
 	class Application final
@@ -35,8 +37,8 @@ namespace app
 		// Menu options
 		int shader_type{0};
 		std::atomic<float> progress{0.f};
-		std::chrono::time_point<std::chrono::steady_clock> begin_rendering;
-		std::chrono::time_point<std::chrono::steady_clock> begin_frame;
+		time_point<steady_clock> begin_rendering;
+		time_point<steady_clock> begin_frame;
 		bool is_wireframe = false;
 		bool is_picking = false;
 		bool is_rendering = false;

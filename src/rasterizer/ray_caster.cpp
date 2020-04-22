@@ -27,9 +27,9 @@ void rasterizer::RayCaster::pick(const std::shared_ptr<Shader>& shader, bool pic
 
 void rasterizer::RayCaster::ray_cast_frame(){
 
-	if (saving) return;
+	if (is_saving) return;
 
-	saving = true;
+	is_saving = true;
 
 	std::thread work([this](){
 
@@ -66,7 +66,7 @@ void rasterizer::RayCaster::ray_cast_frame(){
 		film.save_jpg("ray_cast.jpg");
 		//film.save_ppm("ray_cast.ppm");
 		std::cout << "FILM::SAVED" << std::endl;
-		saving = false;
+		is_saving = false;
 	});
 
 	work.detach();

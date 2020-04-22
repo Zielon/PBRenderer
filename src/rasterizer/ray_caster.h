@@ -24,9 +24,10 @@ namespace rasterizer
 
 		void ray_cast_frame();
 
+		bool is_saving = false;
+
 	private:
 		std::shared_ptr<pbr::Scene> scene;
 		std::shared_ptr<pbr::Camera> camera;
-		bool saving = false;
 	};
 }

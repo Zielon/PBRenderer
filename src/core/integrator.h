@@ -36,7 +36,7 @@ namespace pbr
 
 		virtual std::shared_ptr<Camera> get_camera() const;
 
-		int num_samples = 1;
+		int num_samples = 2;
 		std::shared_ptr<Scene> scene;
 		std::vector<std::shared_ptr<Sampler>> samplers;
 	};

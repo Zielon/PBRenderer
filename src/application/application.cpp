@@ -27,7 +27,7 @@ void app::Application::start(){
 
 	scene->build();
 
-	begin_frame = std::chrono::high_resolution_clock::now();
+	begin_frame = high_resolution_clock::now();
 
 	while (!glfwWindowShouldClose(window.get()))
 	{
@@ -42,13 +42,13 @@ void app::Application::start(){
 		if (glfwGetKey(window.get(), GLFW_KEY_R) == GLFW_PRESS)
 			render();
 
-		if (!is_rendering)
+		if (!is_rendering && !ray_caster->is_saving)
 		{
 			rasterizer::InputHandler::process();
 			camera->update_shader(shader);
+			ray_caster->pick(shader, is_picking);
 		}
 
-		ray_caster->pick(shader, is_picking);
 		scene->draw(shader, is_wireframe);
 		menu.draw();
 
@@ -66,7 +66,7 @@ void app::Application::render(){
 	if (is_rendering) return;
 
 	is_rendering = true;
-	begin_rendering = std::chrono::steady_clock::now();
+	begin_rendering = steady_clock::now();
 
 	std::thread work([this](){
 		pbr::WhittedIntegrator whitted(scene);
@@ -80,15 +80,15 @@ void app::Application::render(){
 
 void app::Application::fps(){
 
-	const auto end_frame = std::chrono::high_resolution_clock::now();
-	const auto seconds = std::chrono::duration_cast<std::chrono::seconds>(end_frame - begin_frame).count();
+	const auto end_frame = high_resolution_clock::now();
+	const auto seconds = duration_cast<std::chrono::seconds>(end_frame - begin_frame).count();
 	frames++;
 
 	if (seconds >= 1.f)
 	{
 		fps_rate = float(frames);
 		frames = 0;
-		begin_frame = std::chrono::high_resolution_clock::now();
+		begin_frame = high_resolution_clock::now();
 	}
 }
 
@@ -96,7 +96,7 @@ void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
 
-	menu.attach([shaders, this](){
+	menu.attach([shaders, this]() {
 
 		ImGui::Text("PBRenderer");
 
@@ -116,14 +116,14 @@ void app::Application::attach_menu(){
 
 		if (is_rendering)
 		{
-			const auto end = std::chrono::steady_clock::now();
-			millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin_rendering).count();
+			const auto end = steady_clock::now();
+			millis = duration_cast<milliseconds>(end - begin_rendering).count();
 		}
 
-		ImGui::Text("Rendering: %llu [ms]", millis);
+		ImGui::Text("PBR rendering: %4llu [ms]", millis);
 		ImGui::ProgressBar(float(progress));
-		ImGui::Text("FPS             [%.1f]", fps_rate);
-		ImGui::Text("Camera movement [%s]", is_rendering ? "OFF" : "ON");
+		ImGui::Text("FPS             [%3.1f]", fps_rate);
+		ImGui::Text("Camera movement [%4s]", is_rendering || ray_caster->is_saving ? "OFF" : "ON");
 		ImGui::Separator();
 		ImGui::Text("\n Program usage: \n"
 			" 1) Camera keys: \n   W - forward \n   D - right \n   A - left \n   S - back \n"
