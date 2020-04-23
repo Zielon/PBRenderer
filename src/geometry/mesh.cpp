@@ -105,12 +105,10 @@ void pbr::Mesh::generate_triangle(){
 		auto b = gl_vertices[indices[i + 1]].position;
 		auto c = gl_vertices[indices[i + 2]].position;
 
-		auto n = normalize(cross(b - a, c - a));
-		n = normalize(transpose(inverse(transformation.to_world)) * glm::vec4(n, 1.f));
-
-		auto v0 = transformation.to_world * glm::vec4(a, 1.f);
-		auto v1 = transformation.to_world * glm::vec4(b, 1.f);
-		auto v2 = transformation.to_world * glm::vec4(c, 1.f);
+		auto n = transformation.normal_to_world(normalize(cross(b - a, c - a)));
+		auto v0 = transformation.vector_to_world(a);
+		auto v1 = transformation.vector_to_world(b);
+		auto v2 = transformation.vector_to_world(c);
 
 		const auto min = glm::min(glm::min(v1, v2), v0);
 		const auto max = glm::max(glm::max(v1, v2), v0);

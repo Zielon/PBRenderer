@@ -31,6 +31,8 @@ namespace pbr
 		GL_Vertex operator*(float s){
 
 			normal *= s;
+			tangent *= s;
+			bitangent *= s;
 			tex_coords *= s;
 			return *this;
 		};

@@ -7,11 +7,13 @@ glm::vec3 pbr::SpecularTransmission::sample_f(
 	float eta_i = entering ? eta_a : eta_b;
 	float eta_t = entering ? eta_b : eta_a;
 
-	if (!math::refract(wo, math::face_forward(glm::vec3(0, 0, 1), wo), eta_i / eta_t, wi))
+	glm::vec3 n = math::face_forward(glm::vec3(0, 0, 1), wo);
+
+	if (!math::refract(wo, n, eta_i / eta_t, wi))
 		return glm::vec3(0.f);
 
 	*pdf = 1.f;
-	glm::vec3 ft = t * (glm::vec3(1.f) - fresnel->evaluate(math::cos_theta(*wi)));
+	glm::vec3 ft = t * glm::vec3(1.f) - fresnel->evaluate(math::cos_theta(*wi));
 
 	if (mode == TransportMode::Radiance)
 		ft *= (eta_i * eta_i) / (eta_t * eta_t);

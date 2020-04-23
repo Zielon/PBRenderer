@@ -29,36 +29,44 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 
 	if (t > 0.0f && intersection.distance > t)
 	{
+		// Local space
 		auto v0 = scene_object->get_vertex(ids.x) * w0;
 		auto v1 = scene_object->get_vertex(ids.y) * w1;
 		auto v2 = scene_object->get_vertex(ids.z) * w2;
 
-		auto hit = ray.point(t);
-
-		auto radius = length(hit);
-		auto theta = glm::atan(glm::sqrt(hit.x * hit.x + hit.y * hit.y), hit.z);
-		auto phi = glm::atan(hit.y, hit.x) + (hit.y < 0.0f ? glm::two_pi<float>() : 0.0f);
-
 		Shading shading{};
+			
+		auto ns = normalize(v0.normal + v1.normal + v2.normal);
+		auto ss = normalize(v0.bitangent + v1.bitangent + v2.bitangent);
+
 		shading.uv = v0.tex_coords + v1.tex_coords + v2.tex_coords;
-		shading.n = normalize(
-			transpose(inverse(scene_object->transformation.to_world)) * glm::vec4(
-				v0.normal + v1.normal + v2.normal, 1.f));
+		shading.n = scene_object->transformation.normal_to_world(ns);
+		shading.dpdu = scene_object->transformation.normal_to_world(ss);
+		shading.dpdv = scene_object->transformation.normal_to_world(cross(ss, ns));
 
-		if (v0.tex_coords == glm::vec2(0.f) && v1.tex_coords == glm::vec2(0.f) && v2.tex_coords == glm::vec2(0.f))
+		// In the case of no tangent and bitangent space, use spherical mapping
+		if (v0.tex_coords == glm::vec2(0.f) && 
+			v1.tex_coords == glm::vec2(0.f) && 
+			v2.tex_coords == glm::vec2(0.f))
+		{
+			auto hit = scene_object->transformation.vector_to_local(ray.point(t));
+
+			// Spherical coordinates
+			auto radius = length(hit);
+			auto theta = glm::atan(glm::sqrt(hit.x * hit.x + hit.y * hit.y), hit.z);
+			auto phi = glm::atan(hit.y, hit.x) + (hit.y < 0.0f ? glm::two_pi<float>() : 0.0f);
+
+			auto dpdu = glm::vec3(-glm::two_pi<float>() * hit.y, glm::two_pi<float>() * hit.x, 0.0f);
+			auto dpdv = glm::vec3(hit.z * glm::cos(phi), hit.z * glm::sin(phi), -radius * glm::sin(theta)) * glm::pi<float>();
+
 			shading.uv = glm::vec2(phi * glm::one_over_two_pi<float>(), theta * glm::one_over_pi<float>());
-
-		shading.dpdu = glm::vec3(-glm::two_pi<float>() * hit.y, glm::two_pi<float>() * hit.x, 0.0f);
-		shading.dpdv = glm::vec3(hit.z * glm::cos(phi), hit.z * glm::sin(phi), -radius * glm::sin(theta)) * glm::pi<float>();
-
-		auto w = normalize(shading.n);
-		auto u = normalize(cross(shading.dpdu, w));
-		auto v = cross(w, u);
-
-		shading.to_local = glm::mat3(u, v, w);
-		shading.to_world = transpose(shading.to_local);
-
-		intersection.point = hit;
+			shading.dpdu = scene_object->transformation.normal_to_world(dpdu);
+			shading.dpdv = scene_object->transformation.normal_to_world(dpdv);
+		}
+			
+		// World space
+		intersection.n = scene_object->transformation.normal_to_world(n);
+		intersection.point = ray.point(t);
 		intersection.wo = -ray.d;
 		intersection.distance = t;
 		intersection.triangle = this;

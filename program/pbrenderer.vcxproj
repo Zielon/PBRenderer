@@ -114,7 +114,6 @@
     <ClCompile Include="..\src\geometry\bbox.cpp" />
     <ClCompile Include="..\src\geometry\mesh.cpp" />
     <ClCompile Include="..\src\geometry\loader.cpp" />
-    <ClCompile Include="..\src\geometry\ray.cpp" />
     <ClCompile Include="..\src\geometry\transformation.cpp" />
     <ClCompile Include="..\src\geometry\triangle.cpp" />
     <ClCompile Include="..\src\integrators\whitted.cpp" />

@@ -19,7 +19,7 @@ void app::Menu::draw() const{
 	ImGui::SetNextWindowPos(ImVec2(position.x, position.y), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(size.x, size.y), ImGuiCond_FirstUseEver);
 
-	ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_MenuBar);
+	ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 
 	for (auto& func : functions) func();
 

@@ -282,9 +282,6 @@
     <ClCompile Include="..\src\geometry\bbox.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\geometry\ray.cpp">
-      <Filter>geometry</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\geometry\mesh.cpp">
       <Filter>geometry</Filter>
     </ClCompile>

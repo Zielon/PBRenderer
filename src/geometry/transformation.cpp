@@ -20,3 +20,8 @@ glm::vec3 pbr::Transformation::vector_to_local(glm::vec3 vector) const{
 
 	return to_local * glm::vec4(vector.xyz(), 1.f);
 }
+
+glm::vec3 pbr::Transformation::normal_to_world(glm::vec3 vector) const{
+
+	return normalize(transpose(inverse(to_world)) * glm::vec4(vector.xyz(), 1.f));
+}

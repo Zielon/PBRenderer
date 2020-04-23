@@ -8,10 +8,11 @@
 #include "../bxdfs/specular_reflection.h"
 
 pbr::BSDF::BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object):
-	n(intersection.shading.n),
-	to_local_coordinate(intersection.shading.to_local),
-	to_world_coordinate(intersection.shading.to_world),
-	object(std::move(object)){ }
+	n(normalize(intersection.shading.n)),
+	s_tangent(normalize(intersection.shading.dpdu)),
+	t_bitangent(cross(n, s_tangent)),
+	point(intersection.point),
+	object(std::move(object)){}
 
 void pbr::BSDF::add(std::shared_ptr<BxDF> bxdf){
 
@@ -20,8 +21,8 @@ void pbr::BSDF::add(std::shared_ptr<BxDF> bxdf){
 
 glm::vec3 pbr::BSDF::f(const glm::vec3& wo_w, const glm::vec3& wi_w, const BxDFType flags) const{
 
-	glm::vec3 wi = to_local(wi_w);
-	glm::vec3 wo = to_local(wo_w);
+	glm::vec3 wi = vertex_to_local(wi_w);
+	glm::vec3 wo = vertex_to_local(wo_w);
 
 	if (wo.z == 0) return glm::vec3(0.f);
 
@@ -67,7 +68,7 @@ glm::vec3 pbr::BSDF::sample_f(
 	glm::vec2 u_remapped(std::min(u[0] * components - comp, 1.f - std::numeric_limits<float>::epsilon()), u[1]);
 
 	glm::vec3 wi = glm::vec3(0.f);
-	const glm::vec3 wo = to_local(wo_w);
+	const glm::vec3 wo = vertex_to_local(wo_w);
 	if (wo.z == 0) return glm::vec3(0.f);
 	if (sampled_type) *sampled_type = bxdf->type;
 	*pdf = 0.f;
@@ -81,7 +82,7 @@ glm::vec3 pbr::BSDF::sample_f(
 		return glm::vec3(0.f);
 	}
 
-	*wi_w = to_world(wi);
+	*wi_w = vertex_to_world(wi);
 
 	if (!(bxdf->type & SPECULAR) && components > 1)
 		for (const auto& b : bxdfs)
@@ -114,14 +115,18 @@ int pbr::BSDF::num_components(BxDFType flags) const{
 	return num;
 }
 
-glm::vec3 pbr::BSDF::to_world(const glm::vec3& v) const{
+glm::vec3 pbr::BSDF::vertex_to_world(const glm::vec3& v) const{
 
-	return to_world_coordinate * v;
+	return glm::vec3(
+		s_tangent.x * v.x + t_bitangent.x * v.y + n.x * v.z,
+		s_tangent.y * v.x + t_bitangent.y * v.y + n.y * v.z,
+		s_tangent.z * v.x + t_bitangent.z * v.y + n.z * v.z
+	);
 }
 
-glm::vec3 pbr::BSDF::to_local(const glm::vec3& v) const{
+glm::vec3 pbr::BSDF::vertex_to_local(const glm::vec3& v) const{
 
-	return to_local_coordinate * v;
+	return glm::vec3(dot(v, s_tangent), dot(v, t_bitangent), dot(v, n));
 }
 
 float pbr::BSDF::pdf(const glm::vec3& wo, const glm::vec3& wi) const{

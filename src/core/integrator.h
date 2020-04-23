@@ -13,7 +13,7 @@ namespace pbr
 	class Integrator
 	{
 	public:
-		Integrator(std::shared_ptr<Scene> scene): scene(std::move(scene)){
+		Integrator(std::shared_ptr<Scene> scene, int num_samples): num_samples(num_samples), scene(std::move(scene)){
 
 			for (auto i = 0; i < std::thread::hardware_concurrency(); ++i)
 				samplers.push_back(std::make_shared<UniformSampler>());
@@ -36,8 +36,9 @@ namespace pbr
 
 		virtual std::shared_ptr<Camera> get_camera() const;
 
-		int num_samples = 1;
+		int num_samples{};
 		std::shared_ptr<Scene> scene;
 		std::vector<std::shared_ptr<Sampler>> samplers;
+		float bias = 0.00001f;
 	};
 }

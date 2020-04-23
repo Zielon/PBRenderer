@@ -11,7 +11,7 @@
       "id": 2,
       "name": "point light 2",
       "type": "POINT_LIGHT",
-      "position": "-20 70 20",
+      "position": "-30 70 20",
       "intensity": 2.5
     }
   ],
@@ -80,7 +80,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.02 0.02 0.02",
-      "translation": "-0.075 0.340 -0.45",
+      "translation": "-0.075 0.060 -0.45",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
@@ -99,7 +99,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
-      "translation": "-0.275 0.240 -0.075",
+      "translation": "-0.475 0.140 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
@@ -113,7 +113,7 @@
           {
             "name": "kt",
             "type": "CONSTANT",
-            "value": "0.8 0.8 0.8"
+            "value": "1 1 1"
           },
           {
             "name": "u_roughness",

@@ -46,13 +46,14 @@ namespace pbr
 
 	private:
 		glm::vec3 n;
-		glm::mat3 to_local_coordinate;
-		glm::mat3 to_world_coordinate;
+		glm::vec3 s_tangent;
+		glm::vec3 t_bitangent;
+		glm::vec3 point;
 		std::vector<std::shared_ptr<BxDF>> bxdfs;
 		std::shared_ptr<SceneObject> object;
 
-		glm::vec3 to_world(const glm::vec3& v) const;
+		glm::vec3 vertex_to_world(const glm::vec3& v) const;
 
-		glm::vec3 to_local(const glm::vec3& v) const;
+		glm::vec3 vertex_to_local(const glm::vec3& v) const;
 	};
 }

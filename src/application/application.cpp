@@ -69,7 +69,7 @@ void app::Application::render(){
 	begin_rendering = steady_clock::now();
 
 	std::thread work([this](){
-		pbr::WhittedIntegrator whitted(scene);
+		pbr::WhittedIntegrator whitted(scene, num_samples);
 		whitted.render(progress);
 		is_rendering = false;
 		progress = 0;
@@ -96,7 +96,7 @@ void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
 
-	menu.attach([shaders, this]() {
+	menu.attach([shaders, this](){
 
 		ImGui::Text("PBRenderer");
 
@@ -120,12 +120,17 @@ void app::Application::attach_menu(){
 			millis = duration_cast<milliseconds>(end - begin_rendering).count();
 		}
 
+		ImGui::Text("Samples");
+		ImGui::SameLine();
+		ImGui::InputInt("int", &num_samples, 1);
 		ImGui::Text("PBR rendering: %4llu [ms]", millis);
 		ImGui::ProgressBar(float(progress));
 		ImGui::Text("FPS             [%3.1f]", fps_rate);
 		ImGui::Text("Camera movement [%4s]", is_rendering || ray_caster->is_saving ? "OFF" : "ON");
+		ImGui::Text("Threads         [%4i]", std::thread::hardware_concurrency());
 		ImGui::Separator();
-		ImGui::Text("\n Program usage: \n"
+		ImGui::NewLine();
+		ImGui::Text("Program usage: \n"
 			" 1) Camera keys: \n   W - forward \n   D - right \n   A - left \n   S - back \n"
 			" 2) Mouse: \n   use scroll \n   press left button [move] \n"
 			" 3) Rendering: \n   R - [pbr] render \n   C - [normal] ray cast \n");

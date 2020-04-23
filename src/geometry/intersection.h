@@ -14,13 +14,12 @@ namespace pbr
 		glm::vec2 uv;
 		glm::vec3 dpdu;
 		glm::vec3 dpdv;
-		glm::mat3 to_local;
-		glm::mat3 to_world;
 	};
 
 	class Intersection
 	{
 	public:
+		glm::vec3 n;
 		glm::vec3 point;
 		glm::vec3 wo;
 		Shading shading;

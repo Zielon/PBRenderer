@@ -59,11 +59,16 @@ glm::vec3 pbr::Integrator::reflect(
 	float pdf;
 	glm::vec3 wi;
 	const glm::vec3 wo = isect.wo;
-	const auto ns = isect.shading.n;
+	const glm::vec3 o = isect.point;
+	const glm::vec3 ns = isect.shading.n;
 	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler->get2D(), &pdf, BxDFType(REFLECTION | SPECULAR));
 
+	glm::vec3 bias_n = bias * ns;
+	bool outside = dot(ray.d, ns) < 0.f;
+	Ray reflection{outside ? o + bias_n : o - bias_n, wi};
+
 	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
-		return f * Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
+		return f * Li(reflection, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
 
 	return glm::vec3(0.f);
 }
@@ -74,11 +79,16 @@ glm::vec3 pbr::Integrator::transmit(
 	float pdf;
 	glm::vec3 wi;
 	const glm::vec3 wo = isect.wo;
-	const auto ns = isect.shading.n;
+	const glm::vec3 o = isect.point;
+	const glm::vec3 ns = isect.shading.n;
 	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler->get2D(), &pdf, BxDFType(TRANSMISSION | SPECULAR));
 
+	glm::vec3 bias_n = bias * ns;
+	bool outside = dot(ray.d, ns) < 0.f;
+	Ray refraction{outside ? o - bias_n : o + bias_n, wi};
+
 	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
-		return f * Li(ray.spawn(wi, isect.point, ns), sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
+		return f * Li(refraction, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
 
 	return glm::vec3(0.f);
 }

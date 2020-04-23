@@ -5,11 +5,11 @@
 #include "../math/math.h"
 
 glm::vec3 pbr::BxDF::sample_f(
-	const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* _pdf, BxDFType* sampledType) const{
+	const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* pdf, BxDFType* sampledType) const{
 
 	*wi = math::cosine_sample_hemisphere(sample);
 	if (wo.z < 0) wi->z *= -1;
-	*_pdf = pdf(wo, *wi);
+	*pdf = this->pdf(wo, *wi);
 
 	return f(wo, *wi);
 }

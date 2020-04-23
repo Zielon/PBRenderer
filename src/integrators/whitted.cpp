@@ -1,8 +1,5 @@
 #include "whitted.h"
 
-#include <chrono>
-#include <thread>
-
 #include "../geometry/triangle.h"
 #include "../geometry/mesh.h"
 #include "../core/uniform_sampler.h"
@@ -11,7 +8,6 @@
 
 glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const{
 
-	float bias = 0.00001f;
 	Intersection intersection;
 	glm::vec3 L = glm::vec3(0.f);
 
@@ -21,23 +17,24 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	const auto triangle = const_cast<Triangle*>(intersection.triangle);
 	const auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
 
-	auto n = intersection.shading.n;
+	auto ns = intersection.shading.n;
 	auto wo = intersection.wo;
-	glm::vec3 o = dot(ray.d, n) < 0 ? intersection.point + n * bias : intersection.point - n * bias;
+	auto o = intersection.point;
+	glm::vec3 bias_n = bias * ns;
+	bool outside = dot(ray.d, ns) < 0.f;
 
 	for (auto& light : scene->get_lights().get())
 	{
 		glm::vec3 wi;
-		float pdf = 1.f;
+		float pdf;
 		glm::vec3 Li = light->sample_Li(intersection, sampler->get2D(), &wi, &pdf);
-		Intersection insect;
-		auto shadow_ray = Ray(o, wi);
-		float shadow = scene->intersect(shadow_ray, insect);
+		Intersection empty{};
+		float shadow = scene->intersect(Ray(outside ? o + bias_n : o - bias_n, wi), empty);
 		auto f = intersection.bsdf->f(wo, wi);
-		L += (1.f - shadow) * f * Li * std::max(0.f, dot(wi, n)) / pdf;
+		L += (1.f - shadow) * f * Li * std::abs(dot(wi, ns)) / pdf;
 	}
 
-	if (depth + 1 < 8)
+	if (depth + 1 < 10)
 	{
 		L += reflect(ray, sampler, intersection, depth);
 		L += transmit(ray, sampler, intersection, depth);
