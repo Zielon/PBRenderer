@@ -30,7 +30,7 @@
           {
             "name": "kr",
             "type": "CONSTANT",
-            "value": "1 1 1"
+            "value": "0.7 0.7 0.7"
           }
         ]
       }
@@ -108,7 +108,7 @@
           {
             "name": "kr",
             "type": "CONSTANT",
-            "value": "0.8 0.8 0.8"
+            "value": "1 1 1"
           },
           {
             "name": "kt",

@@ -40,8 +40,15 @@ glm::vec3 pbr::BSDF::f(const glm::vec3& wo_w, const glm::vec3& wi_w, const BxDFT
 	return f;
 }
 
+/*
+ * Sampling BSDFs from the density that is the average of their individual densities.
+ */
 glm::vec3 pbr::BSDF::sample_f(
-	const glm::vec3& wo_w, glm::vec3* wi_w, const glm::vec2& u, float* pdf, BxDFType type,
+	const glm::vec3& wo_w,
+	glm::vec3* wi_w,
+	const std::shared_ptr<Sampler>& sampler,
+	float* pdf,
+	BxDFType type,
 	BxDFType* sampled_type) const{
 
 	const int components = num_components(type);
@@ -54,10 +61,11 @@ glm::vec3 pbr::BSDF::sample_f(
 		return glm::vec3(0.f);
 	}
 
-	int comp = std::min(int(std::floor(u[0] * components)), components - 1);
+	// Use 1D sample probability to determine one component with equal probability.
+	const int component = std::min(int(std::floor(sampler->get1D() * components)), components - 1);
 
 	std::shared_ptr<BxDF> bxdf = nullptr;
-	int count = comp;
+	int count = component;
 	for (const auto& b : bxdfs)
 		if (b->matches_flags(type) && count-- == 0)
 		{
@@ -65,15 +73,13 @@ glm::vec3 pbr::BSDF::sample_f(
 			break;
 		}
 
-	glm::vec2 u_remapped(std::min(u[0] * components - comp, 1.f - std::numeric_limits<float>::epsilon()), u[1]);
-
 	glm::vec3 wi = glm::vec3(0.f);
 	const glm::vec3 wo = vertex_to_local(wo_w);
 	if (wo.z == 0) return glm::vec3(0.f);
 	if (sampled_type) *sampled_type = bxdf->type;
 	*pdf = 0.f;
 
-	glm::vec3 f = bxdf->sample_f(wo, &wi, u_remapped, pdf, sampled_type);
+	glm::vec3 f = bxdf->sample_f(wo, &wi, sampler->get2D(), pdf, sampled_type);
 
 	if (*pdf == 0)
 	{
@@ -84,12 +90,20 @@ glm::vec3 pbr::BSDF::sample_f(
 
 	*wi_w = vertex_to_world(wi);
 
+	/*
+	 * Skipped if the chosen BxDF is perfectly specular, since the PDF has an implicit delta distribution in it. 
+	 * It would be incorrect to add the other PDF values to this one, 
+	 * since it is a delta term represented with the value 1, rather than as an actual delta distribution.
+	 */
 	if (!(bxdf->type & SPECULAR) && components > 1)
 		for (const auto& b : bxdfs)
 			if (b != bxdf && b->matches_flags(type))
+				// Because *pdf already holds the PDF value for the distribution the sample was taken from, 
+				// we only need to add in the contributions of the others.
 				*pdf += b->pdf(wo, wi);
 
-	if (components > 1) *pdf /= components;
+	if (components > 1)
+		*pdf /= components;
 
 	if (!(bxdf->type & SPECULAR))
 	{

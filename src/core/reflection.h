@@ -10,6 +10,7 @@ namespace pbr
 {
 	class Intersection;
 	class BxDF;
+	class Sampler;
 
 	enum BxDFType
 	{
@@ -38,9 +39,12 @@ namespace pbr
 		 */
 		glm::vec3 f(const glm::vec3& wo_w, const glm::vec3& wi_w, BxDFType flags = ALL) const;
 
-		glm::vec3 sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& u,
-		                   float* pdf, BxDFType type = ALL,
-		                   BxDFType* sampled_type = nullptr) const;
+		glm::vec3 sample_f(
+			const glm::vec3& wo,
+			glm::vec3* wi,
+			const std::shared_ptr<Sampler>& sampler,
+			float* pdf, BxDFType type = ALL,
+			BxDFType* sampled_type = nullptr) const;
 
 		int num_components(BxDFType flags = ALL) const;
 

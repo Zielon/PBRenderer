@@ -44,7 +44,7 @@ namespace app
 		bool is_rendering = false;
 		float fps_rate{0.f};
 		int frames{0};
-		int num_samples{1};
+		int num_samples{2};
 
 		void attach_menu();
 

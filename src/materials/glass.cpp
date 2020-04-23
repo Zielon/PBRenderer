@@ -23,7 +23,7 @@ void pbr::GlassMaterial::compute_BxDF(Intersection& intersection, TransportMode 
 	auto distribution = std::make_shared<BeckmannDistribution>(urough, vrough);
 	auto fresnel = std::make_shared<FresnelDielectric>(1.f, eta);
 
-	//intersection.bsdf->add(std::make_shared<MicrofacetTransmission>(distribution, T, 1.f, eta, mode));
-	//intersection.bsdf->add(std::make_shared<MicrofacetReflection>(distribution, R, fresnel));
-	intersection.bsdf->add(std::make_shared<SpecularTransmission>(T, 1.f, eta, mode));
+	intersection.bsdf->add(std::make_shared<MicrofacetTransmission>(distribution, T, 1.f, eta, mode));
+	intersection.bsdf->add(std::make_shared<MicrofacetReflection>(distribution, R, fresnel));
+	//intersection.bsdf->add(std::make_shared<SpecularTransmission>(T, 1.f, eta, mode));
 }

@@ -61,7 +61,7 @@ glm::vec3 pbr::Integrator::reflect(
 	const glm::vec3 wo = isect.wo;
 	const glm::vec3 o = isect.point;
 	const glm::vec3 ns = isect.shading.n;
-	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler->get2D(), &pdf, BxDFType(REFLECTION | SPECULAR));
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(REFLECTION | SPECULAR));
 
 	glm::vec3 bias_n = bias * ns;
 	bool outside = dot(ray.d, ns) < 0.f;
@@ -81,7 +81,7 @@ glm::vec3 pbr::Integrator::transmit(
 	const glm::vec3 wo = isect.wo;
 	const glm::vec3 o = isect.point;
 	const glm::vec3 ns = isect.shading.n;
-	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler->get2D(), &pdf, BxDFType(TRANSMISSION | SPECULAR));
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(TRANSMISSION | SPECULAR));
 
 	glm::vec3 bias_n = bias * ns;
 	bool outside = dot(ray.d, ns) < 0.f;
