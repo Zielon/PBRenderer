@@ -72,7 +72,9 @@
     <ClInclude Include="..\src\lights\point_light.h" />
     <ClInclude Include="..\src\materials\glass.h" />
     <ClInclude Include="..\src\materials\lambertian.h" />
+    <ClInclude Include="..\src\materials\metal.h" />
     <ClInclude Include="..\src\materials\mirror.h" />
+    <ClInclude Include="..\src\materials\plastic.h" />
     <ClInclude Include="..\src\math\math.h" />
     <ClInclude Include="..\src\microfacets\beckmann_distribution.h" />
     <ClInclude Include="..\src\parser\parser.h" />
@@ -121,7 +123,9 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\materials\glass.cpp" />
     <ClCompile Include="..\src\materials\lambertian.cpp" />
+    <ClCompile Include="..\src\materials\metal.cpp" />
     <ClCompile Include="..\src\materials\mirror.cpp" />
+    <ClCompile Include="..\src\materials\plastic.cpp" />
     <ClCompile Include="..\src\microfacets\beckmann_distribution.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />

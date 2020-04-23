@@ -72,8 +72,6 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 		intersection.triangle = this;
 		intersection.shading = shading;
 
-		scene_object->get_material()->compute_BxDF(intersection);
-
 		return true;
 	}
 

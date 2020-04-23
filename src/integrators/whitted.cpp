@@ -16,6 +16,8 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	const auto triangle = const_cast<Triangle*>(intersection.triangle);
 	const auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
 
+	mesh->get_material()->compute_BxDF(intersection);
+
 	auto ns = intersection.shading.n;
 	auto wo = intersection.wo;
 	auto o = intersection.point;
@@ -33,7 +35,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 		L += (1.f - shadow) * f * Li * std::abs(dot(wi, ns)) / pdf;
 	}
 
-	if (depth + 1 < 10)
+	if (depth + 1 < 5)
 	{
 		L += reflect(ray, sampler, intersection, depth);
 		L += transmit(ray, sampler, intersection, depth);
@@ -50,7 +52,7 @@ glm::vec3 pbr::WhittedIntegrator::reflect(
 	const glm::vec3 wo = isect.wo;
 	const glm::vec3 o = isect.point;
 	const glm::vec3 ns = isect.shading.n;
-	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(REFLECTION | SPECULAR));
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(REFLECTION | SPECULAR | GLOSSY));
 
 	glm::vec3 bias_n = bias * ns;
 	bool outside = dot(ray.d, ns) < 0.f;
@@ -70,7 +72,7 @@ glm::vec3 pbr::WhittedIntegrator::transmit(
 	const glm::vec3 wo = isect.wo;
 	const glm::vec3 o = isect.point;
 	const glm::vec3 ns = isect.shading.n;
-	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(TRANSMISSION | SPECULAR));
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(TRANSMISSION | SPECULAR | GLOSSY));
 
 	glm::vec3 bias_n = bias * ns;
 	bool outside = dot(ray.d, ns) < 0.f;

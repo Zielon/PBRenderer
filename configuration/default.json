@@ -5,21 +5,21 @@
       "name": "point light 1",
       "type": "POINT_LIGHT",
       "position": "30 50 -12",
-      "intensity": 2.5
+      "intensity": 1
     },
     {
       "id": 2,
       "name": "point light 2",
       "type": "POINT_LIGHT",
       "position": "-30 70 20",
-      "intensity": 2.5
+      "intensity": 1
     },
     {
       "id": 3,
       "name": "point light 3",
       "type": "POINT_LIGHT",
       "position": "30 70 50",
-      "intensity": 2.5
+      "intensity": 1
     }
   ],
   "meshes": [
@@ -72,14 +72,8 @@
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1.000 0.766 0.336"
-          }
-        ]
+        "type": "PLASTIC",
+        "textures": []
       }
     },
     {
@@ -120,19 +114,19 @@
           {
             "name": "kt",
             "type": "CONSTANT",
-            "value": "0.9 0.9 0.9"
+            "value": "1 1 1"
           },
           {
             "name": "u_roughness",
             "type": "CONSTANT",
             "float": true,
-            "value": 0.03
+            "value": 0.3
           },
           {
             "name": "v_roughness",
             "type": "CONSTANT",
             "float": true,
-            "value": 0.02
+            "value": 0.3
           },
           {
             "name": "index",
