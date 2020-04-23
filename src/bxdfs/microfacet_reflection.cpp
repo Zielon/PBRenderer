@@ -14,14 +14,14 @@ glm::vec3 pbr::MicrofacetReflection::f(const glm::vec3& wo, const glm::vec3& wi)
 	return r * distribution->D(wh) * distribution->G(wo, wi) * f / (4 * cos_theta_i * cos_theta_o);
 }
 
-glm::vec3 pbr::MicrofacetReflection::sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* pdf,
-                                              BxDFType* sampledType) const{
+glm::vec3 pbr::MicrofacetReflection::sample_f(
+	const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* pdf, BxDFType* sampledType) const{
 
 	if (wo.z == 0) return glm::vec3(0.f);
 	const glm::vec3 wh = normalize(distribution->sample_wh(wo, sample));
 	if (dot(wo, wh) < 0) glm::vec3(0.f);
 	*wi = math::reflect(wo, wh);
-	if (!math::same_hemisphere(wo, *wi)) 
+	if (!math::same_hemisphere(wo, *wi))
 		return glm::vec3(0.f);
 
 	*pdf = distribution->pdf(wo, wh) / (4 * dot(wo, wh));

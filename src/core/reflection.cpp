@@ -14,7 +14,7 @@ pbr::BSDF::BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object)
 	point(intersection.point),
 	object(std::move(object)){}
 
-void pbr::BSDF::add(std::shared_ptr<BxDF> bxdf){
+void pbr::BSDF::add(const std::shared_ptr<BxDF>& bxdf){
 
 	bxdfs.push_back(bxdf);
 }

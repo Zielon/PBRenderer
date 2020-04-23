@@ -13,6 +13,13 @@
       "type": "POINT_LIGHT",
       "position": "-30 70 20",
       "intensity": 2.5
+    },
+    {
+      "id": 3,
+      "name": "point light 3",
+      "type": "POINT_LIGHT",
+      "position": "30 70 50",
+      "intensity": 2.5
     }
   ],
   "meshes": [
@@ -99,7 +106,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
-      "translation": "-0.475 0.140 -0.075",
+      "translation": "-0.275 0.140 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
@@ -108,12 +115,12 @@
           {
             "name": "kr",
             "type": "CONSTANT",
-            "value": "1 1 1"
+            "value": "0.9 0.9 0.9"
           },
           {
             "name": "kt",
             "type": "CONSTANT",
-            "value": "1 1 1"
+            "value": "0.9 0.9 0.9"
           },
           {
             "name": "u_roughness",

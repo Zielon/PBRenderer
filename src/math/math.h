@@ -86,8 +86,7 @@ namespace math
 
 	inline glm::vec3 spherical_direction(float sinTheta, float cosTheta, float phi){
 
-		return glm::vec3(sinTheta * std::cos(phi), sinTheta * std::sin(phi),
-		                 cosTheta);
+		return glm::vec3(sinTheta * std::cos(phi), sinTheta * std::sin(phi), cosTheta);
 	}
 
 	inline glm::vec3 face_forward(const glm::vec3& v, const glm::vec3& n){

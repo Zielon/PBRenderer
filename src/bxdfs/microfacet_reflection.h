@@ -10,10 +10,13 @@ namespace pbr
 	class MicrofacetReflection : public BxDF
 	{
 	public:
-		MicrofacetReflection(std::shared_ptr<MicrofacetDistribution> distribution, const glm::vec3& r,
-		                     std::shared_ptr<Fresnel> fresnel): BxDF(BxDFType(REFLECTION | GLOSSY)), r(r),
-		                                                        fresnel(std::move(fresnel)),
-		                                                        distribution(std::move(distribution)){}
+		MicrofacetReflection(
+			std::shared_ptr<MicrofacetDistribution> distribution,
+			const glm::vec3& r,
+			std::shared_ptr<Fresnel> fresnel):
+			BxDF(BxDFType(REFLECTION | GLOSSY)), r(r),
+			fresnel(std::move(fresnel)),
+			distribution(std::move(distribution)){}
 
 		glm::vec3 f(const glm::vec3& wo, const glm::vec3& wi) const override;
 

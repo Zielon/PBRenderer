@@ -14,9 +14,10 @@ namespace pbr
 			const glm::vec3& t,
 			float eta_a,
 			float eta_b,
-			TransportMode mode): BxDF(BxDFType(TRANSMISSION | SPECULAR)), t(t), eta_a(eta_a), eta_b(eta_b),
-			                     fresnel(std::make_shared<FresnelDielectric>(eta_a, eta_b)),
-			                     mode(mode){}
+			TransportMode mode):
+			BxDF(BxDFType(TRANSMISSION | SPECULAR)), t(t), eta_a(eta_a), eta_b(eta_b),
+			fresnel(std::make_shared<FresnelDielectric>(eta_a, eta_b)),
+			mode(mode){}
 
 		glm::vec3 sample_f(const glm::vec3& wo, glm::vec3* wi,
 		                   const glm::vec2& sample, float* pdf,

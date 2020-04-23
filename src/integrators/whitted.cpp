@@ -3,7 +3,6 @@
 #include "../geometry/triangle.h"
 #include "../geometry/mesh.h"
 #include "../core/uniform_sampler.h"
-#include "../math/math.h"
 #include "../lights/point_light.h"
 
 glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const{
@@ -41,4 +40,44 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	}
 
 	return L;
+}
+
+glm::vec3 pbr::WhittedIntegrator::reflect(
+	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
+
+	float pdf;
+	glm::vec3 wi;
+	const glm::vec3 wo = isect.wo;
+	const glm::vec3 o = isect.point;
+	const glm::vec3 ns = isect.shading.n;
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(REFLECTION | SPECULAR));
+
+	glm::vec3 bias_n = bias * ns;
+	bool outside = dot(ray.d, ns) < 0.f;
+	Ray reflection{outside ? o + bias_n : o - bias_n, wi};
+
+	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
+		return f * Li(reflection, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
+
+	return glm::vec3(0.f);
+}
+
+glm::vec3 pbr::WhittedIntegrator::transmit(
+	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
+
+	float pdf;
+	glm::vec3 wi;
+	const glm::vec3 wo = isect.wo;
+	const glm::vec3 o = isect.point;
+	const glm::vec3 ns = isect.shading.n;
+	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(TRANSMISSION | SPECULAR));
+
+	glm::vec3 bias_n = bias * ns;
+	bool outside = dot(ray.d, ns) < 0.f;
+	Ray refraction{outside ? o - bias_n : o + bias_n, wi};
+
+	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
+		return f * Li(refraction, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
+
+	return glm::vec3(0.f);
 }

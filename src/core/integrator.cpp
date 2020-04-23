@@ -5,7 +5,6 @@
 
 #include "uniform_sampler.h"
 #include "../cameras/projective.h"
-#include "../bxdfs/specular_reflection.h"
 
 void pbr::Integrator::render(std::atomic<float>& progress){
 
@@ -45,52 +44,12 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 		}
 	}
 
-	get_film()->save_ppm("output.ppm");
-	//get_film()->save_jpg("output.jpg");
+	//get_film()->save_ppm("output.ppm");
+	get_film()->save_jpg("output.jpg");
 
 	const auto end = std::chrono::steady_clock::now();
 	const auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 	std::cout << "INFO::INTEGRATOR Render time: [" << millis << " ms]" << std::endl;
-}
-
-glm::vec3 pbr::Integrator::reflect(
-	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
-
-	float pdf;
-	glm::vec3 wi;
-	const glm::vec3 wo = isect.wo;
-	const glm::vec3 o = isect.point;
-	const glm::vec3 ns = isect.shading.n;
-	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(REFLECTION | SPECULAR));
-
-	glm::vec3 bias_n = bias * ns;
-	bool outside = dot(ray.d, ns) < 0.f;
-	Ray reflection{outside ? o + bias_n : o - bias_n, wi};
-
-	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
-		return f * Li(reflection, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
-
-	return glm::vec3(0.f);
-}
-
-glm::vec3 pbr::Integrator::transmit(
-	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
-
-	float pdf;
-	glm::vec3 wi;
-	const glm::vec3 wo = isect.wo;
-	const glm::vec3 o = isect.point;
-	const glm::vec3 ns = isect.shading.n;
-	const glm::vec3 f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(TRANSMISSION | SPECULAR));
-
-	glm::vec3 bias_n = bias * ns;
-	bool outside = dot(ray.d, ns) < 0.f;
-	Ray refraction{outside ? o - bias_n : o + bias_n, wi};
-
-	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
-		return f * Li(refraction, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
-
-	return glm::vec3(0.f);
 }
 
 std::shared_ptr<pbr::Film> pbr::Integrator::get_film() const{

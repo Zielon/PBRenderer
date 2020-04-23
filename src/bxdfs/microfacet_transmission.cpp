@@ -6,6 +6,7 @@ glm::vec3 pbr::MicrofacetTransmission::f(const glm::vec3& wo, const glm::vec3& w
 
 	const float cos_theta_o = math::cos_theta(wo);
 	const float cos_theta_i = math::cos_theta(wi);
+
 	if (cos_theta_i == 0 || cos_theta_o == 0) return glm::vec3(0);
 
 	float eta = math::cos_theta(wo) > 0 ? (eta_b / eta_a) : (eta_a / eta_b);
@@ -15,12 +16,12 @@ glm::vec3 pbr::MicrofacetTransmission::f(const glm::vec3& wo, const glm::vec3& w
 	const glm::vec3 f = fresnel->evaluate(dot(wo, wh));
 
 	const float sqrt_denom = dot(wo, wh) + eta * dot(wi, wh);
-	const float factor = (mode == TransportMode::Radiance) ? (1 / eta) : 1;
+	const float factor = mode == TransportMode::Radiance ? (1 / eta) : 1;
 
-	return (glm::vec3(1.f) - f) * t * std::abs(distribution->D(wh) * distribution->G(wo, wi) * eta * eta *
-		std::abs(dot(wi, wh)) * std::abs(dot(wo, wh)) * factor * factor
-		/ (cos_theta_i * cos_theta_o * sqrt_denom * sqrt_denom));
-
+	return (glm::vec3(1.f) - f) * t *
+		std::abs(distribution->D(wh) * distribution->G(wo, wi) * eta * eta *
+			std::abs(dot(wi, wh)) * std::abs(dot(wo, wh)) * factor * factor /
+			(cos_theta_i * cos_theta_o * sqrt_denom * sqrt_denom));
 }
 
 glm::vec3 pbr::MicrofacetTransmission::sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* pdf,
@@ -30,7 +31,8 @@ glm::vec3 pbr::MicrofacetTransmission::sample_f(const glm::vec3& wo, glm::vec3* 
 	const glm::vec3 wh = normalize(distribution->sample_wh(wo, sample));
 	if (dot(wo, wh) < 0) return glm::vec3(0.f);
 	float eta = math::cos_theta(wo) > 0 ? (eta_a / eta_b) : (eta_b / eta_a);
-	if (!math::refract(wo, wh, eta, wi)) 
+
+	if (!math::refract(wo, wh, eta, wi))
 		return glm::vec3(0.f);
 
 	*pdf = this->pdf(wo, *wi);

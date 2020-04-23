@@ -19,7 +19,7 @@ namespace pbr
 		DIFFUSE = 1 << 2,
 		GLOSSY = 1 << 3,
 		SPECULAR = 1 << 4,
-		ALL = DIFFUSE | GLOSSY | SPECULAR | REFLECTION | TRANSMISSION,
+		ALL = DIFFUSE | GLOSSY | SPECULAR | REFLECTION | TRANSMISSION
 	};
 
 	/**
@@ -30,7 +30,7 @@ namespace pbr
 	public:
 		explicit BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object);
 
-		void add(std::shared_ptr<BxDF> bx);
+		void add(const std::shared_ptr<BxDF>& bx);
 
 		virtual float pdf(const glm::vec3& wo, const glm::vec3& wi) const;
 
