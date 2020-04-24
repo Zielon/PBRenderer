@@ -16,6 +16,8 @@ app::Application::Application():
 	input_handler(window.get(), camera, SCR_WIDTH, SCR_HEIGHT){
 
 	attach_menu();
+
+	scene->build();
 }
 
 app::Application::~Application() = default;
@@ -24,8 +26,6 @@ app::Application::~Application() = default;
  * Main application loop
  */
 void app::Application::start(){
-
-	scene->build();
 
 	begin_frame = high_resolution_clock::now();
 

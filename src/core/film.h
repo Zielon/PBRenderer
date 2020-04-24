@@ -61,7 +61,7 @@ namespace pbr
 
 		void save_ppm(const std::string& file);
 
-		void merge(const std::vector<PixelSamples>& samples);
+		void merge(const std::vector<PixelSamples>& pixels);
 
 		glm::vec2 get_size() const;
 
