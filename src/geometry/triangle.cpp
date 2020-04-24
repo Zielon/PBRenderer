@@ -41,8 +41,8 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 
 		shading.uv = v0.tex_coords + v1.tex_coords + v2.tex_coords;
 		shading.n = scene_object->transformation.normal_to_world(ns);
-		shading.dpdu = scene_object->transformation.normal_to_world(ss);
-		shading.dpdv = scene_object->transformation.normal_to_world(cross(ss, ns));
+		shading.dpdu = scene_object->transformation.vector_to_local(ss);
+		shading.dpdv = scene_object->transformation.vector_to_local(cross(ss, ns));
 
 		// In the case of no tangent and bitangent space, use spherical mapping
 		if (v0.tex_coords == glm::vec2(0.f) && 
@@ -60,8 +60,8 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 			auto dpdv = glm::vec3(hit.z * glm::cos(phi), hit.z * glm::sin(phi), -radius * glm::sin(theta)) * glm::pi<float>();
 
 			shading.uv = glm::vec2(phi * glm::one_over_two_pi<float>(), theta * glm::one_over_pi<float>());
-			shading.dpdu = scene_object->transformation.normal_to_world(dpdu);
-			shading.dpdv = scene_object->transformation.normal_to_world(dpdv);
+			shading.dpdu = scene_object->transformation.vector_to_local(dpdu);
+			shading.dpdv = scene_object->transformation.vector_to_local(dpdv);
 		}
 			
 		// World space

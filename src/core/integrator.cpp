@@ -6,6 +6,14 @@
 #include "uniform_sampler.h"
 #include "../cameras/projective.h"
 
+pbr::Integrator::Integrator(std::shared_ptr<Scene> scene, int num_samples):
+	num_samples(num_samples), scene(std::move(scene)){
+
+	const auto threads = std::thread::hardware_concurrency();
+	for (auto i = 0; i < threads; ++i)
+		samplers.push_back(std::make_shared<UniformSampler>());
+}
+
 void pbr::Integrator::render(std::atomic<float>& progress){
 
 	const auto start = std::chrono::steady_clock::now();

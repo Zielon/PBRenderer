@@ -294,8 +294,10 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)3rd_party\rapidjson\include;$(SolutionDir)3rd_party\glm;$(SolutionDir)3rd_party\glad\include;$(SolutionDir)3rd_party\imgui\examples;$(SolutionDir)3rd_party\imgui;$(SolutionDir)3rd_party\assimp\include;$(SolutionDir)3rd_party\stb;$(SolutionDir)3rd_party\glfw-3.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
-      <DebugInformationFormat>None</DebugInformationFormat>
-      <SupportJustMyCode>true</SupportJustMyCode>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <SupportJustMyCode>
+      </SupportJustMyCode>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>

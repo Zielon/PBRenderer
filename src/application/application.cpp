@@ -3,8 +3,8 @@
 #include <thread>
 #include "../integrators/whitted.h"
 
-const unsigned int SCR_WIDTH = 1200;
-const unsigned int SCR_HEIGHT = 900;
+const unsigned int SCR_WIDTH = 1000;
+const unsigned int SCR_HEIGHT = 800;
 
 app::Application::Application():
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),
@@ -122,14 +122,14 @@ void app::Application::attach_menu(){
 
 		const auto position = camera->get_coordinate().get().position;
 
-		ImGui::Text("Samples");
+		ImGui::Text("# samples");
 		ImGui::SameLine();
 		ImGui::InputInt("int", &num_samples, 1);
 		ImGui::Text("PBR rendering: %4llu [ms]", millis);
 		ImGui::ProgressBar(float(progress));
 		ImGui::Text("FPS             [%3.1f]", fps_rate);
 		ImGui::Text("Camera movement [%4s]", is_rendering || ray_caster->is_saving ? "OFF" : "ON");
-		ImGui::Text("Threads         [%4i]", std::thread::hardware_concurrency());
+		ImGui::Text("# threads       [%4i]", std::thread::hardware_concurrency());
 		ImGui::Text("Camera position");
 		ImGui::Text("[%.5f %.5f %.5f]", position.x, position.y, position.z);
 		ImGui::Separator();

@@ -15,7 +15,7 @@ namespace pbr
 	public:
 		Integrator(std::shared_ptr<Scene> scene, int num_samples): num_samples(num_samples), scene(std::move(scene)){
 
-			auto threads = std::thread::hardware_concurrency();
+			const auto threads = std::thread::hardware_concurrency();
 			for (auto i = 0; i < threads; ++i)
 				samplers.push_back(std::make_shared<UniformSampler>());
 		}
@@ -34,6 +34,6 @@ namespace pbr
 		int num_samples{};
 		std::shared_ptr<Scene> scene;
 		std::vector<std::shared_ptr<Sampler>> samplers;
-		float bias = 0.00001f;
+		float ray_epsilon = 0.00001f;
 	};
 }
