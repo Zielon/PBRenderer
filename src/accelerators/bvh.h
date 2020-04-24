@@ -111,7 +111,7 @@ namespace pbr
 				node->bbox.extend(primitives[i]->get_bbox());
 
 			// Leaf condition and finish recursion.
-			if (node->elements <= 16)
+			if (node->elements <= 4)
 			{
 				node->isLeaf = true;
 				return;
@@ -143,7 +143,7 @@ namespace pbr
 		void sah_split(Node* node){
 
 			// Leaf condition and finish recursion.
-			if (node->elements <= 16)
+			if (node->elements <= 4)
 			{
 				node->isLeaf = true;
 				return;
@@ -223,8 +223,8 @@ namespace pbr
 				return a->get_bbox().centroid()[axis] < b->get_bbox().centroid()[axis];
 			});
 
-			middle_split(node->left.get());
-			middle_split(node->right.get());
+			sah_split(node->left.get());
+			sah_split(node->right.get());
 		}
 
 		void equal_split(Node* node) const{

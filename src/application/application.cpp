@@ -120,6 +120,8 @@ void app::Application::attach_menu(){
 			millis = duration_cast<milliseconds>(end - begin_rendering).count();
 		}
 
+		const auto position = camera->get_coordinate().get().position;
+
 		ImGui::Text("Samples");
 		ImGui::SameLine();
 		ImGui::InputInt("int", &num_samples, 1);
@@ -128,11 +130,13 @@ void app::Application::attach_menu(){
 		ImGui::Text("FPS             [%3.1f]", fps_rate);
 		ImGui::Text("Camera movement [%4s]", is_rendering || ray_caster->is_saving ? "OFF" : "ON");
 		ImGui::Text("Threads         [%4i]", std::thread::hardware_concurrency());
+		ImGui::Text("Camera position");
+		ImGui::Text("[%.5f %.5f %.5f]", position.x, position.y, position.z);
 		ImGui::Separator();
 		ImGui::NewLine();
 		ImGui::Text("Program usage: \n"
 			" 1) Camera keys: \n   W - forward \n   D - right \n   A - left \n   S - back \n"
 			" 2) Mouse: \n   use scroll \n   press left button [move] \n"
-			" 3) Rendering: \n   R - [pbr] render \n   C - [normal] ray cast \n");
+			" 3) Rendering keys: \n   R - [pbr] render \n   C - [normal] ray cast \n");
 	});
 }

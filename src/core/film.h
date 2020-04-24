@@ -5,6 +5,8 @@
 #include <vector>
 #include <mutex>
 
+using PixelSamples = std::vector<std::tuple<glm::vec3, glm::vec2>>;
+
 namespace pbr
 {
 	template <typename T>
@@ -58,6 +60,8 @@ namespace pbr
 		void save_jpg(const std::string& file);
 
 		void save_ppm(const std::string& file);
+
+		void merge(const std::vector<PixelSamples>& samples);
 
 		glm::vec2 get_size() const;
 

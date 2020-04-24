@@ -13,10 +13,12 @@ namespace pbr
 	private:
 		glm::vec3 Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const override;
 
-		virtual glm::vec3 reflect(
-			const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const;
+		virtual glm::vec3 reflect(const Ray& ray,
+		                          const std::shared_ptr<Sampler>& sampler,
+		                          Intersection& isect, int depth) const;
 
-		virtual glm::vec3 transmit(
-			const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const;
+		virtual glm::vec3 transmit(const Ray& ray,
+		                           const std::shared_ptr<Sampler>& sampler,
+		                           Intersection& isect, int depth) const;
 	};
 }
