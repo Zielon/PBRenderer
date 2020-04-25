@@ -9,7 +9,7 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                 std::vector<unsigned> indices,
                 std::vector<GL_Texture> textures,
                 parser::MeshConfig config):
-	SceneObject(MESH, config.id),
+	SceneObject(config.id),
 	bvh(std::make_shared<BVH<Triangle>>()),
 	gl_vertices(std::move(vertices)),
 	gl_textures(std::move(textures)),

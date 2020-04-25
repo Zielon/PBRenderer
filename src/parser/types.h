@@ -23,6 +23,7 @@ namespace parser
 			position = Parser::string_to_vec3(node["position"].GetString());
 			intensity = node["intensity"].GetFloat();
 			area_light = type == "AREA_LIGHT";
+			mesh_id = node.HasMember("mesh_id") ? node["mesh_id"].GetInt() : -1;
 		}
 
 		int id;
@@ -31,6 +32,7 @@ namespace parser
 		glm::vec3 position{};
 		float intensity{};
 		bool area_light;
+		int mesh_id;
 	};
 
 	struct MaterialConfig final

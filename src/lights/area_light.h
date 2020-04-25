@@ -1,16 +1,17 @@
 #pragma once
 
+#include <utility>
+
+#include "../geometry/scene_object.h"
 #include "../core/light.h"
 
 namespace pbr
 {
-	class PointLight final : public Light
+	class AreaLight : public Light
 	{
 	public:
-		PointLight(const parser::LightConfig& config)
-			: Light(POINT, config),
-			  position(config.position),
-			  intensity(config.intensity){}
+		AreaLight(const parser::LightConfig& config, std::shared_ptr<SceneObject> mesh):
+			Light(AREA, config), mesh_id(config.mesh_id), mesh(std::move(mesh)){}
 
 		glm::vec3 sample_Li(
 			const Intersection& intersection, const glm::vec2& u, glm::vec3* wi, float* pdf) const override;
@@ -22,7 +23,11 @@ namespace pbr
 		glm::vec3 power() const override;
 
 	private:
-		const glm::vec3 position;
-		const glm::vec3 intensity;
+		int mesh_id;
+
+		/*
+		 * Area light is represented in the rasterizer as this mesh.
+		 */
+		std::shared_ptr<SceneObject> mesh;
 	};
 }

@@ -9,7 +9,18 @@ glm::vec3 pbr::PointLight::sample_Li(
 	const auto direction = position - intersection.point;
 	*wi = normalize(direction);
 	*pdf = 1.f;
-	return intensity; // / dot(direction, direction);
+	return intensity / length(direction) * length(direction);
+}
+
+float pbr::PointLight::pdf_Li(const Intersection& ref, const glm::vec3& wi) const{
+
+	return 0.f;
+}
+
+float pbr::PointLight::sample_Le(
+	const Intersection& intersection, const glm::vec2& u, glm::vec3* wi, float* pdf) const{
+
+	return 0.f;
 }
 
 glm::vec3 pbr::PointLight::power() const{

@@ -4,44 +4,33 @@
       "id": 1,
       "name": "point light 1",
       "type": "POINT_LIGHT",
-      "position": "30 50 -12",
+      "position": "3 5 -2",
       "intensity": 1
     },
     {
       "id": 2,
       "name": "point light 2",
       "type": "POINT_LIGHT",
-      "position": "-30 70 20",
+      "position": "-3 7 2",
       "intensity": 1
     },
     {
       "id": 3,
       "name": "point light 3",
       "type": "POINT_LIGHT",
-      "position": "30 70 50",
+      "position": "3 7 5",
       "intensity": 1
+    },
+    {
+      "id": 4,
+      "name": "area light 1",
+      "type": "AREA_LIGHT",
+      "position": "3 7 5",
+      "intensity": 1,
+      "mesh_id": 45
     }
   ],
   "meshes": [
-    {
-      "id": 1,
-      "name": "cbox_redwall",
-      "path": "..\\resources\\cbox\\cbox_redwall.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "MIRROR",
-        "textures": [
-          {
-            "name": "kr",
-            "type": "CONSTANT",
-            "value": "0.7 0.7 0.7"
-          }
-        ]
-      }
-    },
     {
       "id": 3,
       "name": "cbox_floor",
@@ -59,6 +48,25 @@
             "width": 768,
             "height": 768,
             "path": "..\\resources\\textures\\checker.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "name": "cbox_luminaire",
+      "path": "..\\resources\\cbox\\cbox_luminaire.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180,
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0.5 0.5 0.5"
           }
         ]
       }

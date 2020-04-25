@@ -60,7 +60,6 @@
     <ClInclude Include="..\src\core\uniform_sampler.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
     <ClInclude Include="..\src\geometry\camera_system.h" />
-    <ClInclude Include="..\src\geometry\object.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />
     <ClInclude Include="..\src\geometry\loader.h" />
     <ClInclude Include="..\src\geometry\ray.h" />
@@ -69,6 +68,7 @@
     <ClInclude Include="..\src\geometry\transformation.h" />
     <ClInclude Include="..\src\geometry\triangle.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
+    <ClInclude Include="..\src\lights\area_light.h" />
     <ClInclude Include="..\src\lights\point_light.h" />
     <ClInclude Include="..\src\materials\glass.h" />
     <ClInclude Include="..\src\materials\lambertian.h" />
@@ -119,6 +119,7 @@
     <ClCompile Include="..\src\geometry\transformation.cpp" />
     <ClCompile Include="..\src\geometry\triangle.cpp" />
     <ClCompile Include="..\src\integrators\whitted.cpp" />
+    <ClCompile Include="..\src\lights\area_light.cpp" />
     <ClCompile Include="..\src\lights\point_light.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\materials\glass.cpp" />

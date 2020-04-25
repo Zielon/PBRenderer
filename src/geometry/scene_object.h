@@ -4,7 +4,6 @@
 #include "../geometry/bbox.h"
 #include "../core/material.h"
 #include "transformation.h"
-#include "object.h"
 
 namespace pbr
 {
@@ -41,10 +40,10 @@ namespace pbr
 	class Intersection;
 	class Ray;
 
-	class SceneObject : public Object
+	class SceneObject
 	{
 	public:
-		SceneObject(Type type, int id): Object(type, id){}
+		SceneObject(int id): id(id){}
 
 		virtual ~SceneObject() = default;
 
@@ -59,6 +58,8 @@ namespace pbr
 		virtual GL_Vertex get_vertex(int id) const = 0;
 
 		Transformation transformation;
+
+		int id;
 
 	protected:
 		BBox bbox;

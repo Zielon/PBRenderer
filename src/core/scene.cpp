@@ -11,7 +11,7 @@ void pbr::Scene::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wi
 		object->draw(shader, wireframe);
 }
 
-void pbr::Scene::add_object(const std::shared_ptr<SceneObject>& mesh){
+void pbr::Scene::add_mesh(const std::shared_ptr<SceneObject>& mesh){
 
 	bvh->add(mesh);
 	objects.push_back(mesh);

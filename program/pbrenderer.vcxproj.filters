@@ -222,9 +222,6 @@
     <ClInclude Include="..\src\geometry\camera_system.h">
       <Filter>geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\geometry\object.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\materials\glass.h">
       <Filter>materials</Filter>
     </ClInclude>
@@ -245,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="..\src\materials\plastic.h">
       <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lights\area_light.h">
+      <Filter>lights</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,6 +377,9 @@
     </ClCompile>
     <ClCompile Include="..\src\materials\plastic.cpp">
       <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lights\area_light.cpp">
+      <Filter>lights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

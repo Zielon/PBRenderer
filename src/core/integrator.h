@@ -4,7 +4,6 @@
 #include "film.h"
 #include "uniform_sampler.h"
 
-#include <thread>
 #include <glm/glm.hpp>
 #include <atomic>
 
@@ -13,12 +12,7 @@ namespace pbr
 	class Integrator
 	{
 	public:
-		Integrator(std::shared_ptr<Scene> scene, int num_samples): num_samples(num_samples), scene(std::move(scene)){
-
-			const auto threads = std::thread::hardware_concurrency();
-			for (auto i = 0; i < threads; ++i)
-				samplers.push_back(std::make_shared<UniformSampler>());
-		}
+		Integrator(std::shared_ptr<Scene> scene, int num_samples);
 
 		virtual ~Integrator() = default;
 

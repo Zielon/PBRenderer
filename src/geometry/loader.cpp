@@ -8,8 +8,10 @@
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 #include <fstream>
+#include <assimp/postprocess.h>
 #include "../parser/types.h"
 #include "../lights/point_light.h"
+#include "../lights/area_light.h"
 
 void pbr::Loader::load_meshes(const std::string& config){
 
@@ -53,18 +55,24 @@ void pbr::Loader::load_lights(const std::string& config) const{
 
 	document.ParseStream(isw);
 
-	const rapidjson::Value& meshes = document["lights"];
-	assert(meshes.IsArray());
+	const rapidjson::Value& lights = document["lights"];
+	assert(lights.IsArray());
 
-	for (auto itr = meshes.Begin(); itr != meshes.End(); ++itr)
+	for (auto itr = lights.Begin(); itr != lights.End(); ++itr)
 	{
 		const rapidjson::Value& attribute = *itr;
 		assert(attribute.IsObject());
 		parser::LightConfig configuration(attribute);
 
-		auto light = std::make_shared<PointLight>(configuration);
+		if (configuration.type == "POINT_LIGHT")
+		{
+			scene->add_light(std::make_shared<PointLight>(configuration));
+		}
 
-		scene->add_light(light);
+		if (configuration.type == "AREA_LIGHT")
+		{
+			scene->add_light(std::make_shared<AreaLight>(configuration, meshes.at(configuration.mesh_id)));
+		}
 
 		std::cout << "INFO::LOADER Light loaded -> [" << configuration.name << "]" << std::endl;
 	}
@@ -76,9 +84,8 @@ void pbr::Loader::process_node(
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		auto mesh = process_mesh(ai_scene->mMeshes[node->mMeshes[i]], ai_scene, configuration);
-		mesh->type = MESH;
-
-		scene->add_object(mesh);
+		meshes[mesh->id] = mesh;
+		scene->add_mesh(mesh);
 	}
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++)

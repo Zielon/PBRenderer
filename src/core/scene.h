@@ -21,7 +21,7 @@ namespace pbr
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe);
 
-		void add_object(const std::shared_ptr<SceneObject>& mesh);
+		void add_mesh(const std::shared_ptr<SceneObject>& mesh);
 
 		void add_light(const std::shared_ptr<Light>& light);
 

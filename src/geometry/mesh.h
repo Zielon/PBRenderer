@@ -27,6 +27,7 @@ namespace pbr
 	public:
 		Mesh(std::vector<GL_Vertex> vertices,
 		     std::vector<unsigned int> indices,
+
 		     std::vector<GL_Texture> textures,
 		     parser::MeshConfig config);
 
