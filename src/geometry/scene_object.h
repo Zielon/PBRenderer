@@ -33,6 +33,8 @@ namespace pbr
 			tangent *= s;
 			bitangent *= s;
 			tex_coords *= s;
+			position *= s;
+
 			return *this;
 		};
 	};
@@ -40,10 +42,12 @@ namespace pbr
 	class Intersection;
 	class Ray;
 
+	enum SceneObjectType { MESH, LIGHT };
+
 	class SceneObject
 	{
 	public:
-		SceneObject(int id): id(id){}
+		SceneObject(int id, SceneObjectType type): id(id), type(type){}
 
 		virtual ~SceneObject() = default;
 
@@ -60,6 +64,8 @@ namespace pbr
 		Transformation transformation;
 
 		int id;
+
+		SceneObjectType type;
 
 	protected:
 		BBox bbox;

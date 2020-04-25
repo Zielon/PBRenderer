@@ -1,15 +1,24 @@
 #include "mesh.h"
 
 #include <utility>
-#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <random>
+
+template <typename Iterator>
+Iterator select_randomly(Iterator start, Iterator end){
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	const std::uniform_int_distribution<> dis(0, std::distance(start, end) - 1);
+	std::advance(start, dis(gen));
+	return start;
+}
 
 pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                 std::vector<unsigned> indices,
                 std::vector<GL_Texture> textures,
                 parser::MeshConfig config):
-	SceneObject(config.id),
+	SceneObject(config.id, MESH),
 	bvh(std::make_shared<BVH<Triangle>>()),
 	gl_vertices(std::move(vertices)),
 	gl_textures(std::move(textures)),
@@ -28,6 +37,16 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 	generate_gl_buffers();
 
 	bvh->build(Split::SAH);
+}
+
+pbr::Sample pbr::Mesh::sample(const glm::vec2& u) const{
+
+	std::vector<Sample> samples;
+
+	for (auto& triangle : bvh->get_primitives())
+		samples.emplace_back(triangle->sample(u));
+
+	return *select_randomly(samples.begin(), samples.end());
 }
 
 void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){

@@ -2,6 +2,7 @@
 
 #include <glm/geometric.hpp>
 #include <glm/gtc/constants.hpp>
+#include "../math/math.h"
 
 /**
  * Moller-Trumbore triangle-ray intersection algorithm.
@@ -35,7 +36,7 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 		auto v2 = scene_object->get_vertex(ids.z) * w2;
 
 		Shading shading{};
-			
+
 		auto ns = normalize(v0.normal + v1.normal + v2.normal);
 		auto ss = normalize(v0.bitangent + v1.bitangent + v2.bitangent);
 
@@ -45,8 +46,8 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 		shading.dpdv = scene_object->transformation.vector_to_local(cross(ss, ns));
 
 		// In the case of no tangent and bitangent space, use spherical mapping
-		if (v0.tex_coords == glm::vec2(0.f) && 
-			v1.tex_coords == glm::vec2(0.f) && 
+		if (v0.tex_coords == glm::vec2(0.f) &&
+			v1.tex_coords == glm::vec2(0.f) &&
 			v2.tex_coords == glm::vec2(0.f))
 		{
 			auto hit = scene_object->transformation.vector_to_local(ray.point(t));
@@ -57,13 +58,14 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 			auto phi = glm::atan(hit.y, hit.x) + (hit.y < 0.0f ? glm::two_pi<float>() : 0.0f);
 
 			auto dpdu = glm::vec3(-glm::two_pi<float>() * hit.y, glm::two_pi<float>() * hit.x, 0.0f);
-			auto dpdv = glm::vec3(hit.z * glm::cos(phi), hit.z * glm::sin(phi), -radius * glm::sin(theta)) * glm::pi<float>();
+			auto dpdv = glm::vec3(hit.z * glm::cos(phi), hit.z * glm::sin(phi), -radius * glm::sin(theta)) * glm::pi<
+				float>();
 
 			shading.uv = glm::vec2(phi * glm::one_over_two_pi<float>(), theta * glm::one_over_pi<float>());
 			shading.dpdu = scene_object->transformation.vector_to_local(dpdu);
 			shading.dpdv = scene_object->transformation.vector_to_local(dpdv);
 		}
-			
+
 		// World space
 		intersection.n = scene_object->transformation.normal_to_world(n);
 		intersection.point = ray.point(t);
@@ -76,6 +78,30 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 	}
 
 	return false;
+}
+
+pbr::Sample pbr::Triangle::sample(const glm::vec2& u) const{
+
+	float su0 = std::sqrt(u[0]);
+	auto b = glm::vec2(1 - su0, u[1] * su0);
+
+	Sample sample{};
+
+	// Local space
+	auto v0 = scene_object->get_vertex(ids.x) * b[0];
+	auto v1 = scene_object->get_vertex(ids.y) * b[1];
+	auto v2 = scene_object->get_vertex(ids.z) * (1 - b[0] - b[1]);
+
+	sample.p = scene_object->transformation.vector_to_world(v0.position + v1.position + v2.position);
+	sample.n = n;
+	sample.pdf = 1.f / area();
+
+	return sample;
+}
+
+float pbr::Triangle::area() const{
+
+	return 0.5f * length(cross(edge0, edge1));
 }
 
 pbr::BBox pbr::Triangle::get_bbox() const{

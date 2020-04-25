@@ -27,7 +27,6 @@ namespace pbr
 	public:
 		Mesh(std::vector<GL_Vertex> vertices,
 		     std::vector<unsigned int> indices,
-
 		     std::vector<GL_Texture> textures,
 		     parser::MeshConfig config);
 
@@ -39,7 +38,11 @@ namespace pbr
 
 		std::shared_ptr<Material> get_material() const override;
 
+		Sample sample(const glm::vec2& u) const;
+
 		GL_Vertex get_vertex(int id) const override;
+
+		std::shared_ptr<AreaLight> area_light{ nullptr };
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};

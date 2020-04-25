@@ -7,22 +7,31 @@
 
 namespace pbr
 {
-	enum LightType{ AREA, POINT };
+	enum LightType { AREA, POINT };
+
+	class Scene;
 
 	class Light
 	{
 	public:
 		virtual ~Light() = default;
 
-		Light(LightType type, parser::LightConfig config): configuration(std::move(config)), type(type){}
+		Light(LightType type, parser::LightConfig config): type(type), configuration(std::move(config)){}
 
 		virtual glm::vec3 power() const = 0;
 
-		virtual glm::vec3 sample_Li(const Intersection& intersection, const glm::vec2& u, glm::vec3* wi, float* pdf) const = 0;
+		virtual glm::vec3 sample_Li(
+			const Intersection& intersection,
+			const std::shared_ptr<Scene>& scene,
+			const glm::vec2& u,
+			glm::vec3* wi,
+			float* pdf,
+			bool* shadow) const = 0;
 
-		virtual float pdf_Li(const Intersection &ref, const glm::vec3 &wi) const = 0;
+		virtual float pdf_Li(const Intersection& ref, const glm::vec3& wi) const = 0;
 
-		virtual float sample_Le(const Intersection& intersection, const glm::vec2& u, glm::vec3* wi, float* pdf) const = 0;
+		virtual float sample_Le(const Intersection& intersection, const glm::vec2& u, glm::vec3* wi,
+		                        float* pdf) const = 0;
 
 		//virtual void pdf_Le(const Ray &ray, const Normal3f &nLight, Float *pdfPos, Float *pdfDir) const = 0;
 

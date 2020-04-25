@@ -11,7 +11,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	glm::vec3 L = glm::vec3(0.f);
 
 	if (!scene->intersect(ray, intersection))
-		return glm::vec3(0.235294, 0.67451, 0.843137);
+		return glm::vec3(0.f);
 
 	auto triangle = const_cast<Triangle*>(intersection.triangle);
 	auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
@@ -24,16 +24,24 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	auto shift = ray_epsilon * ns;
 	auto outside = dot(ray.d, ns) < 0.f;
 
+	if (mesh->type == LIGHT && mesh->area_light)
+		L += mesh->area_light->L(intersection.n, wo);
+
 	for (auto& light : scene->get_lights().get())
 	{
-		glm::vec3 wi;
-		float pdf;
-		auto Li = light->sample_Li(intersection, sampler->get2D(), &wi, &pdf);
-		Intersection empty{};
-		float shadow = scene->intersect(Ray(outside ? o + shift : o - shift, wi), empty);
+		glm::vec3 wi{};
+		float pdf{0.f};
+		bool is_shadow{};
+		intersection.point = outside ? o + shift : o - shift;
+		auto Li = light->sample_Li(intersection, scene, sampler->get2D(), &wi, &pdf, &is_shadow);
+		if (Li == glm::vec3(0.f) || pdf == 0.f) continue;
 		auto f = intersection.bsdf->f(wo, wi);
-		L += (1.f - shadow) * f * Li * std::abs(dot(wi, ns)) / pdf;
+		if (f != glm::vec3(0.f) && !is_shadow)
+			L += f * Li * std::abs(dot(wi, ns)) / pdf;
 	}
+
+	// Restore original intersection point
+	intersection.point = o;
 
 	if (depth + 1 < 5)
 	{

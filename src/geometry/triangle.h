@@ -6,9 +6,17 @@
 #include "bbox.h"
 #include "intersection.h"
 #include "../core/scene.h"
+#include "../lights/area_light.h"
 
 namespace pbr
 {
+	struct Sample
+	{
+		glm::vec3 p;
+		glm::vec3 n;
+		float pdf;
+	};
+
 	/**
 	 * Triangle is defined in the world space
 	 */
@@ -21,6 +29,10 @@ namespace pbr
 		                                               bbox(BBox(min, max)){ };
 
 		bool intersect(const Ray& ray, Intersection& intersection) const;
+
+		Sample sample(const glm::vec2& u) const;
+
+		float area() const;
 
 		BBox get_bbox() const;
 

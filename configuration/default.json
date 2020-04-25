@@ -1,38 +1,16 @@
 {
   "lights": [
     {
-      "id": 1,
-      "name": "point light 1",
-      "type": "POINT_LIGHT",
-      "position": "3 5 -2",
-      "intensity": 1
-    },
-    {
-      "id": 2,
-      "name": "point light 2",
-      "type": "POINT_LIGHT",
-      "position": "-3 7 2",
-      "intensity": 1
-    },
-    {
-      "id": 3,
-      "name": "point light 3",
-      "type": "POINT_LIGHT",
-      "position": "3 7 5",
-      "intensity": 1
-    },
-    {
       "id": 4,
       "name": "area light 1",
       "type": "AREA_LIGHT",
-      "position": "3 7 5",
-      "intensity": 1,
-      "mesh_id": 45
+      "intensity": 100,
+      "mesh_id": 2
     }
   ],
   "meshes": [
     {
-      "id": 3,
+      "id": 1,
       "name": "cbox_floor",
       "path": "..\\resources\\cbox\\cbox_floor.obj",
       "scaling": "0.001 0.001 0.001",
@@ -53,9 +31,28 @@
       }
     },
     {
-      "id": 45,
+      "id": 2,
       "name": "cbox_luminaire",
       "path": "..\\resources\\cbox\\cbox_luminaire.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 -0.01 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180,
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "1 1 1"
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "cbox_redwall",
+      "path": "..\\resources\\cbox\\cbox_redwall.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
       "rotation_axis": "0 1 0",
@@ -66,22 +63,85 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.5 0.5 0.5"
+            "value": "1 0 0"
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "cbox_greenwall",
+      "path": "..\\resources\\cbox\\cbox_greenwall.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180,
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0 1 0"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "cbox_back",
+      "path": "..\\resources\\cbox\\cbox_back.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180,
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0 0 1"
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "cbox_ceiling",
+      "path": "..\\resources\\cbox\\cbox_ceiling.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation_axis": "0 1 0",
+      "rotation_degree": 180,
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0.235294 0.67451 0.843137"
           }
         ]
       }
     },
     {
       "id": 7,
-      "name": "armadillo",
-      "path": "..\\resources\\armadillo\\armadillo.ply",
-      "scaling": "0.002 0.002 0.002",
-      "translation": "-.27 .110 -.25",
+      "name": "bunny",
+      "path": "..\\resources\\bunny\\bunny.ply",
+      "scaling": "1 1 1",
+      "translation": "-0.25 -0.02 -0.2",
       "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation_degree": 45,
       "material": {
-        "type": "PLASTIC",
-        "textures": []
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0.5 0.5 0.5"
+          }
+        ]
       }
     },
     {
@@ -108,7 +168,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
-      "translation": "-0.275 0.140 -0.075",
+      "translation": "-0.375 0.140 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {

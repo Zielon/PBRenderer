@@ -14,6 +14,6 @@ in G2P
 
 void main()
 {       
-	vec3 normal = normalize(frag.normal);	
+	vec3 normal = normalize(frag.normal);
     FragColor = vec4(abs(normal), 1.0);
 }

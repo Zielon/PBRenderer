@@ -20,9 +20,8 @@ namespace parser
 			id = node["id"].GetInt();
 			name = node["name"].GetString();
 			type = node["type"].GetString();
-			position = Parser::string_to_vec3(node["position"].GetString());
+			position = node.HasMember("position") ? Parser::string_to_vec3(node["position"].GetString()) : glm::vec3();
 			intensity = node["intensity"].GetFloat();
-			area_light = type == "AREA_LIGHT";
 			mesh_id = node.HasMember("mesh_id") ? node["mesh_id"].GetInt() : -1;
 		}
 
@@ -31,7 +30,6 @@ namespace parser
 		std::string type;
 		glm::vec3 position{};
 		float intensity{};
-		bool area_light;
 		int mesh_id;
 	};
 

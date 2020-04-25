@@ -47,7 +47,7 @@ void pbr::Loader::load_meshes(const std::string& config){
 	}
 }
 
-void pbr::Loader::load_lights(const std::string& config) const{
+void pbr::Loader::load_lights(const std::string& config){
 
 	std::ifstream ifs(config);
 	rapidjson::IStreamWrapper isw(ifs);
@@ -71,7 +71,10 @@ void pbr::Loader::load_lights(const std::string& config) const{
 
 		if (configuration.type == "AREA_LIGHT")
 		{
-			scene->add_light(std::make_shared<AreaLight>(configuration, meshes.at(configuration.mesh_id)));
+			auto mesh = meshes.at(configuration.mesh_id);
+			mesh->type = LIGHT;
+			mesh->area_light = std::make_shared<AreaLight>(configuration, mesh);
+			scene->add_light(mesh->area_light);
 		}
 
 		std::cout << "INFO::LOADER Light loaded -> [" << configuration.name << "]" << std::endl;

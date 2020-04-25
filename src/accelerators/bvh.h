@@ -96,9 +96,14 @@ namespace pbr
 			return intersection.distance < std::numeric_limits<float>::max();
 		}
 
+		std::vector<std::shared_ptr<T>> get_primitives(){
+
+			return primitives;
+		}
+
 	private:
-		std::vector<std::shared_ptr<T>> primitives;
 		std::shared_ptr<Node> root;
+		std::vector<std::shared_ptr<T>> primitives;
 
 		/**
 		 * Simple median/middle split method which segments bounding volume centroids

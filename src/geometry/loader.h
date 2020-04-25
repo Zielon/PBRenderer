@@ -29,7 +29,7 @@ namespace pbr
 
 		void load_meshes(const std::string& config);
 
-		void load_lights(const std::string& config) const;
+		void load_lights(const std::string& config);
 
 	private:
 		std::string directory;

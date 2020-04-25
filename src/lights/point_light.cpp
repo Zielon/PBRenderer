@@ -2,13 +2,20 @@
 
 #include <glm/ext/scalar_constants.hpp>
 #include "../geometry/intersection.h"
+#include "../core/scene.h"
 
 glm::vec3 pbr::PointLight::sample_Li(
-	const Intersection& intersection, const glm::vec2& u, glm::vec3* wi, float* pdf) const{
+	const Intersection& intersection, const std::shared_ptr<Scene>& scene, const glm::vec2& u, glm::vec3* wi,
+	float* pdf, bool* shadow) const{
+
+	Intersection empty{};
 
 	const auto direction = position - intersection.point;
+
 	*wi = normalize(direction);
 	*pdf = 1.f;
+	*shadow = scene->intersect(Ray(intersection.point, *wi), empty);
+
 	return intensity / length(direction) * length(direction);
 }
 
