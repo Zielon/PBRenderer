@@ -42,7 +42,9 @@ namespace pbr
 
 		GL_Vertex get_vertex(int id) const override;
 
-		std::shared_ptr<AreaLight> area_light{ nullptr };
+		std::shared_ptr<AreaLight> get_area_light() const;
+
+		void set_area_light(const std::shared_ptr<AreaLight>& light);
 
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
@@ -54,6 +56,7 @@ namespace pbr
 		std::vector<GL_Texture> gl_textures;
 		std::vector<GLuint> indices;
 		const parser::MeshConfig configuration;
+		std::shared_ptr<AreaLight> area_light{nullptr};
 
 		void generate_triangle();
 

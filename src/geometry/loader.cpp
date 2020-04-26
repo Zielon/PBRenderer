@@ -9,6 +9,7 @@
 #include <rapidjson/istreamwrapper.h>
 #include <fstream>
 #include <assimp/postprocess.h>
+
 #include "../parser/types.h"
 #include "../lights/point_light.h"
 #include "../lights/area_light.h"
@@ -72,9 +73,8 @@ void pbr::Loader::load_lights(const std::string& config){
 		if (configuration.type == "AREA_LIGHT")
 		{
 			auto mesh = meshes.at(configuration.mesh_id);
-			mesh->type = LIGHT;
-			mesh->area_light = std::make_shared<AreaLight>(configuration, mesh);
-			scene->add_light(mesh->area_light);
+			mesh->set_area_light(std::make_shared<AreaLight>(configuration, mesh));
+			scene->add_light(mesh->get_area_light());
 		}
 
 		std::cout << "INFO::LOADER Light loaded -> [" << configuration.name << "]" << std::endl;

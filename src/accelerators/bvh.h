@@ -3,12 +3,13 @@
 #include <algorithm>
 #include <queue>
 #include <functional>
+#include <iostream>
+#include <array>
 
 #include "node.h"
 #include "../core/aggregate.h"
 #include "../geometry/ray.h"
 #include "../geometry/intersection.h"
-#include <iostream>
 
 namespace pbr
 {
@@ -69,7 +70,7 @@ namespace pbr
 
 		bool intersect(const Ray& ray, Intersection& intersection) const override{
 
-			std::priority_queue<Node*, std::vector<Node*>, Comparator> queue;
+			/*std::priority_queue<Node*, std::vector<Node*>, Comparator> queue;
 
 			queue.push(root.get());
 
@@ -91,12 +92,40 @@ namespace pbr
 					if (node->left && node->left->intersect(ray)) queue.push(node->left.get());
 					if (node->right && node->right->intersect(ray)) queue.push(node->right.get());
 				}
+			}*/
+
+			/*
+			 * The ownership and memory management of Node* still belongs to std::make_unique<Node>
+			 * however for intersection check it has been temporarily borrow by stack.
+			 */
+			int size = 0;
+			std::array<Node*, 32> stack{};
+			stack[size++] = root.get();
+
+			while (size)
+			{
+				Node* node = stack[--size];
+				const auto intersects = node->intersect(ray);
+
+				if (intersects && node->distance < intersection.distance)
+				{
+					if (node->isLeaf)
+					{
+						for (int i = node->start; i < node->end; ++i)
+							primitives[i]->intersect(ray, intersection);
+
+						continue;
+					}
+
+					if (node->left) stack[size++] = node->left.get();
+					if (node->right) stack[size++] = node->right.get();
+				}
 			}
 
 			return intersection.distance < std::numeric_limits<float>::max();
 		}
 
-		std::vector<std::shared_ptr<T>> get_primitives(){
+		std::vector<std::shared_ptr<T>>& get_primitives(){
 
 			return primitives;
 		}
@@ -154,7 +183,7 @@ namespace pbr
 				return;
 			}
 
-			const int n_buckets = 256;
+			const int n_buckets = 128;
 			std::vector<Bucket> buckets(n_buckets);
 
 			int axis = -1;

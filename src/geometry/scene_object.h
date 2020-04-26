@@ -30,10 +30,8 @@ namespace pbr
 		GL_Vertex operator*(float s){
 
 			normal *= s;
-			tangent *= s;
 			bitangent *= s;
 			tex_coords *= s;
-			position *= s;
 
 			return *this;
 		};

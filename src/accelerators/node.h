@@ -10,8 +10,8 @@ namespace pbr
 	{
 	public:
 		BBox bbox;
-		int start{0};
-		int end{0};
+		int start{};
+		int end{};
 		int elements{};
 		float distance{};
 		bool isLeaf = false;

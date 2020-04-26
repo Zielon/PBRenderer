@@ -88,11 +88,11 @@ pbr::Sample pbr::Triangle::sample(const glm::vec2& u) const{
 	Sample sample{};
 
 	// Local space
-	auto v0 = scene_object->get_vertex(ids.x) * b[0];
-	auto v1 = scene_object->get_vertex(ids.y) * b[1];
-	auto v2 = scene_object->get_vertex(ids.z) * (1 - b[0] - b[1]);
+	auto v0 = scene_object->get_vertex(ids.x).position * b[0];
+	auto v1 = scene_object->get_vertex(ids.y).position * b[1];
+	auto v2 = scene_object->get_vertex(ids.z).position * (1 - b[0] - b[1]);
 
-	sample.p = scene_object->transformation.vector_to_world(v0.position + v1.position + v2.position);
+	sample.p = scene_object->transformation.vector_to_world(v0 + v1 + v2);
 	sample.n = n;
 	sample.pdf = 1.f / area();
 

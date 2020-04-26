@@ -24,9 +24,12 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	auto shift = ray_epsilon * ns;
 	auto outside = dot(ray.d, ns) < 0.f;
 
-	if (mesh->type == LIGHT && mesh->area_light)
-		L += mesh->area_light->L(intersection.n, wo);
+	if (mesh->type == LIGHT && mesh->get_area_light())
+		L += mesh->get_area_light()->L(intersection.n, wo);
 
+	/*
+	 * Calculate Lambertian reflectance for all incoming lights.
+	 */
 	for (auto& light : scene->get_lights().get())
 	{
 		glm::vec3 wi{};
@@ -36,11 +39,12 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 		auto Li = light->sample_Li(intersection, scene, sampler->get2D(), &wi, &pdf, &is_shadow);
 		if (Li == glm::vec3(0.f) || pdf == 0.f) continue;
 		auto f = intersection.bsdf->f(wo, wi);
+
 		if (f != glm::vec3(0.f) && !is_shadow)
 			L += f * Li * std::abs(dot(wi, ns)) / pdf;
 	}
 
-	// Restore original intersection point
+	// Restore the original intersection point
 	intersection.point = o;
 
 	if (depth + 1 < 5)
@@ -55,6 +59,7 @@ glm::vec3 pbr::WhittedIntegrator::Li(const Ray& ray, const std::shared_ptr<Sampl
 	}
 
 	return L;
+
 }
 
 glm::vec3 pbr::WhittedIntegrator::reflect(

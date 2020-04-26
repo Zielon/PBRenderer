@@ -41,10 +41,12 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 
 pbr::Sample pbr::Mesh::sample(const glm::vec2& u) const{
 
-	std::vector<Sample> samples;
+	auto& primitives = bvh->get_primitives();
 
-	for (auto& triangle : bvh->get_primitives())
-		samples.emplace_back(triangle->sample(u));
+	std::vector<Sample> samples(primitives.size());
+
+	for (int i = 0; i < primitives.size(); i++)
+		samples[i] = primitives[i]->sample(u);
 
 	return *select_randomly(samples.begin(), samples.end());
 }
@@ -78,7 +80,7 @@ void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wir
 
 	glBindVertexArray(VAO);
 
-	shader->setMat4("model", transformation.to_world);
+	shader->setMat4("model", transformation.to_world_mat);
 	shader->setVec3("color", glm::vec3(0.75f, 0.75f, 0.75f));
 
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
@@ -114,6 +116,17 @@ std::shared_ptr<pbr::Material> pbr::Mesh::get_material() const{
 pbr::GL_Vertex pbr::Mesh::get_vertex(int id) const{
 
 	return gl_vertices[id];
+}
+
+std::shared_ptr<pbr::AreaLight> pbr::Mesh::get_area_light() const{
+
+	return area_light;
+}
+
+void pbr::Mesh::set_area_light(const std::shared_ptr<AreaLight>& light){
+
+	type = LIGHT;
+	area_light = light;
 }
 
 void pbr::Mesh::generate_triangle(){

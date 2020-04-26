@@ -11,7 +11,7 @@ namespace pbr
 	{
 	public:
 		AreaLight(const parser::LightConfig& config, std::shared_ptr<SceneObject> mesh):
-			Light(AREA, config), mesh_id(config.mesh_id), position(config.position), intensity(config.intensity),
+			Light(AREA, config), mesh_id(config.mesh_id), position(config.position), luminous(config.intensity),
 			two_sided(false), scene_object(std::move(mesh)){}
 
 		glm::vec3 sample_Li(
@@ -29,7 +29,7 @@ namespace pbr
 	private:
 		int mesh_id;
 		const glm::vec3 position;
-		const glm::vec3 intensity;
+		const glm::vec3 luminous;
 		bool two_sided;
 
 		/*

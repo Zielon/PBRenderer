@@ -30,8 +30,11 @@ namespace pbr
 
 		virtual float pdf_Li(const Intersection& ref, const glm::vec3& wi) const = 0;
 
-		virtual float sample_Le(const Intersection& intersection, const glm::vec2& u, glm::vec3* wi,
-		                        float* pdf) const = 0;
+		virtual float sample_Le(
+			const Intersection& intersection,
+			const glm::vec2& u,
+			glm::vec3* wi,
+			float* pdf) const = 0;
 
 		//virtual void pdf_Le(const Ray &ray, const Normal3f &nLight, Float *pdfPos, Float *pdfDir) const = 0;
 

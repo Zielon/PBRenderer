@@ -48,10 +48,10 @@ float pbr::AreaLight::sample_Le(const Intersection& intersection, const glm::vec
 
 glm::vec3 pbr::AreaLight::power() const{
 
-	return 2.f * intensity * scene_object->get_bbox().surface_area() / 2.f * glm::pi<float>();
+	return 2.f * luminous * scene_object->get_bbox().surface_area() / 2.f * glm::pi<float>();
 }
 
 glm::vec3 pbr::AreaLight::L(const glm::vec3& n, const glm::vec3& w) const{
 
-	return two_sided || dot(n, w) > 0 ? intensity : glm::vec3(0.f);
+	return two_sided || dot(n, w) > 0 ? luminous : glm::vec3(0.f);
 }

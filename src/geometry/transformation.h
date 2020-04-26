@@ -24,7 +24,8 @@ namespace pbr
 		glm::vec3 rotation_axis{};
 		glm::vec3 scaling{};
 		glm::vec3 translation{};
-		glm::mat4 to_world = glm::mat4(1.0f);
-		glm::mat4 to_local = glm::mat4(1.0f);
+		glm::mat4 to_world_mat = glm::mat4(1.0f);
+		glm::mat4 to_local_mat = glm::mat4(1.0f);
+		glm::mat4 normal_to_world_mat = glm::mat4(1.0f);
 	};
 }
