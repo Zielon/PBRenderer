@@ -16,8 +16,8 @@ namespace pbr
 		float distance{};
 		bool isLeaf = false;
 
-		std::shared_ptr<Node> left{nullptr};
-		std::shared_ptr<Node> right{nullptr};
+		std::unique_ptr<Node> left{nullptr};
+		std::unique_ptr<Node> right{nullptr};
 
 		Node() = default;
 

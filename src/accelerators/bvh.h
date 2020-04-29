@@ -96,7 +96,7 @@ namespace pbr
 
 			/*
 			 * The ownership and memory management of Node* still belongs to std::make_unique<Node>
-			 * however for intersection check it has been temporarily borrow by stack.
+			 * however for intersection check it has been borrow by stack temporarily.
 			 */
 			int size = 0;
 			std::array<Node*, 32> stack{};
@@ -125,13 +125,13 @@ namespace pbr
 			return intersection.distance < std::numeric_limits<float>::max();
 		}
 
-		std::vector<std::shared_ptr<T>>& get_primitives(){
+		const std::vector<std::shared_ptr<T>>& get_primitives() const{
 
 			return primitives;
 		}
 
 	private:
-		std::shared_ptr<Node> root;
+		std::unique_ptr<Node> root;
 		std::vector<std::shared_ptr<T>> primitives;
 
 		/**

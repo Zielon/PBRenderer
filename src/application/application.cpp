@@ -59,6 +59,7 @@ void app::Application::start(){
 	}
 
 	glfwTerminate();
+	exit(0);
 }
 
 void app::Application::render(){
