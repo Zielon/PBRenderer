@@ -333,9 +333,6 @@
     <ClCompile Include="..\src\core\bxdf.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\textures\texture.cpp">
-      <Filter>textures</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\bxdfs\lambertian_reflection.cpp">
       <Filter>bxdfs</Filter>
     </ClCompile>

@@ -133,7 +133,6 @@
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
     <ClCompile Include="..\src\textures\image_texture.cpp" />
-    <ClCompile Include="..\src\textures\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\configuration\default.json" />
