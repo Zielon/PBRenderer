@@ -15,7 +15,7 @@ glm::vec3 pbr::BxDF::sample_f(
 
 float pbr::BxDF::pdf(const glm::vec3& wo, const glm::vec3& wi) const{
 
-	return !math::same_hemisphere(wo, wi) ? math::abs_cos_theta(wi) * glm::one_over_pi<float>() : 0.f;
+	return math::same_hemisphere(wo, wi) ? math::abs_cos_theta(wi) * glm::one_over_pi<float>() : 0.f;
 }
 
 bool pbr::BxDF::matches_flags(const BxDFType t) const{

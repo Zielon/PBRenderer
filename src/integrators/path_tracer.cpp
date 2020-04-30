@@ -32,8 +32,6 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		auto wo = intersection.wo;
 		auto o = intersection.point;
 		auto ns = intersection.shading.n;
-		auto offset = ray_epsilon * ns;
-		auto outside = dot(ray.d, ns) < 0.f;
 
 		if (mesh->type == LIGHT && mesh->get_area_light())
 			L += beta * mesh->get_area_light()->L(ns, wo);

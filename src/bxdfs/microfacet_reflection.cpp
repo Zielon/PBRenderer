@@ -11,7 +11,7 @@ glm::vec3 pbr::MicrofacetReflection::f(const glm::vec3& wo, const glm::vec3& wi)
 	wh = normalize(wh);
 	glm::vec3 f = fresnel->evaluate(dot(wi, math::face_forward(wh, glm::vec3(0, 0, 1))));
 
-	return r * distribution->D(wh) * distribution->G(wo, wi) * f / std::max(4 * cos_theta_i * cos_theta_o, 0.00001f);
+	return r * distribution->D(wh) * distribution->G(wo, wi) * f / (4 * cos_theta_i * cos_theta_o);
 }
 
 glm::vec3 pbr::MicrofacetReflection::sample_f(
@@ -32,8 +32,6 @@ glm::vec3 pbr::MicrofacetReflection::sample_f(
 float pbr::MicrofacetReflection::pdf(const glm::vec3& wo, const glm::vec3& wi) const{
 
 	if (!math::same_hemisphere(wo, wi)) return 0;
-
 	glm::vec3 wh = normalize(wo + wi);
-
 	return distribution->pdf(wo, wh) / (4 * dot(wo, wh));
 }

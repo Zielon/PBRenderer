@@ -141,7 +141,7 @@ void app::Application::attach_menu(){
 		const auto position = camera->get_coordinate().get().position;
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
-		if (ImGui::CollapsingHeader("Current integrator"))
+		if (ImGui::CollapsingHeader("Current integrator"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
 			ImGui::ListBox("integrators", &integrator_type, integrators, IM_ARRAYSIZE(integrators), 2);
 		}
