@@ -17,12 +17,12 @@ void pbr::MetalMaterial::compute_BxDF(Intersection& intersection, TransportMode 
 
 	Triangle* triangle = const_cast<Triangle*>(intersection.triangle);
 
-	intersection.bsdf = std::make_shared<BSDF>(intersection, triangle->scene_object);
-
 	//GOLD
 	auto eta = glm::vec3(0.27732f); // Refractive index
 	auto k = glm::vec3(2.9278f); // Extinction coefficient
 	auto r = glm::vec3(1.f);
+
+	intersection.bsdf = std::make_shared<BSDF>(intersection, triangle->scene_object);
 
 	auto fresnel = std::make_shared<FresnelConductor>(glm::vec3(1.f), eta, k);
 	auto distribution = std::make_shared<BeckmannDistribution>(roughness_to_alpha(.01f), roughness_to_alpha(.01f));

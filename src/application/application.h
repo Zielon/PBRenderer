@@ -36,6 +36,7 @@ namespace app
 
 		// Menu options
 		int shader_type{0};
+		int integrator_type{0};
 		std::atomic<float> progress{0.f};
 		time_point<steady_clock> begin_rendering;
 		time_point<steady_clock> begin_frame;

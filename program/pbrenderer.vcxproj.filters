@@ -246,6 +246,9 @@
     <ClInclude Include="..\src\lights\area_light.h">
       <Filter>lights</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\integrators\path_tracer.h">
+      <Filter>integrators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="..\src\lights\area_light.cpp">
       <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\integrators\path_tracer.cpp">
+      <Filter>integrators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

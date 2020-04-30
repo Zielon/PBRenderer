@@ -67,6 +67,7 @@
     <ClInclude Include="..\src\geometry\intersection.h" />
     <ClInclude Include="..\src\geometry\transformation.h" />
     <ClInclude Include="..\src\geometry\triangle.h" />
+    <ClInclude Include="..\src\integrators\path_tracer.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\lights\area_light.h" />
     <ClInclude Include="..\src\lights\point_light.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="..\src\geometry\loader.cpp" />
     <ClCompile Include="..\src\geometry\transformation.cpp" />
     <ClCompile Include="..\src\geometry\triangle.cpp" />
+    <ClCompile Include="..\src\integrators\path_tracer.cpp" />
     <ClCompile Include="..\src\integrators\whitted.cpp" />
     <ClCompile Include="..\src\lights\area_light.cpp" />
     <ClCompile Include="..\src\lights\point_light.cpp" />

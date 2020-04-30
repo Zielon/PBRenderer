@@ -6,8 +6,8 @@
 #include "uniform_sampler.h"
 #include "../cameras/projective.h"
 
-pbr::Integrator::Integrator(std::shared_ptr<Scene> scene, int num_samples):
-	num_samples(num_samples), scene(std::move(scene)){
+pbr::Integrator::Integrator(std::shared_ptr<Scene> scene, int num_samples, std::string name):
+	name(name), num_samples(num_samples), scene(std::move(scene)){
 
 	const auto threads = std::thread::hardware_concurrency();
 	for (auto i = 0; i < threads; ++i)
@@ -50,12 +50,12 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 	}
 
 	get_film()->merge(pixels);
-	get_film()->save_jpg("output.jpg");
+	get_film()->save_jpg(name + "_output.jpg");
 	//get_film()->save_ppm("output.ppm");
 
 	const auto end = std::chrono::steady_clock::now();
 	const auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-	std::cout << "INFO::INTEGRATOR Render time: [" << millis << " ms]" << std::endl;
+	std::cout << "INFO::INTEGRATOR (" << name << ") render time: [" << millis << " ms]" << std::endl;
 }
 
 std::shared_ptr<pbr::Film> pbr::Integrator::get_film() const{

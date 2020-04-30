@@ -2,6 +2,7 @@
 
 #include <thread>
 #include "../integrators/whitted.h"
+#include "../integrators/path_tracer.h"
 
 const unsigned int SCR_WIDTH = 1000;
 const unsigned int SCR_HEIGHT = 800;
@@ -70,8 +71,23 @@ void app::Application::render(){
 	begin_rendering = steady_clock::now();
 
 	std::thread work([this](){
-		pbr::WhittedIntegrator whitted(scene, num_samples);
-		whitted.render(progress);
+		switch (integrator_type)
+		{
+		case 0:
+			{
+				pbr::PathTracer path(scene, num_samples);
+				path.render(progress);
+				break;
+			}
+		case 1:
+			{
+				pbr::WhittedIntegrator whitted(scene, num_samples);
+				whitted.render(progress);
+				break;
+			}
+		default:
+			break;
+		}
 		is_rendering = false;
 		progress = 0;
 	});
@@ -96,8 +112,9 @@ void app::Application::fps(){
 void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
+	const char* integrators[] = {"PATH TRACER", "WHITTED"};
 
-	menu.attach([shaders, this](){
+	menu.attach([shaders, integrators, this](){
 
 		ImGui::Text("PBRenderer");
 
@@ -123,6 +140,13 @@ void app::Application::attach_menu(){
 
 		const auto position = camera->get_coordinate().get().position;
 
+		ImGui::PushItemWidth(ImGui::GetWindowWidth());
+		if (ImGui::CollapsingHeader("Current integrator"))
+		{
+			ImGui::ListBox("integrators", &integrator_type, integrators, IM_ARRAYSIZE(integrators), 2);
+		}
+
+		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		ImGui::Text("# samples");
 		ImGui::SameLine();
 		ImGui::InputInt("int", &num_samples, 1);

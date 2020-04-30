@@ -10,11 +10,11 @@ void pbr::GlassMaterial::compute_BxDF(Intersection& intersection, TransportMode 
 
 	Triangle* triangle = const_cast<Triangle*>(intersection.triangle);
 
-	intersection.bsdf = std::make_shared<BSDF>(intersection, triangle->scene_object);
-
 	float eta = index->evaluate(intersection);
 	glm::vec3 R = kr->evaluate(intersection);
 	glm::vec3 T = kt->evaluate(intersection);
+
+	intersection.bsdf = std::make_shared<BSDF>(intersection, triangle->scene_object, eta);
 
 	auto fresnel = std::make_shared<FresnelDielectric>(1.f, eta);
 

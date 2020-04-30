@@ -16,7 +16,7 @@ glm::vec3 pbr::AreaLight::sample_Li(
 
 	Intersection light{};
 	*wi = normalize(direction);
-	*shadow = !scene->intersect(Ray(intersection.point, *wi), light);
+	*shadow = !scene->intersect(Ray(intersection.point + *wi * 0.0001f, *wi), light);
 	*pdf = 0.f;
 
 	if (!*shadow && light.triangle->scene_object->type != LIGHT)

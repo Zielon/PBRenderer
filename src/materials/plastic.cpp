@@ -19,8 +19,8 @@ void pbr::PlasticMaterial::compute_BxDF(Intersection& intersection, TransportMod
 
 	intersection.bsdf = std::make_shared<BSDF>(intersection, triangle->scene_object);
 
-	auto kd = glm::vec3(0.55f);
-	auto r = glm::vec3(0.25f);
+	auto kd = glm::vec3(0.235294, 0.67451, 0.843137);
+	auto r = glm::vec3(0.05f);
 	auto fresnel = std::make_shared<FresnelDielectric>(1.5f, 1.f);
 	auto distribution = std::make_shared<BeckmannDistribution>(roughness_to_alpha(.01f), roughness_to_alpha(.01f));
 

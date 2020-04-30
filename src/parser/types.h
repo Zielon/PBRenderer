@@ -40,6 +40,9 @@ namespace parser
 		explicit MaterialConfig(const rapidjson::Value& node){
 
 			type = node["type"].GetString();
+
+			if (!node.HasMember("textures")) return;
+
 			const rapidjson::Value& textures_map = node["textures"];
 
 			assert(textures_map.IsArray());

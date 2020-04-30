@@ -10,13 +10,12 @@ glm::vec3 pbr::BxDF::sample_f(
 	*wi = math::cosine_sample_hemisphere(sample);
 	if (wo.z < 0) wi->z *= -1;
 	*pdf = this->pdf(wo, *wi);
-
 	return f(wo, *wi);
 }
 
 float pbr::BxDF::pdf(const glm::vec3& wo, const glm::vec3& wi) const{
 
-	return math::same_hemisphere(wo, wi) ? math::abs_cos_theta(wi) * glm::one_over_pi<float>() : 0.f;
+	return !math::same_hemisphere(wo, wi) ? math::abs_cos_theta(wi) * glm::one_over_pi<float>() : 0.f;
 }
 
 bool pbr::BxDF::matches_flags(const BxDFType t) const{

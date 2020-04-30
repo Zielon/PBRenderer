@@ -113,4 +113,37 @@ namespace math
 		*wt = eta * -wi + (eta * cosThetaI - cosThetaT) * n;
 		return true;
 	}
+
+	inline float next_float_up(float f){
+		unsigned x;
+		memcpy(&x, &f, 4);
+		++x;
+		memcpy(&f, &x, 4);
+		return f;
+	}
+
+	inline float next_float_down(float f){
+		unsigned x;
+		memcpy(&x, &f, 4);
+		--x;
+		memcpy(&f, &x, 4);
+		return f;
+	}
+
+	inline glm::vec3 offset_ray_origin(
+		const glm::vec3& p, const glm::vec3& n, const glm::vec3& error, const glm::vec3& w){
+
+		float d = dot(abs(n), error);
+		glm::vec3 offset = d * glm::vec3(n);
+		if (dot(w, n) < 0) offset = -offset;
+		glm::vec3 po = p + offset;
+		for (int i = 0; i < 3; ++i)
+		{
+			if (offset[i] > 0)
+				po[i] = next_float_up(po[i]);
+			else if (offset[i] < 0)
+				po[i] = next_float_down(po[i]);
+		}
+		return po;
+	}
 }

@@ -23,6 +23,7 @@ namespace pbr
 		glm::vec3 point;
 		glm::vec3 wo;
 		Shading shading;
+		glm::vec3 error;
 		const Triangle* triangle{nullptr};
 		std::shared_ptr<BSDF> bsdf{nullptr};
 		float distance = std::numeric_limits<float>::max();

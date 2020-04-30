@@ -28,11 +28,11 @@ namespace pbr
 	class BSDF
 	{
 	public:
-		explicit BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object);
+		explicit BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object, float eta = 1.f);
 
 		void add(const std::shared_ptr<BxDF>& bx);
 
-		virtual float pdf(const glm::vec3& wo, const glm::vec3& wi) const;
+		virtual float pdf(const glm::vec3& wo, const glm::vec3& wi, BxDFType flags = ALL) const;
 
 		/*
 		 * This function assumes that light is decoupled in different wavelengths.
@@ -47,6 +47,8 @@ namespace pbr
 			BxDFType* sampled_type = nullptr) const;
 
 		int num_components(BxDFType flags = ALL) const;
+
+		float eta;
 
 	private:
 		glm::vec3 n;

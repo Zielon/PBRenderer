@@ -4,6 +4,12 @@
 #include <glm/gtc/constants.hpp>
 #include "../math/math.h"
 
+// http://www.pbr-book.org/3ed-2018/Shapes/Managing_Rounding_Error.html
+inline float gamma(int n){
+
+	return (n * std::numeric_limits<float>::epsilon() * 0.5) / (1 - n * std::numeric_limits<float>::epsilon() * 0.5);
+}
+
 /**
  * Moller-Trumbore triangle-ray intersection algorithm.
  */
@@ -34,6 +40,12 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 		auto v0 = scene_object->get_vertex(ids.x) * w0;
 		auto v1 = scene_object->get_vertex(ids.y) * w1;
 		auto v2 = scene_object->get_vertex(ids.z) * w2;
+
+		auto x_abs_sum = std::abs(v0.position.x) + std::abs(v1.position.x) + std::abs(v2.position.x);
+		auto y_abs_sum = std::abs(v0.position.y) + std::abs(v1.position.y) + std::abs(v2.position.y);
+		auto z_abs_sum = std::abs(v0.position.z) + std::abs(v1.position.z) + std::abs(v2.position.z);
+
+		intersection.error = gamma(7) * glm::vec3(x_abs_sum, y_abs_sum, z_abs_sum);
 
 		Shading shading{};
 
