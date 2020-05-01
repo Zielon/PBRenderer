@@ -29,9 +29,11 @@ namespace pbr
 
 		GL_Vertex operator*(float s){
 
+			position *= s;
 			normal *= s;
-			bitangent *= s;
 			tex_coords *= s;
+			bitangent *= s;
+			tangent *= s;
 
 			return *this;
 		};
@@ -58,6 +60,8 @@ namespace pbr
 		virtual void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) = 0;
 
 		virtual GL_Vertex get_vertex(int id) const = 0;
+
+		virtual float get_area() const = 0;
 
 		Transformation transformation;
 

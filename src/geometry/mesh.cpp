@@ -4,15 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <random>
-
-template <typename Iterator>
-Iterator select_randomly(Iterator start, Iterator end){
-	static std::random_device rd;
-	static std::mt19937 gen(rd());
-	const std::uniform_int_distribution<> dis(0, std::distance(start, end) - 1);
-	std::advance(start, dis(gen));
-	return start;
-}
+#include "../core/utils.h"
 
 pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
                 std::vector<unsigned> indices,
@@ -41,14 +33,8 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
 
 pbr::Sample pbr::Mesh::sample(const glm::vec2& u) const{
 
-	auto& primitives = bvh->get_primitives();
-
-	std::vector<Sample> samples(primitives.size());
-
-	for (int i = 0; i < primitives.size(); i++)
-		samples[i] = primitives[i]->sample(u);
-
-	return *select_randomly(samples.begin(), samples.end());
+	auto& primitive = *select_randomly(bvh->get_primitives().begin(), bvh->get_primitives().end());
+	return primitive->sample(u);
 }
 
 void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe){
@@ -113,9 +99,14 @@ std::shared_ptr<pbr::Material> pbr::Mesh::get_material() const{
 	return material;
 }
 
+float pbr::Mesh::get_area() const{
+
+	return area;
+}
+
 pbr::GL_Vertex pbr::Mesh::get_vertex(int id) const{
 
-	return gl_vertices[id];
+	return vertices[id];
 }
 
 std::shared_ptr<pbr::AreaLight> pbr::Mesh::get_area_light() const{
@@ -151,6 +142,12 @@ void pbr::Mesh::generate_triangle(){
 		bvh->add(triangle);
 
 		bbox.extend(min, max);
+
+		area += triangle->area;
+
+		vertices.push_back(transformation.vertex_to_world(gl_vertices[indices[i]]));
+		vertices.push_back(transformation.vertex_to_world(gl_vertices[indices[i + 1]]));
+		vertices.push_back(transformation.vertex_to_world(gl_vertices[indices[i + 2]]));
 	}
 }
 

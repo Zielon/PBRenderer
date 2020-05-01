@@ -19,7 +19,7 @@ glm::vec3 pbr::PointLight::sample_Li(
 	return intensity / length(direction) * length(direction);
 }
 
-float pbr::PointLight::pdf_Li(const Intersection& ref, const glm::vec3& wi) const{
+float pbr::PointLight::pdf_Li(const Intersection& ref, const std::shared_ptr<Scene>& scene, const glm::vec3& wi) const{
 
 	return 0.f;
 }

@@ -6,7 +6,9 @@
 
 inline float power_heuristic(int nf, float fPdf, int ng, float gPdf){
 
-	auto f = nf * fPdf, g = ng * gPdf;
+	auto f = nf * fPdf;
+	auto g = ng * gPdf;
+
 	return (f * f) / (f * f + g * g);
 }
 
@@ -56,7 +58,6 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 				float light_pdf{0.f};
 				float scattering_pdf{0.f};
 				bool is_shadow{};
-
 				auto Li = light->sample_Li(intersection, scene, sampler->get2D(), &wi, &light_pdf, &is_shadow);
 
 				if (light_pdf > 0.f && Li != glm::vec3(0.f))
@@ -67,7 +68,9 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 					if (f != glm::vec3(0.f))
 					{
 						if (is_shadow) Li = glm::vec3(0.f);
-						else
+
+						// Add light's contribution to reflected radiance
+						if (Li != glm::vec3(0.f))
 						{
 							float weight = power_heuristic(1, light_pdf, 1, scattering_pdf);
 							Ld += f * Li * weight / light_pdf;
@@ -75,7 +78,7 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 					}
 				}
 
-				// Sample BSDF with multiple importance sampling
+				// Sample scattered direction for surface interactions
 				BxDFType type;
 				auto f = intersection.bsdf->sample_f(wo, &wi, sampler, &scattering_pdf, bsdf_flags, &type);
 				f *= std::abs(dot(wi, ns));
@@ -87,14 +90,15 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 					float weight = 1.f;
 					if (!is_specular)
 					{
-						light_pdf = light->pdf_Li(intersection, wi);
+						light_pdf = light->pdf_Li(intersection, scene, wi);
 						if (light_pdf == 0) return Ld;
 						weight = power_heuristic(1, scattering_pdf, 1, light_pdf);
 					}
 
 					// Find intersection
 					Intersection light_intersection;
-					auto intersects = scene->intersect({o, wi}, light_intersection);
+					Ray surface_ray = {o + wi * ray_epsilon, wi};
+					auto intersects = scene->intersect(surface_ray, light_intersection);
 
 					Li = glm::vec3(0.f);
 
@@ -102,7 +106,7 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 					{
 						auto area_light = mesh->get_area_light();
 						if (mesh->type == LIGHT && area_light == light)
-							Li = area_light ? area_light->L(light_intersection.shading.n, -wi) : glm::vec3(0.f);
+							Li = area_light->L(light_intersection.shading.n, -wi);
 
 						if (Li != glm::vec3(0.f))
 							Ld += f * Li * weight / scattering_pdf;
@@ -121,14 +125,15 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		auto f = intersection.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(ALL), &flags);
 		beta *= f * std::abs(dot(wi, ns)) / pdf;
 
-		ray = {math::offset_ray_origin(o, ns, intersection.error, wi), wi};
+		//ray = {math::offset_ray_origin(o, ns, intersection.error, wi), wi};
+		ray = {o + wi * ray_epsilon, wi};
 
 		is_specular_ray = (flags & SPECULAR) != 0;
 
 		// Russian roulette
 		if (compMax(beta) < 1.f && depth > 3)
 		{
-			float q = std::max(float(.05), 1 - compMax(beta));
+			float q = std::max(float(.05), 1.f - compMax(beta));
 			if (sampler->get1D() < q) break;
 			beta /= 1 - q;
 		}

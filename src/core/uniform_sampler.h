@@ -46,10 +46,10 @@ namespace pbr
 
 	inline glm::vec2 concentric_sample_disk(const glm::vec2& u){
 
+		// Map uniform random numbers to [-1,1]^2
 		glm::vec2 u_offset = 2.f * u - glm::vec2(1, 1);
 
 		if (u_offset.x == 0 && u_offset.y == 0) return glm::vec2(0, 0);
-
 		float theta, r;
 
 		if (std::abs(u_offset.x) > std::abs(u_offset.y))

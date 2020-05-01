@@ -4,8 +4,8 @@
 #include "../integrators/whitted.h"
 #include "../integrators/path_tracer.h"
 
-const unsigned int SCR_WIDTH = 1000;
-const unsigned int SCR_HEIGHT = 800;
+const unsigned int SCR_WIDTH = 500;
+const unsigned int SCR_HEIGHT = 500;
 
 app::Application::Application():
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),

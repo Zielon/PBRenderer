@@ -7,6 +7,8 @@
 
 namespace pbr
 {
+	struct GL_Vertex;
+
 	class Transformation
 	{
 	public:
@@ -19,6 +21,8 @@ namespace pbr
 		glm::vec3 vector_to_local(glm::vec3 vector) const;
 
 		glm::vec3 normal_to_world(glm::vec3 vector) const;
+
+		GL_Vertex vertex_to_world(const GL_Vertex& vertex) const;
 
 		float rotation_degree;
 		glm::vec3 rotation_axis{};

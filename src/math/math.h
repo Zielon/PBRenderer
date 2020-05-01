@@ -97,7 +97,7 @@ namespace math
 	inline glm::vec3 cosine_sample_hemisphere(const glm::vec2& u){
 
 		glm::vec2 d = pbr::concentric_sample_disk(u);
-		float z = std::sqrt(std::max(float(0), 1 - d.x * d.x - d.y * d.y));
+		float z = std::sqrt(std::max(0.f, 1.f - d.x * d.x - d.y * d.y));
 		return glm::vec3(d.x, d.y, z);
 	}
 
@@ -114,22 +114,6 @@ namespace math
 		return true;
 	}
 
-	inline float next_float_up(float f){
-		unsigned x;
-		memcpy(&x, &f, 4);
-		++x;
-		memcpy(&f, &x, 4);
-		return f;
-	}
-
-	inline float next_float_down(float f){
-		unsigned x;
-		memcpy(&x, &f, 4);
-		--x;
-		memcpy(&f, &x, 4);
-		return f;
-	}
-
 	inline glm::vec3 offset_ray_origin(
 		const glm::vec3& p, const glm::vec3& n, const glm::vec3& error, const glm::vec3& w){
 
@@ -137,13 +121,6 @@ namespace math
 		glm::vec3 offset = d * glm::vec3(n);
 		if (dot(w, n) < 0) offset = -offset;
 		glm::vec3 po = p + offset;
-		for (int i = 0; i < 3; ++i)
-		{
-			if (offset[i] > 0)
-				po[i] = next_float_up(po[i]);
-			else if (offset[i] < 0)
-				po[i] = next_float_down(po[i]);
-		}
 		return po;
 	}
 }

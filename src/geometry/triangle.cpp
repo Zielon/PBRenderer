@@ -36,16 +36,10 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 
 	if (t > 0.0f && intersection.distance > t)
 	{
-		// Local space
+		// World space
 		auto v0 = scene_object->get_vertex(ids.x) * w0;
 		auto v1 = scene_object->get_vertex(ids.y) * w1;
 		auto v2 = scene_object->get_vertex(ids.z) * w2;
-
-		auto x_abs_sum = std::abs(v0.position.x) + std::abs(v1.position.x) + std::abs(v2.position.x);
-		auto y_abs_sum = std::abs(v0.position.y) + std::abs(v1.position.y) + std::abs(v2.position.y);
-		auto z_abs_sum = std::abs(v0.position.z) + std::abs(v1.position.z) + std::abs(v2.position.z);
-
-		intersection.error = gamma(7) * glm::vec3(x_abs_sum, y_abs_sum, z_abs_sum);
 
 		Shading shading{};
 
@@ -53,16 +47,16 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 		auto ss = normalize(v0.bitangent + v1.bitangent + v2.bitangent);
 
 		shading.uv = v0.tex_coords + v1.tex_coords + v2.tex_coords;
-		shading.n = scene_object->transformation.normal_to_world(ns);
-		shading.dpdu = scene_object->transformation.vector_to_local(ss);
-		shading.dpdv = scene_object->transformation.vector_to_local(cross(ss, ns));
+		shading.n = ns;
+		shading.dpdu = ss;
+		shading.dpdv = cross(ss, ns);
 
 		// In the case of no tangent and bitangent space, use spherical mapping
 		if (v0.tex_coords == glm::vec2(0.f) &&
 			v1.tex_coords == glm::vec2(0.f) &&
 			v2.tex_coords == glm::vec2(0.f))
 		{
-			auto hit = scene_object->transformation.vector_to_local(ray.point(t));
+			auto hit = ray.point(t);
 
 			// Spherical coordinates
 			auto radius = length(hit);
@@ -74,12 +68,15 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 				float>();
 
 			shading.uv = glm::vec2(phi * glm::one_over_two_pi<float>(), theta * glm::one_over_pi<float>());
-			shading.dpdu = scene_object->transformation.vector_to_local(dpdu);
-			shading.dpdv = scene_object->transformation.vector_to_local(dpdv);
+			shading.dpdu = dpdu;
+			shading.dpdv = dpdv;
 		}
 
+		auto sum = abs(v0.position) + abs(v1.position) + abs(v2.position);
+
 		// World space
-		intersection.n = scene_object->transformation.normal_to_world(n);
+		intersection.error = gamma(7) * glm::vec3(sum.x, sum.y, sum.z);
+		intersection.n = n;
 		intersection.point = ray.point(t);
 		intersection.wo = -ray.d;
 		intersection.distance = t;
@@ -99,21 +96,18 @@ pbr::Sample pbr::Triangle::sample(const glm::vec2& u) const{
 
 	Sample sample{};
 
-	// Local space
+	// World space
 	auto v0 = scene_object->get_vertex(ids.x).position * b[0];
 	auto v1 = scene_object->get_vertex(ids.y).position * b[1];
 	auto v2 = scene_object->get_vertex(ids.z).position * (1 - b[0] - b[1]);
+	auto sum = abs(v0) + abs(v1) + abs(v2);
 
-	sample.p = scene_object->transformation.vector_to_world(v0 + v1 + v2);
-	sample.n = n;
-	sample.pdf = 1.f / area();
+	sample.error = gamma(7) * glm::vec3(sum.x, sum.y, sum.z);
+	sample.point = v0 + v1 + v2;
+	sample.normal = n;
+	sample.pdf = 1.f / area;
 
 	return sample;
-}
-
-float pbr::Triangle::area() const{
-
-	return 0.5f * length(cross(edge0, edge1));
 }
 
 pbr::BBox pbr::Triangle::get_bbox() const{

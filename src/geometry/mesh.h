@@ -38,6 +38,8 @@ namespace pbr
 
 		std::shared_ptr<Material> get_material() const override;
 
+		float get_area() const override;
+
 		Sample sample(const glm::vec2& u) const;
 
 		GL_Vertex get_vertex(int id) const override;
@@ -49,9 +51,11 @@ namespace pbr
 	private:
 		GLuint VAO{}, VBO{}, EBO{};
 
+		float area = 0;
 		std::string name;
 		BBox bbox;
 		std::shared_ptr<BVH<Triangle>> bvh;
+		std::vector<GL_Vertex> vertices;
 		std::vector<GL_Vertex> gl_vertices;
 		std::vector<GL_Texture> gl_textures;
 		std::vector<GLuint> indices;

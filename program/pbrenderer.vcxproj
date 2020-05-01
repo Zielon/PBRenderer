@@ -58,6 +58,7 @@
     <ClInclude Include="..\src\core\reflection.h" />
     <ClInclude Include="..\src\core\scene.h" />
     <ClInclude Include="..\src\core\uniform_sampler.h" />
+    <ClInclude Include="..\src\core\utils.h" />
     <ClInclude Include="..\src\geometry\bbox.h" />
     <ClInclude Include="..\src\geometry\camera_system.h" />
     <ClInclude Include="..\src\geometry\mesh.h" />

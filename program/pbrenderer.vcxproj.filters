@@ -249,6 +249,9 @@
     <ClInclude Include="..\src\integrators\path_tracer.h">
       <Filter>integrators</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\core\utils.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
