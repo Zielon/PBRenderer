@@ -4,7 +4,7 @@
       "id": 4,
       "name": "area light 1",
       "type": "AREA_LIGHT",
-      "intensity": 100,
+      "intensity": 70,
       "mesh_id": 2
     }
   ],
@@ -35,7 +35,7 @@
       "name": "cbox_luminaire",
       "path": "..\\resources\\cbox\\cbox_luminaire.obj",
       "scaling": "0.001 0.001 0.001",
-      "translation": "0 -0.01 0",
+      "translation": "0 0 0",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
@@ -63,7 +63,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "1 0 0"
+            "value": "0.651 0.055 0.057"
           }
         ]
       }
@@ -82,7 +82,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0 1 0"
+            "value": "0.115 0.476 0.098"
           }
         ]
       }
@@ -101,7 +101,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0 0 1"
+            "value": "0.708 0.721 0.758"
           }
         ]
       }
@@ -120,7 +120,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.235294 0.67451 0.843137"
+            "value": "0.708 0.721 0.758"
           }
         ]
       }

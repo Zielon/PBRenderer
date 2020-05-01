@@ -3,26 +3,29 @@
 #include "../geometry/intersection.h"
 #include "../geometry/triangle.h"
 #include "../geometry/mesh.h"
-#include "../math/math.h"
 
 glm::vec3 pbr::AreaLight::sample_Li(
 	const Intersection& intersection, const std::shared_ptr<Scene>& scene, const glm::vec2& u, glm::vec3* wi,
 	float* pdf, bool* shadow) const{
 
-	auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(scene_light);
-	auto sample = mesh->sample(u);
+	// Sample point on the area light mesh
+	auto light = std::dynamic_pointer_cast<Mesh, SceneObject>(scene_light);
+	auto sample = light->sample(u);
 	auto direction = sample.point - intersection.point;
 
-	Intersection light{};
 	*wi = normalize(direction);
-	*shadow = !scene->intersect(Ray(intersection.point, *wi), light);
 	*pdf = 0.f;
+	*shadow = true;
 
-	if (!*shadow && light.triangle->scene_object->type != LIGHT)
+	Intersection shadow_test{};
+	auto intersects = scene->intersect(Ray(intersection.point + *wi * 0.0001f, direction), shadow_test); // Shadow ray
+
+	if (!intersects || shadow_test.triangle->scene_object->type != LIGHT)
 		return glm::vec3(0.f);
 
+	*shadow = false;
 	*pdf = sample.pdf;
-	*pdf *= length(direction) * length(direction) / std::abs(dot(sample.normal, *wi));
+	*pdf *= (length(direction) * length(direction)) / std::abs(dot(sample.normal, -*wi));
 
 	if (std::isinf(*pdf)) *pdf = 0.f;
 
@@ -40,13 +43,10 @@ float pbr::AreaLight::pdf_Li(const Intersection& intersection, const std::shared
 	// Only visible samples are considered
 	if (!scene->intersect(ray, light_intersection)) return 0.f;
 
-	if (light_intersection.triangle->scene_object->type != LIGHT)
-		return 0.f;
-
 	auto direction = intersection.point - light_intersection.point;
 
 	// Convert light sample weight to solid angle measure
-	float pdf = dot(direction, direction) / (std::abs(dot(light_intersection.n, -wi)) * light->get_area());
+	float pdf = (length(direction) * length(direction)) / (std::abs(dot(light_intersection.n, -wi)) * light->get_area());
 
 	return std::isinf(pdf) ? 0.f : pdf;
 }

@@ -55,11 +55,11 @@ namespace pbr
 		std::string name;
 		BBox bbox;
 		std::shared_ptr<BVH<Triangle>> bvh;
-		std::vector<GL_Vertex> vertices;
-		std::vector<GL_Vertex> gl_vertices;
-		std::vector<GL_Texture> gl_textures;
+		std::vector<GL_Vertex> GL_vertices;
+		std::vector<GL_Texture> GL_textures;
 		std::vector<GLuint> indices;
 		const parser::MeshConfig configuration;
+		std::vector<GL_Vertex> vertices;
 		std::shared_ptr<AreaLight> area_light{nullptr};
 
 		void generate_triangle();

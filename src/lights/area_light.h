@@ -12,7 +12,7 @@ namespace pbr
 	public:
 		AreaLight(const parser::LightConfig& config, std::shared_ptr<SceneObject> mesh):
 			Light(AREA, config), mesh_id(config.mesh_id), position(config.position), luminous(config.intensity),
-			two_sided(false), scene_light(std::move(mesh)){}
+			two_sided(true), scene_light(std::move(mesh)){}
 
 		glm::vec3 sample_Li(
 			const Intersection& intersection, const std::shared_ptr<Scene>& scene, const glm::vec2& u, glm::vec3* wi,

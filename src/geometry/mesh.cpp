@@ -6,16 +6,17 @@
 #include <random>
 #include "../core/utils.h"
 
-pbr::Mesh::Mesh(std::vector<GL_Vertex> vertices,
+pbr::Mesh::Mesh(std::vector<GL_Vertex> gl_vertices,
                 std::vector<unsigned> indices,
                 std::vector<GL_Texture> textures,
                 parser::MeshConfig config):
 	SceneObject(config.id, MESH),
 	bvh(std::make_shared<BVH<Triangle>>()),
-	gl_vertices(std::move(vertices)),
-	gl_textures(std::move(textures)),
+	GL_vertices(std::move(gl_vertices)),
+	GL_textures(std::move(textures)),
 	indices(std::move(indices)),
-	configuration(config){
+	configuration(config),
+	vertices(std::vector<GL_Vertex>(gl_vertices.size())){
 
 	material = Material::create_material(config.material_config);
 	transformation = Transformation(
@@ -44,12 +45,12 @@ void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wir
 	unsigned int normalNr = 1;
 	unsigned int heightNr = 1;
 
-	for (unsigned int i = 0; i < gl_textures.size(); i++)
+	for (unsigned int i = 0; i < GL_textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
 
 		std::string number;
-		std::string name = gl_textures[i].type;
+		std::string name = GL_textures[i].type;
 
 		if (name == "texture_diffuse")
 			number = std::to_string(diffuseNr++);
@@ -61,7 +62,7 @@ void pbr::Mesh::draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wir
 			number = std::to_string(heightNr++);
 
 		glUniform1i(glGetUniformLocation(shader->ID, (name + number).c_str()), i);
-		glBindTexture(GL_TEXTURE_2D, gl_textures[i].id);
+		glBindTexture(GL_TEXTURE_2D, GL_textures[i].id);
 	}
 
 	glBindVertexArray(VAO);
@@ -122,11 +123,13 @@ void pbr::Mesh::set_area_light(const std::shared_ptr<AreaLight>& light){
 
 void pbr::Mesh::generate_triangle(){
 
+	vertices.resize(GL_vertices.size());
+
 	for (auto i = 0; i < indices.size(); i += 3)
 	{
-		auto a = gl_vertices[indices[i]].position;
-		auto b = gl_vertices[indices[i + 1]].position;
-		auto c = gl_vertices[indices[i + 2]].position;
+		auto a = GL_vertices[indices[i]].position;
+		auto b = GL_vertices[indices[i + 1]].position;
+		auto c = GL_vertices[indices[i + 2]].position;
 
 		auto n = transformation.normal_to_world(normalize(cross(b - a, c - a)));
 		auto v0 = transformation.vector_to_world(a);
@@ -136,7 +139,7 @@ void pbr::Mesh::generate_triangle(){
 		const auto min = glm::min(glm::min(v1, v2), v0);
 		const auto max = glm::max(glm::max(v1, v2), v0);
 
-		auto ids = glm::ivec3(indices[i], indices[i + 1], indices[i + 2]);
+		glm::ivec3 ids = glm::ivec3(indices[i], indices[i + 1], indices[i + 2]);
 		auto triangle = std::make_shared<Triangle>(ids, v0, v1, v2, n, min, max, this);
 
 		bvh->add(triangle);
@@ -145,9 +148,9 @@ void pbr::Mesh::generate_triangle(){
 
 		area += triangle->area;
 
-		vertices.push_back(transformation.vertex_to_world(gl_vertices[indices[i]]));
-		vertices.push_back(transformation.vertex_to_world(gl_vertices[indices[i + 1]]));
-		vertices.push_back(transformation.vertex_to_world(gl_vertices[indices[i + 2]]));
+		vertices[ids.x] = transformation.vertex_to_world(GL_vertices[indices[i]]);
+		vertices[ids.y] = transformation.vertex_to_world(GL_vertices[indices[i + 1]]);
+		vertices[ids.z] = transformation.vertex_to_world(GL_vertices[indices[i + 2]]);
 	}
 }
 
@@ -160,7 +163,7 @@ void pbr::Mesh::generate_gl_buffers(){
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, gl_vertices.size() * sizeof(GL_Vertex), &gl_vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, GL_vertices.size() * sizeof(GL_Vertex), &GL_vertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
