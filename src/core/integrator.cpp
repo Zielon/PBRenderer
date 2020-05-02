@@ -31,7 +31,7 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 
 	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 	{
-		#pragma omp for schedule(static, 128)
+		#pragma omp for schedule(dynamic)
 		for (auto j = 0; j < height * width; ++j)
 		{
 			const auto y = int(j / width);

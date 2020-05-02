@@ -102,7 +102,7 @@ void pbr::Film::merge(const std::vector<PixelSamples>& pixels){
 
 	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 	{
-		#pragma omp for schedule(static, 128)
+		#pragma omp for schedule(dynamic)
 		for (auto j = 0; j < width * height; ++j)
 		{
 			const auto y = int(j / width);

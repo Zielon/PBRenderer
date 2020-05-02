@@ -130,7 +130,7 @@
       "name": "bunny",
       "path": "..\\resources\\bunny\\bunny.ply",
       "scaling": "1 1 1",
-      "translation": "-0.25 -0.033 -0.2",
+      "translation": "-0.25 -0.033 -0.3",
       "rotation_axis": "0 1 0",
       "rotation_degree": 45,
       "material": {
