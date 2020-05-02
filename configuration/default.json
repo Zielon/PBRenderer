@@ -63,7 +63,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.651 0.055 0.057"
+            "value": "0.9236 0.0984 0.3883"
           }
         ]
       }
@@ -82,7 +82,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.115 0.476 0.098"
+            "value": "0.4117 0.6745 0.2824"
           }
         ]
       }
@@ -101,7 +101,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.708 0.721 0.758"
+            "value": "0.2275 0.4862 0.6509"
           }
         ]
       }
@@ -120,7 +120,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.708 0.721 0.758"
+            "value": "0.2275 0.4862 0.6509"
           }
         ]
       }
@@ -161,7 +161,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
-      "translation": "-0.375 0.140 -0.075",
+      "translation": "-0.475 0.03 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {

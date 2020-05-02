@@ -5,10 +5,14 @@
 #include "stb_image_write.h"
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 #include <glm/ext/scalar_constants.hpp>
 
 pbr::Film::Film(glm::vec2 size):
-	pixels(std::vector<std::vector<Pixel<float>>>(size.y, std::vector<Pixel<float>>(size.x))), size(size){}
+	pixels(std::vector<std::vector<Pixel<float>>>(size.y, std::vector<Pixel<float>>(size.x))), size(size){
+
+	std::experimental::filesystem::create_directory("../output");
+}
 
 pbr::Pixel<float> pbr::Film::get_pixel(int x, int y){
 
@@ -49,7 +53,7 @@ void pbr::Film::save_jpg(const std::string& file){
 		}
 	}
 
-	stbi_write_jpg(file.c_str(), size.x, size.y, 3, output, 100);
+	stbi_write_jpg(("../output/" + file).c_str(), size.x, size.y, 3, output, 100);
 
 	std::cout << "INFO::FILM file [" << file << "] saved" << std::endl;
 
@@ -61,7 +65,7 @@ void pbr::Film::save_ppm(const std::string& file){
 	const auto output = new char[size.x * size.y * 3];
 	auto index = 0;
 
-	std::ofstream ofs(file, std::ios::out | std::ios::binary);
+	std::ofstream ofs("../output/" + file, std::ios::out | std::ios::binary);
 
 	ofs << "P6\n" << size.x << " " << size.y << "\n255\n";
 	for (int j = 0; j < size.y; ++j)
@@ -118,24 +122,7 @@ void pbr::Film::merge(const std::vector<PixelSamples>& pixels){
 			}
 
 			pixel /= normalization;
-			set_pixel(pixel, x, y);
-		}
-	}
-}
-
-void pbr::Film::tonemap(){
-
-	const int width = int(size.x);
-	const int height = int(size.y);
-
-	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
-	{
-		#pragma omp for schedule(static, 128)
-		for (auto j = 0; j < width * height; ++j)
-		{
-			const auto y = int(j / width);
-			const auto x = j - y * width;
-			set_pixel(clamp(get_pixel(x, y).to_vec3(), 0.f, 1.f), x, y);
+			set_pixel(clamp(pixel, 0.f, 1.f), x, y);
 		}
 	}
 }
