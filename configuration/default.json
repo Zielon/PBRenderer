@@ -134,14 +134,7 @@
       "rotation_axis": "0 1 0",
       "rotation_degree": 45,
       "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.708 0.721 0.758"
-          }
-        ]
+        "type": "PLASTIC"
       }
     },
     {

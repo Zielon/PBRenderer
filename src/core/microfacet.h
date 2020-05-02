@@ -43,6 +43,8 @@ namespace pbr
 			return 1 / (1 + lambda(wo) + lambda(wi));
 		}
 
+		static float roughness_to_alpha(float roughness);
+
 	protected:
 		MicrofacetDistribution(bool sample_visible_area): sample_visible_normals(sample_visible_area){};
 

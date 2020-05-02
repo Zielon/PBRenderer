@@ -48,15 +48,15 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 
 		shading.uv = v0.tex_coords + v1.tex_coords + v2.tex_coords;
 		shading.n = ns;
-		shading.dpdu = ss;
-		shading.dpdv = cross(ss, ns);
+		shading.dpdu = scene_object->transformation.vector_to_local(ss);
+		shading.dpdv = scene_object->transformation.vector_to_local(cross(ss, ns));
 
 		// In the case of no tangent and bitangent space, use spherical mapping
 		if (v0.tex_coords == glm::vec2(0.f) &&
 			v1.tex_coords == glm::vec2(0.f) &&
 			v2.tex_coords == glm::vec2(0.f))
 		{
-			auto hit = ray.point(t);
+			auto hit = scene_object->transformation.vector_to_local(ray.point(t));
 
 			// Spherical coordinates
 			auto radius = length(hit);
@@ -68,8 +68,8 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 				float>();
 
 			shading.uv = glm::vec2(phi * glm::one_over_two_pi<float>(), theta * glm::one_over_pi<float>());
-			shading.dpdu = dpdu;
-			shading.dpdv = dpdv;
+			shading.dpdu = scene_object->transformation.vector_to_local(dpdu);
+			shading.dpdv = scene_object->transformation.vector_to_local(dpdv);
 		}
 
 		auto sum = abs(v0.position) + abs(v1.position) + abs(v2.position);
