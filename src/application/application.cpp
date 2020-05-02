@@ -114,7 +114,7 @@ void app::Application::fps(){
 void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
-	const char* integrators[] = {"PATH TRACER", "WHITTED", "DIRECT_ILLUMINATION"};
+	const char* integrators[] = {"PATH TRACER", "WHITTED", "DIRECT ILLUMINATION"};
 
 	menu.attach([shaders, integrators, this](){
 

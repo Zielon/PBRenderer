@@ -36,23 +36,30 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 		{
 			const auto y = int(j / width);
 			const auto x = j - y * width;
+			auto& sampler = samplers[omp_get_thread_num()];
+
+			auto pixel = get_film()->get_pixel(x, y).to_vec3();
 
 			for (auto i = 0; i < num_samples; i++)
 			{
-				auto& sampler = samplers[omp_get_thread_num()];
+				const auto weight = 1.0f / (i + 1);
 				const auto offset = sampler->get2D();
 				auto ray = get_camera()->cast_ray(glm::vec2(x, y), offset);
-				pixels[j].emplace_back(Li(ray, sampler, 0), offset);
+
+				pixel *= i * weight;
+				pixel += weight * Li(ray, sampler, 0);
 				progress = float(current) / work;
 				++current;
 			}
+
+			get_film()->set_pixel(pixel, x, y);
 		}
 	}
 
 	const auto end = std::chrono::steady_clock::now();
 	const auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-	get_film()->merge(pixels);
+	//get_film()->merge(pixels);
 	get_film()->save_jpg(name + "_" + std::to_string(num_samples) + "_" + std::to_string(millis) + ".jpg");
 
 	std::cout << "INFO::INTEGRATOR (" << name << ") render time: [" << millis << " ms]" << std::endl;
