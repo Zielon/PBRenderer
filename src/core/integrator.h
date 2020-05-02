@@ -25,6 +25,16 @@ namespace pbr
 			const std::shared_ptr<Light>& light,
 			const std::shared_ptr<Sampler>& sampler) const;
 
+		virtual glm::vec3 reflect(
+			const Ray& ray,
+			const std::shared_ptr<Sampler>& sampler,
+			Intersection& isect, int depth) const;
+
+		virtual glm::vec3 transmit(
+			const Ray& ray,
+			const std::shared_ptr<Sampler>& sampler,
+			Intersection& isect, int depth) const;
+
 	protected:
 		virtual glm::vec3 Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const = 0;
 

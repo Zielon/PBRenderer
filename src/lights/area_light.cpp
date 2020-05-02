@@ -20,7 +20,7 @@ glm::vec3 pbr::AreaLight::sample_Li(
 	*shadow = true;
 
 	Intersection shadow_test{};
-	auto intersects = scene->intersect(Ray(intersection.point + *wi * 0.0001f, direction), shadow_test); // Shadow ray
+	auto intersects = scene->intersect(Ray(intersection.point + *wi * ray_epsilon, direction), shadow_test);
 
 	if (!intersects || shadow_test.triangle->scene_object->type != LIGHT)
 		return glm::vec3(0.f);
@@ -40,7 +40,7 @@ float pbr::AreaLight::pdf_Li(const Intersection& intersection,
 
 	auto light = std::dynamic_pointer_cast<Mesh, SceneObject>(scene_light);
 
-	Ray ray{intersection.point + wi * 0.0001f, wi};
+	Ray ray{intersection.point + wi * ray_epsilon, wi};
 	Intersection light_intersection;
 
 	// Only visible samples are considered
@@ -52,7 +52,7 @@ float pbr::AreaLight::pdf_Li(const Intersection& intersection,
 
 	// Convert light sample weight to solid angle measure
 	auto pdf = (length(direction) * length(direction)) /
-		(std::abs(dot(light_intersection.n, -wi)) * light->get_area());
+		(std::abs(dot(light_intersection.shading.n, -wi)) * light->get_area());
 
 	return std::isinf(pdf) ? 0.f : pdf;
 }

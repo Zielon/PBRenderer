@@ -6,6 +6,7 @@
 #include "uniform_sampler.h"
 #include "../cameras/projective.h"
 #include "../geometry/mesh.h"
+#include "../math/math.h"
 
 pbr::Integrator::Integrator(std::shared_ptr<Scene> scene, int num_samples, std::string name):
 	name(name), num_samples(num_samples), scene(std::move(scene)){
@@ -138,9 +139,8 @@ glm::vec3 pbr::Integrator::direct_illumination(
 			weight = power_heuristic(1, scattering_pdf, 1, light_pdf);
 		}
 
-		wi = normalize(wi);
-
-		// Find intersection
+		// Find intersection with light to account if a new sampled direction from BxDF
+		// intersects an area light and accumulate its contribution
 		Intersection light_intersection;
 		Ray surface_ray = {o + wi * ray_epsilon, wi};
 		auto intersects = scene->intersect(surface_ray, light_intersection);
@@ -150,16 +150,54 @@ glm::vec3 pbr::Integrator::direct_illumination(
 		if (intersects)
 		{
 			auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(light_intersection.triangle->scene_object);
-
 			if (mesh->type == LIGHT && mesh->get_area_light() == light)
 				Li = mesh->get_area_light()->L(light_intersection.shading.n, -wi);
-
 			if (Li != glm::vec3(0.f))
 				Ld += f * Li * weight / scattering_pdf;
 		}
 	}
 
 	return Ld;
+}
+
+glm::vec3 pbr::Integrator::reflect(
+	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
+
+	float pdf;
+	glm::vec3 wi;
+
+	auto wo = isect.wo;
+	auto o = isect.point;
+	auto ns = isect.shading.n;
+	auto error = isect.error;
+	auto f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(REFLECTION | SPECULAR));
+
+	Ray reflection{math::offset_ray_origin(o, ns, error, wi), wi};
+
+	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
+		return f * Li(reflection, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
+
+	return glm::vec3(0.f);
+}
+
+glm::vec3 pbr::Integrator::transmit(
+	const Ray& ray, const std::shared_ptr<Sampler>& sampler, Intersection& isect, int depth) const{
+
+	float pdf;
+	glm::vec3 wi;
+
+	auto wo = isect.wo;
+	auto o = isect.point;
+	auto ns = isect.shading.n;
+	auto error = isect.error;
+	auto f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(TRANSMISSION | SPECULAR));
+
+	Ray refraction{math::offset_ray_origin(o, ns, error, wi), wi};
+
+	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
+		return f * Li(refraction, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
+
+	return glm::vec3(0.f);
 }
 
 std::shared_ptr<pbr::Film> pbr::Integrator::get_film() const{

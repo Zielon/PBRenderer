@@ -4,7 +4,7 @@
       "id": 4,
       "name": "area light 1",
       "type": "AREA_LIGHT",
-      "intensity": 25,
+      "intensity": 35,
       "mesh_id": 2
     }
   ],

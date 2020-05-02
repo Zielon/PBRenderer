@@ -252,6 +252,9 @@
     <ClInclude Include="..\src\core\utils.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\integrators\direct_lighting.h">
+      <Filter>integrators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -385,6 +388,9 @@
       <Filter>lights</Filter>
     </ClCompile>
     <ClCompile Include="..\src\integrators\path_tracer.cpp">
+      <Filter>integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\integrators\direct_lighting.cpp">
       <Filter>integrators</Filter>
     </ClCompile>
   </ItemGroup>

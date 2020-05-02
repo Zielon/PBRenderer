@@ -3,6 +3,7 @@
 #include <thread>
 #include "../integrators/whitted.h"
 #include "../integrators/path_tracer.h"
+#include "../integrators/direct_lighting.h"
 
 const unsigned int SCR_WIDTH = 500;
 const unsigned int SCR_HEIGHT = 500;
@@ -70,24 +71,25 @@ void app::Application::render(){
 	is_rendering = true;
 	begin_rendering = steady_clock::now();
 
-	std::thread work([this](){
-		switch (integrator_type)
-		{
-		case 0:
-			{
-				pbr::PathTracer path(scene, num_samples);
-				path.render(progress);
-				break;
-			}
-		case 1:
-			{
-				pbr::WhittedIntegrator whitted(scene, num_samples);
-				whitted.render(progress);
-				break;
-			}
-		default:
-			break;
-		}
+	std::shared_ptr<pbr::Integrator> integrator{};
+
+	switch (integrator_type)
+	{
+	case 0:
+		integrator = std::make_shared<pbr::PathTracer>(scene, num_samples);
+		break;
+	case 1:
+		integrator = std::make_shared<pbr::WhittedIntegrator>(scene, num_samples);
+		break;
+	case 2:
+		integrator = std::make_shared<pbr::DirectLighting>(scene, num_samples);
+		break;
+	default:
+		break;
+	}
+
+	std::thread work([this, integrator](){
+		integrator->render(progress);
 		is_rendering = false;
 		progress = 0;
 	});
@@ -112,7 +114,7 @@ void app::Application::fps(){
 void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
-	const char* integrators[] = {"PATH TRACER", "WHITTED"};
+	const char* integrators[] = {"PATH TRACER", "WHITTED", "DIRECT_ILLUMINATION"};
 
 	menu.attach([shaders, integrators, this](){
 
@@ -143,7 +145,7 @@ void app::Application::attach_menu(){
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		if (ImGui::CollapsingHeader("Current integrator"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
-			ImGui::ListBox("integrators", &integrator_type, integrators, IM_ARRAYSIZE(integrators), 2);
+			ImGui::ListBox("integrators", &integrator_type, integrators, IM_ARRAYSIZE(integrators), 3);
 		}
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());

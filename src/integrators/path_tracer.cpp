@@ -19,24 +19,27 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 			break;
 
 		auto triangle = const_cast<Triangle*>(intersection.triangle);
-		auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
+		auto hit_mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
 
-		mesh->get_material()->compute_BxDF(intersection);
+		hit_mesh->get_material()->compute_BxDF(intersection);
 
 		auto wo = intersection.wo;
 		auto o = intersection.point;
 		auto ns = intersection.shading.n;
 
-		if (mesh->type == LIGHT && mesh->get_area_light())
-			L += beta * mesh->get_area_light()->L(ns, wo);
+		if ((depth == 0 || is_specular_ray) && hit_mesh->type == LIGHT && hit_mesh->get_area_light())
+			L += beta * hit_mesh->get_area_light()->L(ns, wo);
 
-		// Direct illumination estimation
+		/*
+		 * Direct illumination estimation
+		 * Sample illumination from lights to find path contribution while skipping perfectly specular
+		 */
 		if (intersection.bsdf->num_components(BxDFType(ALL & ~SPECULAR)) > 0)
 		{
 			float light_pdf;
 			auto light = select_light(sampler->get1D(), &light_pdf);
-			auto Ld = direct_illumination(intersection, light, sampler);
-			L += beta * (Ld / light_pdf);
+			auto Ld = direct_illumination(intersection, light, sampler) / light_pdf;
+			L += beta * Ld;
 		}
 
 		// Sample BSDF to get new path direction
@@ -45,14 +48,13 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		BxDFType flags;
 
 		auto f = intersection.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(ALL), &flags);
-
 		if (f == glm::vec3(0.f) || pdf == 0.f) break;
 
 		beta *= f * std::abs(dot(wi, ns)) / pdf;
 		is_specular_ray = (flags & SPECULAR) != 0;
 
 		// Russian roulette
-		if (compMax(beta) < 1.f && depth > 3)
+		if (compMax(beta) < 0.01f && depth > 4)
 		{
 			float q = std::max(float(.05), 1.f - compMax(beta));
 			if (sampler->get1D() < q) break;

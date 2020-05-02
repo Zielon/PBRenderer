@@ -88,7 +88,7 @@ glm::vec3 pbr::BSDF::sample_f(
 		return glm::vec3(0.f);
 	}
 
-	*wi_w = vertex_to_world(wi);
+	*wi_w = normalize(vertex_to_world(wi));
 
 	/*
 	 * Skipped if the chosen BxDF is perfectly specular, since the PDF has an implicit delta distribution in it.
@@ -152,13 +152,11 @@ float pbr::BSDF::pdf(const glm::vec3& wo_w, const glm::vec3& wi_w, BxDFType flag
 	auto matching = 0;
 
 	for (const auto& bxdf : bxdfs)
-	{
 		if (bxdf->matches_flags(flags))
 		{
 			pdf += bxdf->pdf(wo, wi);
 			matching++;
 		}
-	}
-
+	
 	return matching > 0 ? pdf / matching : 0.f;
 }

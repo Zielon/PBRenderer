@@ -11,8 +11,8 @@ namespace pbr
 	{
 	public:
 		AreaLight(const parser::LightConfig& config, std::shared_ptr<SceneObject> mesh):
-			Light(AREA, config), mesh_id(config.mesh_id), position(config.position), luminous(config.intensity),
-			two_sided(false), scene_light(std::move(mesh)){}
+			Light(AREA, config), mesh_id(config.mesh_id), two_sided(false), position(config.position),
+			luminous(config.intensity), scene_light(std::move(mesh)){}
 
 		glm::vec3 sample_Li(
 			const Intersection& intersection, const std::shared_ptr<Scene>& scene, const glm::vec2& u, glm::vec3* wi,
@@ -28,9 +28,10 @@ namespace pbr
 
 	private:
 		int mesh_id;
+		bool two_sided;
 		const glm::vec3 position;
 		const glm::vec3 luminous;
-		bool two_sided;
+		float ray_epsilon = 0.00001f;
 
 		/*
 		 * Area light is represented in the rasterizer as this mesh.
