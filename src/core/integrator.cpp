@@ -29,22 +29,20 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 	const auto work = float(num_samples * height * width);
 	std::atomic<int> current{1};
 
-	for (auto i = 0; i < num_samples; i++)
+	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 	{
-		#pragma omp parallel num_threads(std::thread::hardware_concurrency())
+		#pragma omp for schedule(static, 128)
+		for (auto j = 0; j < height * width; ++j)
 		{
-			#pragma omp for schedule(static, 128)
-			for (auto j = 0; j < height * width; ++j)
-			{
-				const auto y = int(j / width);
-				const auto x = j - y * width;
+			const auto y = int(j / width);
+			const auto x = j - y * width;
 
+			for (auto i = 0; i < num_samples; i++)
+			{
 				auto& sampler = samplers[omp_get_thread_num()];
 				const auto offset = sampler->get2D();
-
 				auto ray = get_camera()->cast_ray(glm::vec2(x, y), offset);
 				pixels[j].emplace_back(Li(ray, sampler, 0), offset);
-
 				progress = float(current) / work;
 				++current;
 			}

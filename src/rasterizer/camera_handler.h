@@ -17,7 +17,7 @@ namespace rasterizer
 		RIGHT
 	};
 
-	const float SPEED = 2.5f;
+	const float SPEED = 0.5f;
 	const float SENSITIVITY = 0.10f;
 
 	class CameraHandler final

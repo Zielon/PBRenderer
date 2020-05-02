@@ -5,8 +5,8 @@
 #include "../integrators/path_tracer.h"
 #include "../integrators/direct_lighting.h"
 
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 900;
+const unsigned int SCR_HEIGHT = 700;
 
 app::Application::Application():
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),

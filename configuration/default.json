@@ -161,7 +161,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
-      "translation": "-0.475 0.03 -0.075",
+      "translation": "-0.475 0.04 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
