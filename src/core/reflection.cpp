@@ -7,8 +7,7 @@
 #include "../geometry/intersection.h"
 #include "../bxdfs/specular_reflection.h"
 
-pbr::BSDF::BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object, float eta):
-	eta(eta),
+pbr::BSDF::BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object, float eta) :
 	n(normalize(intersection.shading.n)),
 	s_tangent(normalize(intersection.shading.dpdu)),
 	t_bitangent(cross(n, s_tangent)),
@@ -20,32 +19,15 @@ void pbr::BSDF::add(const std::shared_ptr<BxDF>& bxdf){
 	bxdfs.push_back(bxdf);
 }
 
-float pbr::BSDF::pdf(const glm::vec3& wo_w, const glm::vec3& wi_w, BxDFType flags) const{
-
-	glm::vec3 wi = vertex_to_local(wi_w);
-	glm::vec3 wo = vertex_to_local(wo_w);
-	if (wo.z == 0) return 0.f;
-	auto pdf{0.f};
-	auto matching = 0;
-
-	for (const auto& bxdf : bxdfs)
-	{
-		if (bxdf->matches_flags(flags))
-		{
-			pdf += bxdf->pdf(wo, wi);
-			matching++;
-		}
-	}
-
-	return matching > 0 ? pdf / matching : 0.f;
-}
-
 glm::vec3 pbr::BSDF::f(const glm::vec3& wo_w, const glm::vec3& wi_w, const BxDFType flags) const{
 
 	glm::vec3 wi = vertex_to_local(wi_w);
 	glm::vec3 wo = vertex_to_local(wo_w);
+
 	if (wo.z == 0) return glm::vec3(0.f);
+
 	const bool reflect = dot(wi_w, n) * dot(wo_w, n) > 0;
+
 	glm::vec3 f(0.f);
 
 	for (const auto& bxdf : bxdfs)
@@ -109,8 +91,8 @@ glm::vec3 pbr::BSDF::sample_f(
 	*wi_w = vertex_to_world(wi);
 
 	/*
-	 * Skipped if the chosen BxDF is perfectly specular, since the PDF has an implicit delta distribution in it. 
-	 * It would be incorrect to add the other PDF values to this one, 
+	 * Skipped if the chosen BxDF is perfectly specular, since the PDF has an implicit delta distribution in it.
+	 * It would be incorrect to add the other PDF values to this one,
 	 * since it is a delta term represented with the value 1, rather than as an actual delta distribution.
 	 */
 	if (!(bxdf->type & SPECULAR) && components > 1)
@@ -159,4 +141,24 @@ glm::vec3 pbr::BSDF::vertex_to_world(const glm::vec3& v) const{
 glm::vec3 pbr::BSDF::vertex_to_local(const glm::vec3& v) const{
 
 	return glm::vec3(dot(v, s_tangent), dot(v, t_bitangent), dot(v, n));
+}
+
+float pbr::BSDF::pdf(const glm::vec3& wo_w, const glm::vec3& wi_w, BxDFType flags) const{
+
+	glm::vec3 wi = vertex_to_local(wi_w);
+	glm::vec3 wo = vertex_to_local(wo_w);
+	if (wo.z == 0) return 0.f;
+	auto pdf{0.f};
+	auto matching = 0;
+
+	for (const auto& bxdf : bxdfs)
+	{
+		if (bxdf->matches_flags(flags))
+		{
+			pdf += bxdf->pdf(wo, wi);
+			matching++;
+		}
+	}
+
+	return matching > 0 ? pdf / matching : 0.f;
 }

@@ -3,7 +3,6 @@
 #define STBI_MSC_SECURE_CRT
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <glm/ext/scalar_constants.hpp>
@@ -35,11 +34,6 @@ void pbr::Film::set_pixel(glm::vec3 pixel, int x, int y){
 	pixels[y][x] = Pixel<float>(pixel.x, pixel.y, pixel.z);
 }
 
-inline float clamp(const float& lo, const float& hi, const float& v){
-
-	return std::max(lo, std::min(hi, v));
-}
-
 void pbr::Film::save_jpg(const std::string& file){
 
 	const auto output = new char[size.x * size.y * 3];
@@ -49,9 +43,9 @@ void pbr::Film::save_jpg(const std::string& file){
 	{
 		for (int i = 0; i < size.x; ++i)
 		{
-			output[index++] = char(255 * clamp(0, 1, pixels[j][i].r));
-			output[index++] = char(255 * clamp(0, 1, pixels[j][i].g));
-			output[index++] = char(255 * clamp(0, 1, pixels[j][i].b));
+			output[index++] = char(255 * pixels[j][i].r);
+			output[index++] = char(255 * pixels[j][i].g);
+			output[index++] = char(255 * pixels[j][i].b);
 		}
 	}
 
@@ -74,9 +68,9 @@ void pbr::Film::save_ppm(const std::string& file){
 	{
 		for (int i = 0; i < size.x; ++i)
 		{
-			const char r = char(255 * clamp(0, 1, pixels[j][i].r));
-			const char g = char(255 * clamp(0, 1, pixels[j][i].g));
-			const char b = char(255 * clamp(0, 1, pixels[j][i].b));
+			const char r = char(255 * pixels[j][i].r);
+			const char g = char(255 * pixels[j][i].g);
+			const char b = char(255 * pixels[j][i].b);
 			ofs << r << g << b;
 		}
 	}
@@ -100,9 +94,11 @@ void pbr::Film::merge(const std::vector<PixelSamples>& pixels){
 	const int width = int(size.x);
 	const int height = int(size.y);
 
+	if (pixels.empty()) return;
+
 	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 	{
-		#pragma omp for schedule(dynamic, 128)
+		#pragma omp for schedule(static, 128)
 		for (auto j = 0; j < width * height; ++j)
 		{
 			const auto y = int(j / width);
@@ -123,6 +119,23 @@ void pbr::Film::merge(const std::vector<PixelSamples>& pixels){
 
 			pixel /= normalization;
 			set_pixel(pixel, x, y);
+		}
+	}
+}
+
+void pbr::Film::tonemap(){
+
+	const int width = int(size.x);
+	const int height = int(size.y);
+
+	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
+	{
+		#pragma omp for schedule(static, 128)
+		for (auto j = 0; j < width * height; ++j)
+		{
+			const auto y = int(j / width);
+			const auto x = j - y * width;
+			set_pixel(clamp(get_pixel(x, y).to_vec3(), 0.f, 1.f), x, y);
 		}
 	}
 }

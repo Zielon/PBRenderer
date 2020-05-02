@@ -60,14 +60,15 @@ glm::vec3 pbr::WhittedIntegrator::reflect(
 
 	float pdf;
 	glm::vec3 wi;
-
 	auto wo = isect.wo;
 	auto o = isect.point;
 	auto ns = isect.shading.n;
-	auto error = isect.error;
+
 	auto f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(REFLECTION | SPECULAR));
 
-	Ray reflection{math::offset_ray_origin(o, ns, error, wi), wi};
+	auto shift = ray_epsilon * ns;
+	auto outside = dot(ray.d, ns) < 0.f;
+	Ray reflection{ outside ? o + shift : o - shift, wi };
 
 	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
 		return f * Li(reflection, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;
@@ -80,14 +81,15 @@ glm::vec3 pbr::WhittedIntegrator::transmit(
 
 	float pdf;
 	glm::vec3 wi;
-
 	auto wo = isect.wo;
 	auto o = isect.point;
 	auto ns = isect.shading.n;
-	auto error = isect.error;
+
 	auto f = isect.bsdf->sample_f(wo, &wi, sampler, &pdf, BxDFType(TRANSMISSION | SPECULAR));
 
-	Ray refraction{math::offset_ray_origin(o, ns, error, wi), wi};
+	auto shift = ray_epsilon * ns;
+	auto outside = dot(ray.d, ns) < 0.f;
+	Ray refraction{ outside ? o - shift : o + shift, wi };
 
 	if (pdf > 0.f && f != glm::vec3(0.f) && glm::abs(dot(wi, ns)) != 0.f)
 		return f * Li(refraction, sampler, depth + 1) * std::abs(dot(wi, ns)) / pdf;

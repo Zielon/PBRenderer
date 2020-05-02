@@ -4,7 +4,7 @@
       "id": 4,
       "name": "area light 1",
       "type": "AREA_LIGHT",
-      "intensity": 70,
+      "intensity": 25,
       "mesh_id": 2
     }
   ],
@@ -35,7 +35,7 @@
       "name": "cbox_luminaire",
       "path": "..\\resources\\cbox\\cbox_luminaire.obj",
       "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
+      "translation": "0 -0.01 0",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
@@ -130,11 +130,18 @@
       "name": "bunny",
       "path": "..\\resources\\bunny\\bunny.ply",
       "scaling": "1 1 1",
-      "translation": "-0.25 -0.02 -0.2",
+      "translation": "-0.25 -0.033 -0.2",
       "rotation_axis": "0 1 0",
       "rotation_degree": 45,
       "material": {
-        "type": "PLASTIC"
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0.708 0.721 0.758"
+          }
+        ]
       }
     },
     {

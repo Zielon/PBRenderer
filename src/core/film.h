@@ -63,6 +63,8 @@ namespace pbr
 
 		void merge(const std::vector<PixelSamples>& pixels);
 
+		void tonemap();
+
 		glm::vec2 get_size() const;
 
 	private:

@@ -18,6 +18,13 @@ namespace pbr
 
 		virtual void render(std::atomic<float>& progress);
 
+		virtual std::shared_ptr<Light> select_light(float u, float* pdf) const;
+
+		virtual glm::vec3 direct_illumination(
+			const Intersection& intersection,
+			const std::shared_ptr<Light>& light,
+			const std::shared_ptr<Sampler>& sampler) const;
+
 	protected:
 		virtual glm::vec3 Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const = 0;
 
