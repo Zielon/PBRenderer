@@ -26,6 +26,8 @@ GLTF application for creating physically based renderings. The whole project is 
 ![input_1](https://github.com/Zielon/PBRenderer/blob/master/samples/input_1.jpg)
 ![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/output_1.jpg)
 
+> The Stanford Bunny in the picture above is made of plastic material, the smaller sphere is made of glass and the bigger one in the left corner is mirror.
+> The image was genereated using 2048 samples per pixel and it took 30 minutes for rendering time.
 
 #### References:
 [pbr-book (3ed-2018)](http://www.pbr-book.org/3ed-2018/contents.html)
