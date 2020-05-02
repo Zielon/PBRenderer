@@ -23,8 +23,8 @@ GLTF application for creating physically based renderings. The whole project is 
 6) Metal/Gold
 ```
 
-![input_1](https://github.com/Zielon/PBRenderer/tree/master/samples/input_1.jpg)
-![output_1](https://github.com/Zielon/PBRenderer/tree/master/samples/output_1.jpg)
+![input_1](https://github.com/Zielon/PBRenderer/blob/master/samples/input_1.jpg)
+![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/output_1.jpg)
 
 
 #### References:
