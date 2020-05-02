@@ -22,8 +22,10 @@ GLTF application for creating physically based renderings. The whole project is 
 5) Glass
 6) Metal/Gold
 ```
-![alt text](https://github.com/Zielon/PBRenderer/tree/master/samples/input_1.jpg "Program input")
-![alt text](https://github.com/Zielon/PBRenderer/tree/master/samples/output_1.jpg "Program output with 2048spp")
+
+![input_1](https://github.com/Zielon/PBRenderer/tree/master/samples/input_1.jpg)
+![output_1](https://github.com/Zielon/PBRenderer/tree/master/samples/output_1.jpg)
+
 
 #### References:
 [pbr-book (3ed-2018)](http://www.pbr-book.org/3ed-2018/contents.html)
