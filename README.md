@@ -8,21 +8,22 @@ GLTF application for creating physically based renderings. The whole project is 
 ```
 1) Whitted
 2) Direct light
-3) Path tracer
+3) Path tracer with importance sampling
 ```
 
 ####  Available materials:
 ```
-1) Lambertian
+1) Lambertian with cosine weighted sampling 
 2) Perfect specular
 3) Perfect transmit
-(Based of microfacet distributions)
+
+(Based on microfacet distributions)
 4) Plastic
 5) Glass
 6) Metal/Gold
 ```
-![](https://github.com/Zielon/PBRenderer/tree/master/samples/input_1.jpg "Program input")
-![](https://github.com/Zielon/PBRenderer/tree/master/samples/output_1.jpg "Program output with 2048spp")
+![alt text](https://github.com/Zielon/PBRenderer/tree/master/samples/input_1.jpg "Program input")
+![alt text](https://github.com/Zielon/PBRenderer/tree/master/samples/output_1.jpg "Program output with 2048spp")
 
-#### References
+#### References:
 [pbr-book (3ed-2018)](http://www.pbr-book.org/3ed-2018/contents.html)
