@@ -16,7 +16,7 @@ namespace pbr
 
 		virtual ~Integrator() = default;
 
-		virtual void render(std::atomic<float>& progress);
+		virtual void render(float& progress);
 
 		virtual std::shared_ptr<Light> select_light(float u, float* pdf) const;
 

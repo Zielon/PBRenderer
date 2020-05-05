@@ -16,7 +16,7 @@ pbr::Integrator::Integrator(std::shared_ptr<Scene> scene, int num_samples, std::
 		samplers.push_back(std::make_shared<UniformSampler>());
 }
 
-void pbr::Integrator::render(std::atomic<float>& progress){
+void pbr::Integrator::render(float& progress){
 
 	const auto start = std::chrono::steady_clock::now();
 
@@ -25,34 +25,37 @@ void pbr::Integrator::render(std::atomic<float>& progress){
 	const int height = int(film_size.y);
 
 	std::vector<PixelSamples> pixels(height * width, PixelSamples());
-
-	const auto work = float(num_samples * height * width);
-	std::atomic<int> current{1};
+	const auto patch_size = 256; // 16x16
+	const auto fraction = float(patch_size) / float(height * width);
 
 	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 	{
 		#pragma omp for schedule(dynamic)
-		for (auto j = 0; j < height * width; ++j)
+		for (auto s = 0; s < height * width; s += patch_size)
 		{
-			const auto y = int(j / width);
-			const auto x = j - y * width;
-			auto& sampler = samplers[omp_get_thread_num()];
-
-			auto pixel = get_film()->get_pixel(x, y).to_vec3();
-
-			for (auto i = 0; i < num_samples; i++)
+			for (auto j = s; j < s + patch_size; ++j)
 			{
-				const auto weight = 1.0f / (i + 1);
-				const auto offset = sampler->get2D();
-				auto ray = get_camera()->cast_ray(glm::vec2(x, y), offset);
+				if (j >= height * width) break;
 
-				pixel *= i * weight;
-				pixel += weight * Li(ray, sampler, 0);
-				progress = float(current) / work;
-				++current;
+				const auto y = int(j / width);
+				const auto x = j - y * width;
+				auto& sampler = samplers[omp_get_thread_num()];
+				auto pixel = get_film()->get_pixel(x, y).to_vec3();
+
+				for (auto i = 0; i < num_samples; i++)
+				{
+					const auto weight = 1.0f / (i + 1);
+					const auto offset = sampler->get2D();
+					auto ray = get_camera()->cast_ray(glm::vec2(x, y), offset);
+
+					pixel *= i * weight;
+					pixel += weight * Li(ray, sampler, 0);
+				}
+
+				get_film()->set_pixel(pixel, x, y);
 			}
 
-			get_film()->set_pixel(pixel, x, y);
+			progress += fraction;
 		}
 	}
 

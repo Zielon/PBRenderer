@@ -63,6 +63,10 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 
 		ray = {o + wi * ray_epsilon, wi};
 		depth++;
+
+		// Stop tracing if the ray hits light source
+		if (hit_mesh->type == LIGHT && hit_mesh->get_area_light())
+			break;
 	}
 
 	return L;

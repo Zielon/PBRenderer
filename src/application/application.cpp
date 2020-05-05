@@ -153,7 +153,7 @@ void app::Application::attach_menu(){
 		ImGui::SameLine();
 		ImGui::InputInt("int", &num_samples, 1);
 		ImGui::Text("PBR rendering: %4llu [ms]", millis);
-		ImGui::ProgressBar(float(progress));
+		ImGui::ProgressBar(progress);
 		ImGui::Text("FPS             [%3.1f]", fps_rate);
 		ImGui::Text("Camera movement [%4s]", is_rendering || ray_caster->is_saving ? "OFF" : "ON");
 		ImGui::Text("# threads       [%4i]", std::thread::hardware_concurrency());
