@@ -32,6 +32,13 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> gl_vertices,
 	bvh->build(Split::SAH);
 }
 
+pbr::Mesh::~Mesh(){
+
+	glDeleteBuffers(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+}
+
 pbr::Sample pbr::Mesh::sample(const glm::vec2& u) const{
 
 	auto& primitive = *select_randomly(bvh->get_primitives().begin(), bvh->get_primitives().end());

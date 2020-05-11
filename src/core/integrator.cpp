@@ -29,7 +29,7 @@ void pbr::Integrator::render(float& progress){
 	const int height = int(film_size.y);
 
 	std::vector<PixelSamples> pixels(height * width, PixelSamples());
-	const auto patch_size = 1024; // 32x32
+	const auto patch_size = 256; // 16x16
 	const auto fraction = float(patch_size) / float(height * width);
 
 	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
@@ -37,8 +37,6 @@ void pbr::Integrator::render(float& progress){
 		#pragma omp for schedule(dynamic)
 		for (auto s = 0; s < height * width; s += patch_size)
 		{
-			SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
-
 			for (auto j = s; j < s + patch_size; ++j)
 			{
 				if (j >= height * width) break;

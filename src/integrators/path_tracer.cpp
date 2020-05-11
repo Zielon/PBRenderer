@@ -11,12 +11,16 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 	glm::vec3 beta{1.f};
 	auto is_specular_ray = false;
 
-	while (true)
+	while (depth < max_depth)
 	{
 		Intersection intersection;
 
-		if (!scene->intersect(ray, intersection) || depth > max_depth)
+		if (!scene->intersect(ray, intersection))
+		{
+			for (const auto& light : scene->get_environment_lights().get())
+				L += beta * light->Le(intersection);
 			break;
+		}
 
 		auto triangle = const_cast<Triangle*>(intersection.triangle);
 		auto hit_mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
@@ -30,10 +34,10 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		if (depth == 0 || is_specular_ray)
 		{
 			if (hit_mesh->type == LIGHT && hit_mesh->get_area_light())
+			{
 				L += beta * hit_mesh->get_area_light()->L(ns, wo);
-			else
-				for (const auto& light : scene->get_environment_lights().get())
-					L += beta * light->Le(intersection);
+				break;
+			}
 		}
 
 		/*

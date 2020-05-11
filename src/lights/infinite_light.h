@@ -4,6 +4,8 @@
 
 namespace pbr
 {
+	class Intersection;
+
 	class InfiniteLight : public Light
 	{
 	public:

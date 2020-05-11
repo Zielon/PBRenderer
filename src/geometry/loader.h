@@ -15,21 +15,31 @@ namespace pbr
 	class Loader
 	{
 	public:
-		Loader(std::shared_ptr<Scene> scene): scene(std::move(scene)){
+		Loader(std::shared_ptr<Scene> scene, std::string path):
+			config_path(std::move(path)),
+			scene(std::move(scene)){
 
 			auto start = std::chrono::high_resolution_clock::now();
 
-			load_meshes("../configuration/default.json");
-			load_lights("../configuration/default.json");
+			load_meshes(config_path);
+			load_lights(config_path);
 
 			auto end = std::chrono::high_resolution_clock::now();
 			const auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-			std::cout << "INFO::LOADER Config loading time: [" << millis << " ms]" << std::endl;
+			std::cout << "INFO::LOADER " << config_path << " loading time: [" << millis << " ms]" << std::endl;
 		};
+
+		~Loader(){
+
+			scene = nullptr;
+			meshes.clear();
+		}
 
 		void load_meshes(const std::string& config);
 
 		void load_lights(const std::string& config);
+
+		std::string config_path;
 
 	private:
 		std::string directory;

@@ -190,7 +190,9 @@ std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene
 		material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-	return std::make_shared<Mesh>(vertices, indices, textures, configuration);
+	return std::shared_ptr<Mesh>(new Mesh(vertices, indices, textures, configuration), [](Mesh* mesh){
+		delete mesh;
+	});
 }
 
 std::vector<pbr::GL_Texture> pbr::Loader::load_material_textures(

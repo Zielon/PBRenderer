@@ -1,13 +1,17 @@
 #include "infinite_light.h"
 
+#include "../geometry/intersection.h"
+#include <glm/gtc/constants.hpp>
+
 glm::vec3 pbr::InfiniteLight::power() const{
 
 	return {};
 }
 
 glm::vec3 pbr::InfiniteLight::Le(const Intersection& intersection) const{
-	
-	return {};
+
+	auto t = 0.5f * (-intersection.wo + 1.0f);
+	return glm::vec3(1.0f - t) + t * glm::vec3(0.5f, 0.7f, 1.0f) * glm::one_over_pi<float>();
 }
 
 glm::vec3 pbr::InfiniteLight::sample_Li(const Intersection& intersection, const std::shared_ptr<Scene>& scene,

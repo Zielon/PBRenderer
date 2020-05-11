@@ -30,6 +30,8 @@ namespace pbr
 		     std::vector<GL_Texture> textures,
 		     parser::MeshConfig config);
 
+		~Mesh();
+
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe) override;
 
 		bool intersect(const Ray& ray, Intersection& intersection) const override;

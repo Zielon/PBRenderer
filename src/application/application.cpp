@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include <thread>
+#include <filesystem>
 
 #include "../integrators/whitted.h"
 #include "../integrators/path_tracer.h"
@@ -16,7 +17,7 @@ app::Application::Application():
 	camera(std::make_shared<pbr::ProjectiveCamera>(glm::ivec2(SCR_WIDTH, SCR_HEIGHT))),
 	scene(std::make_shared<pbr::Scene>(camera)),
 	ray_caster(std::make_shared<rasterizer::RayCaster>(scene, camera)),
-	model_loader(std::make_shared<pbr::Loader>(scene)),
+	model_loader(std::make_shared<pbr::Loader>(scene, "../configuration/default.json")),
 	input_handler(window.get(), camera, SCR_WIDTH, SCR_HEIGHT){
 
 	attach_menu();
@@ -37,6 +38,8 @@ void app::Application::start(){
 	{
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		if (is_reloading) continue;
 
 		auto shader = shader_manager.reload(shader_type);
 
@@ -60,6 +63,7 @@ void app::Application::start(){
 		glfwPollEvents();
 
 		fps();
+		reload();
 	}
 
 	glfwTerminate();
@@ -91,7 +95,7 @@ void app::Application::render(){
 	}
 
 	std::thread work([this, integrator](){
-		SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
+		//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 		integrator->render(progress);
 		is_rendering = false;
 		progress = 0;
@@ -114,12 +118,35 @@ void app::Application::fps(){
 	}
 }
 
+void app::Application::reload(){
+
+	std::string path;
+
+	if (current_config == 0) path = "../configuration/box.json";
+	if (current_config == 1) path = "../configuration/default.json";
+
+	if (model_loader->config_path != path)
+	{
+		is_reloading = true;
+
+		std::thread work([this, path](){
+			scene.reset(new pbr::Scene(camera));
+			model_loader.reset(new pbr::Loader(scene, path));
+			scene->build();
+			is_reloading = false;
+		});
+
+		work.detach();
+	}
+}
+
 void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
 	const char* integrators[] = {"PATH TRACER", "WHITTED", "DIRECT ILLUMINATION"};
+	const char* configs[] = {"BOX", "INFINITY_LIGHT"};
 
-	menu.attach([shaders, integrators, this](){
+	menu.attach([shaders, integrators, configs, this](){
 
 		ImGui::Text("PBRenderer");
 
@@ -127,9 +154,7 @@ void app::Application::attach_menu(){
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		if (ImGui::CollapsingHeader("Current shader"))
-		{
 			ImGui::ListBox("shaders", &shader_type, shaders, IM_ARRAYSIZE(shaders), 3);
-		}
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		ImGui::Checkbox("Show wireframe", &is_wireframe);
@@ -147,9 +172,7 @@ void app::Application::attach_menu(){
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		if (ImGui::CollapsingHeader("Current integrator"), ImGuiTreeNodeFlags_DefaultOpen)
-		{
 			ImGui::ListBox("integrators", &integrator_type, integrators, IM_ARRAYSIZE(integrators), 3);
-		}
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		ImGui::Text("# samples");
@@ -162,6 +185,8 @@ void app::Application::attach_menu(){
 		ImGui::Text("# threads       [%4i]", std::thread::hardware_concurrency());
 		ImGui::Text("Camera position");
 		ImGui::Text("[%.5f %.5f %.5f]", position.x, position.y, position.z);
+		//if (ImGui::CollapsingHeader("Configuration"))
+		//	ImGui::ListBox("configs", &current_config, configs, IM_ARRAYSIZE(configs), 2);
 		ImGui::Separator();
 		ImGui::NewLine();
 		ImGui::Text("Program usage: \n"

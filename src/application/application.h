@@ -43,14 +43,18 @@ namespace app
 		bool is_wireframe = false;
 		bool is_picking = false;
 		bool is_rendering = false;
+		bool is_reloading = false;
 		float fps_rate{0.f};
 		int frames{0};
 		int num_samples{10};
+		int current_config{1};
 
 		void attach_menu();
 
 		void render();
 
 		void fps();
+
+		void reload();
 	};
 }
