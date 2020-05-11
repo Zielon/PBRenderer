@@ -1,6 +1,8 @@
 #include "application.h"
 
+#include <windows.h>
 #include <thread>
+
 #include "../integrators/whitted.h"
 #include "../integrators/path_tracer.h"
 #include "../integrators/direct_lighting.h"
@@ -89,6 +91,7 @@ void app::Application::render(){
 	}
 
 	std::thread work([this, integrator](){
+		SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
 		integrator->render(progress);
 		is_rendering = false;
 		progress = 0;

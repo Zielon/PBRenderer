@@ -64,6 +64,9 @@
     <Filter Include="microfacets">
       <UniqueIdentifier>{5f1f1300-fd41-4e87-9e7b-483814b2b1bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="medium">
+      <UniqueIdentifier>{e0f3f7a7-ee38-467b-bb4f-60520593df3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\scene.h">
@@ -255,6 +258,18 @@
     <ClInclude Include="..\src\integrators\direct_lighting.h">
       <Filter>integrators</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\medium\homogeneous_medium.h">
+      <Filter>medium</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\medium\phase_function.h">
+      <Filter>medium</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lights\infinite_light.h">
+      <Filter>lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\medium.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -392,6 +407,12 @@
     </ClCompile>
     <ClCompile Include="..\src\integrators\direct_lighting.cpp">
       <Filter>integrators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\medium\homogeneous_medium.cpp">
+      <Filter>medium</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lights\infinite_light.cpp">
+      <Filter>lights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

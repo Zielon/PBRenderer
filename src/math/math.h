@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "../core/uniform_sampler.h"
 
+#define NOMINMAX
+
 namespace math
 {
 	inline float clamp(const float& lo, const float& hi, const float& v){

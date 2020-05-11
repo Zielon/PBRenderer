@@ -54,6 +54,7 @@
     <ClInclude Include="..\src\core\light.h" />
     <ClInclude Include="..\src\core\integrator.h" />
     <ClInclude Include="..\src\core\material.h" />
+    <ClInclude Include="..\src\core\medium.h" />
     <ClInclude Include="..\src\core\microfacet.h" />
     <ClInclude Include="..\src\core\reflection.h" />
     <ClInclude Include="..\src\core\scene.h" />
@@ -72,6 +73,7 @@
     <ClInclude Include="..\src\integrators\path_tracer.h" />
     <ClInclude Include="..\src\integrators\whitted.h" />
     <ClInclude Include="..\src\lights\area_light.h" />
+    <ClInclude Include="..\src\lights\infinite_light.h" />
     <ClInclude Include="..\src\lights\point_light.h" />
     <ClInclude Include="..\src\materials\glass.h" />
     <ClInclude Include="..\src\materials\lambertian.h" />
@@ -79,6 +81,8 @@
     <ClInclude Include="..\src\materials\mirror.h" />
     <ClInclude Include="..\src\materials\plastic.h" />
     <ClInclude Include="..\src\math\math.h" />
+    <ClInclude Include="..\src\medium\homogeneous_medium.h" />
+    <ClInclude Include="..\src\medium\phase_function.h" />
     <ClInclude Include="..\src\microfacets\beckmann_distribution.h" />
     <ClInclude Include="..\src\parser\parser.h" />
     <ClInclude Include="..\src\parser\types.h" />
@@ -125,6 +129,7 @@
     <ClCompile Include="..\src\integrators\path_tracer.cpp" />
     <ClCompile Include="..\src\integrators\whitted.cpp" />
     <ClCompile Include="..\src\lights\area_light.cpp" />
+    <ClCompile Include="..\src\lights\infinite_light.cpp" />
     <ClCompile Include="..\src\lights\point_light.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\materials\glass.cpp" />
@@ -132,6 +137,7 @@
     <ClCompile Include="..\src\materials\metal.cpp" />
     <ClCompile Include="..\src\materials\mirror.cpp" />
     <ClCompile Include="..\src\materials\plastic.cpp" />
+    <ClCompile Include="..\src\medium\homogeneous_medium.cpp" />
     <ClCompile Include="..\src\microfacets\beckmann_distribution.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />
@@ -249,6 +255,7 @@
       <OpenMPSupport>true</OpenMPSupport>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <EnableModules>true</EnableModules>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)3rd_party\glfw-3.3\lib\lib-vc2017-64bit;$(SolutionDir)3rd_party\glfw-3.3\bin\lib-vc2017-64bit;$(SolutionDir)3rd_party\assimp\lib;$(SolutionDir)3rd_party\glad\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -305,6 +312,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <SupportJustMyCode>
       </SupportJustMyCode>
       <EnableModules>true</EnableModules>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>
@@ -333,6 +341,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <SupportJustMyCode>true</SupportJustMyCode>
       <EnableModules>true</EnableModules>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

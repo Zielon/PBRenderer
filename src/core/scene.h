@@ -8,6 +8,7 @@
 #include "../accelerators/bvh.h"
 #include "../geometry/scene_object.h"
 #include "../rasterizer/shader.h"
+#include "../lights/infinite_light.h"
 
 namespace pbr
 {
@@ -25,6 +26,8 @@ namespace pbr
 
 		void add_light(const std::shared_ptr<Light>& light);
 
+		void add_environment_light(const std::shared_ptr<InfiniteLight>& light);
+
 		void build() const;
 
 		std::shared_ptr<Camera> get_camera() const;
@@ -33,10 +36,13 @@ namespace pbr
 
 		std::reference_wrapper<std::vector<std::shared_ptr<Light>>> get_lights();
 
+		std::reference_wrapper<std::vector<std::shared_ptr<InfiniteLight>>> get_environment_lights();
+
 	private:
 		std::shared_ptr<BVH<SceneObject>> bvh;
 		std::shared_ptr<Camera> camera;
 		std::vector<std::shared_ptr<Light>> lights;
+		std::vector<std::shared_ptr<InfiniteLight>> environment_lights;
 		std::vector<std::shared_ptr<SceneObject>> objects;
 	};
 }

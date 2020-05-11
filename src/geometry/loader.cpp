@@ -13,6 +13,7 @@
 #include "../parser/types.h"
 #include "../lights/point_light.h"
 #include "../lights/area_light.h"
+#include "../lights/infinite_light.h"
 
 void pbr::Loader::load_meshes(const std::string& config){
 
@@ -68,6 +69,11 @@ void pbr::Loader::load_lights(const std::string& config){
 		if (configuration.type == "POINT_LIGHT")
 		{
 			scene->add_light(std::make_shared<PointLight>(configuration));
+		}
+
+		if (configuration.type == "INFINITE_LIGHT")
+		{
+			scene->add_environment_light(std::make_shared<InfiniteLight>(configuration));
 		}
 
 		if (configuration.type == "AREA_LIGHT")

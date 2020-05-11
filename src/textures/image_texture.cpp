@@ -10,6 +10,7 @@ void pbr::Image::load(){
 
 	unsigned char* data = stbi_load(path.c_str(), &width, &height, &num_channels, 0);
 
+	#pragma omp for schedule(dynamic)
 	for (auto i = 0; i < width; ++i)
 		for (auto j = 0; j < height; ++j)
 		{
@@ -38,15 +39,14 @@ void pbr::Image::save(const std::string& file){
 	const auto output = new char[width * height * 3];
 	auto index = 0;
 
+	#pragma omp for schedule(dynamic)
 	for (int j = 0; j < height; ++j)
-	{
 		for (int i = 0; i < width; ++i)
 		{
 			output[index++] = char(255 * clamp(0, 1, pixels[j][i].r));
 			output[index++] = char(255 * clamp(0, 1, pixels[j][i].g));
 			output[index++] = char(255 * clamp(0, 1, pixels[j][i].b));
 		}
-	}
 
 	stbi_write_jpg(file.c_str(), width, height, 3, output, 100);
 

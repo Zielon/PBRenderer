@@ -7,7 +7,7 @@
 
 namespace pbr
 {
-	enum LightType { AREA, POINT };
+	enum LightType { AREA, POINT, INFINITE };
 
 	class Scene;
 

@@ -21,8 +21,17 @@ namespace parser
 			name = node["name"].GetString();
 			type = node["type"].GetString();
 			position = node.HasMember("position") ? Parser::string_to_vec3(node["position"].GetString()) : glm::vec3();
-			intensity = node["intensity"].GetFloat();
+			intensity = node.HasMember("intensity") ? node["intensity"].GetFloat() : 0.f;
 			mesh_id = node.HasMember("mesh_id") ? node["mesh_id"].GetInt() : -1;
+
+			if (type == "INFINITE_LIGHT")
+			{
+				const rapidjson::Value& texture = node["texture"];
+				auto path = texture["path"].GetString();
+				auto width = texture["width"].GetInt();
+				auto height = texture["height"].GetInt();
+				hdr = std::make_shared<pbr::ImageTexture>(name, width, height, path);
+			}
 		}
 
 		int id;
@@ -31,6 +40,7 @@ namespace parser
 		glm::vec3 position{};
 		float intensity{};
 		int mesh_id;
+		std::shared_ptr<pbr::ImageTexture> hdr{};
 	};
 
 	struct MaterialConfig final

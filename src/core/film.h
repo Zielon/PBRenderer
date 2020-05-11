@@ -65,6 +65,8 @@ namespace pbr
 
 		glm::vec2 get_size() const;
 
+		static float gaussian2D(const glm::vec2& sample);
+
 	private:
 		std::vector<std::vector<Pixel<float>>> pixels;
 		glm::vec2 size{};

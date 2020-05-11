@@ -6,6 +6,18 @@
       "type": "AREA_LIGHT",
       "intensity": 35,
       "mesh_id": 2
+    },
+    {
+      "id": 4,
+      "name": "infinite light 1",
+      "type": "INFINITE_LIGHT",
+      "texture": {
+        "name": "hdr",
+        "type": "IMAGE",
+        "width": 8192,
+        "height": 4096,
+        "path": "..\\resources\\hdr\\hayfield.jpg"
+      }
     }
   ],
   "meshes": [
@@ -35,7 +47,7 @@
       "name": "cbox_luminaire",
       "path": "..\\resources\\cbox\\cbox_luminaire.obj",
       "scaling": "0.001 0.001 0.001",
-      "translation": "0 -0.01 0",
+      "translation": "0 0.1 0",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
@@ -45,82 +57,6 @@
             "name": "kd",
             "type": "CONSTANT",
             "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 3,
-      "name": "cbox_redwall",
-      "path": "..\\resources\\cbox\\cbox_redwall.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.9236 0.0984 0.3883"
-          }
-        ]
-      }
-    },
-    {
-      "id": 4,
-      "name": "cbox_greenwall",
-      "path": "..\\resources\\cbox\\cbox_greenwall.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.4117 0.6745 0.2824"
-          }
-        ]
-      }
-    },
-    {
-      "id": 5,
-      "name": "cbox_back",
-      "path": "..\\resources\\cbox\\cbox_back.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.2275 0.4862 0.6509"
-          }
-        ]
-      }
-    },
-    {
-      "id": 6,
-      "name": "cbox_ceiling",
-      "path": "..\\resources\\cbox\\cbox_ceiling.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.2275 0.4862 0.6509"
           }
         ]
       }
@@ -134,26 +70,7 @@
       "rotation_axis": "0 1 0",
       "rotation_degree": 45,
       "material": {
-        "type": "PLASTIC"
-      }
-    },
-    {
-      "id": 8,
-      "name": "sphere",
-      "path": "..\\resources\\parametric\\sphere.ply",
-      "scaling": "0.02 0.02 0.02",
-      "translation": "-0.075 0.060 -0.45",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "MIRROR",
-        "textures": [
-          {
-            "name": "kr",
-            "type": "CONSTANT",
-            "value": "0.9 0.9 0.9"
-          }
-        ]
+        "type": "METAL"
       }
     },
     {
@@ -161,7 +78,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
-      "translation": "-0.475 0.04 -0.075",
+      "translation": "-0.475 0.07 -0.075",
       "rotation_axis": "0 1 0",
       "rotation_degree": 180,
       "material": {
@@ -170,7 +87,7 @@
           {
             "name": "kr",
             "type": "CONSTANT",
-            "value": "0.9 0.9 0.9"
+            "value": "0.99 0.99 0.99"
           },
           {
             "name": "kt",
@@ -181,13 +98,13 @@
             "name": "u_roughness",
             "type": "CONSTANT",
             "float": true,
-            "value": 0.3
+            "value": 0
           },
           {
             "name": "v_roughness",
             "type": "CONSTANT",
             "float": true,
-            "value": 0.3
+            "value": 0
           },
           {
             "name": "index",

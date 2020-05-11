@@ -12,8 +12,8 @@ void pbr::MetalMaterial::compute_BxDF(Intersection& intersection, TransportMode 
 	Triangle* triangle = const_cast<Triangle*>(intersection.triangle);
 
 	//GOLD
-	auto eta = glm::vec3(0.27732f); // Refractive index
-	auto k = glm::vec3(2.9278f); // Extinction coefficient
+	auto eta = glm::vec3(3.1099, 1.1851, 0.9132); // Refractive index
+	auto k = glm::vec3(2.9567, 2.2785, 1.5698); // Extinction coefficient
 	auto r = glm::vec3(1.f);
 
 	intersection.bsdf = std::make_shared<BSDF>(intersection, triangle->scene_object);

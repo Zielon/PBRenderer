@@ -5,6 +5,9 @@
 #define GLM_SWIZZLE_STQP
 #include <glm/glm.hpp>
 
+#undef near
+#undef far
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 

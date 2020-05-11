@@ -27,8 +27,14 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		auto o = intersection.point;
 		auto ns = intersection.shading.n;
 
-		if ((depth == 0 || is_specular_ray) && hit_mesh->type == LIGHT && hit_mesh->get_area_light())
-			L += beta * hit_mesh->get_area_light()->L(ns, wo);
+		if (depth == 0 || is_specular_ray)
+		{
+			if (hit_mesh->type == LIGHT && hit_mesh->get_area_light())
+				L += beta * hit_mesh->get_area_light()->L(ns, wo);
+			else
+				for (const auto& light : scene->get_environment_lights().get())
+					L += beta * light->Le(intersection);
+		}
 
 		/*
 		 * Direct illumination estimation
@@ -63,10 +69,6 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 
 		ray = {o + wi * ray_epsilon, wi};
 		depth++;
-
-		// Stop tracing if the ray hits light source
-		if (hit_mesh->type == LIGHT && hit_mesh->get_area_light())
-			break;
 	}
 
 	return L;
