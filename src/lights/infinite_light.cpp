@@ -8,7 +8,7 @@
 
 pbr::InfiniteLight::InfiniteLight(const parser::LightConfig& config):
 	Light(INFINITE, config), hdr(config.hdr),
-	transformation(Transformation(config.rotation, config.scaling, config.translation)){
+	transformation(Transformation(config.rotation, glm::vec3(1.f), config.translation)){
 
 	auto size = hdr->get_size();
 	int width = size.x;

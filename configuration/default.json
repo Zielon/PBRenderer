@@ -4,7 +4,6 @@
       "id": 4,
       "name": "infinite light 1",
       "type": "INFINITE_LIGHT",
-      "scaling": "0.00001 0.00001 0.00001",
       "translation": "0 0 0",
       "rotation": "270 0 0",
       "texture": {
