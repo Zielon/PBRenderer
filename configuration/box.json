@@ -15,8 +15,7 @@
       "path": "..\\resources\\cbox\\cbox_floor.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
         "textures": [
@@ -36,8 +35,7 @@
       "path": "..\\resources\\cbox\\cbox_luminaire.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 -0.01 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
         "textures": [
@@ -55,8 +53,7 @@
       "path": "..\\resources\\cbox\\cbox_redwall.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
         "textures": [
@@ -74,8 +71,7 @@
       "path": "..\\resources\\cbox\\cbox_greenwall.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
         "textures": [
@@ -93,8 +89,7 @@
       "path": "..\\resources\\cbox\\cbox_back.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
         "textures": [
@@ -112,8 +107,7 @@
       "path": "..\\resources\\cbox\\cbox_ceiling.obj",
       "scaling": "0.001 0.001 0.001",
       "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
         "textures": [
@@ -131,8 +125,7 @@
       "path": "..\\resources\\bunny\\bunny.ply",
       "scaling": "1 1 1",
       "translation": "-0.25 -0.033 -0.3",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 45,
+      "rotation": "0 0 0",
       "material": {
         "type": "PLASTIC"
       }
@@ -143,8 +136,7 @@
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
       "translation": "-0.475 0.04 -0.075",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 0",
       "material": {
         "type": "GLASS",
         "textures": [

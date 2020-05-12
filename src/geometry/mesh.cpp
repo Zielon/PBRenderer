@@ -20,8 +20,7 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> gl_vertices,
 
 	material = Material::create_material(config.material_config);
 	transformation = Transformation(
-		config.rotation_axis,
-		config.rotation_degree,
+		config.rotation,
 		config.scaling,
 		config.translation
 	);

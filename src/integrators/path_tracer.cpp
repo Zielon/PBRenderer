@@ -18,7 +18,7 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		if (!scene->intersect(ray, intersection))
 		{
 			for (const auto& light : scene->get_environment_lights().get())
-				L += beta * light->Le(intersection);
+				L += beta * light->Le(ray);
 			break;
 		}
 

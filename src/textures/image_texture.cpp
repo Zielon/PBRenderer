@@ -12,6 +12,7 @@ void pbr::Image::load(){
 
 	#pragma omp for schedule(dynamic)
 	for (auto i = 0; i < width; ++i)
+	{
 		for (auto j = 0; j < height; ++j)
 		{
 			Pixel<float> pixel;
@@ -25,6 +26,7 @@ void pbr::Image::load(){
 
 			pixels[j][i] = pixel;
 		}
+	}
 
 	stbi_image_free(data);
 }
@@ -41,12 +43,14 @@ void pbr::Image::save(const std::string& file){
 
 	#pragma omp for schedule(dynamic)
 	for (int j = 0; j < height; ++j)
+	{
 		for (int i = 0; i < width; ++i)
 		{
 			output[index++] = char(255 * clamp(0, 1, pixels[j][i].r));
 			output[index++] = char(255 * clamp(0, 1, pixels[j][i].g));
 			output[index++] = char(255 * clamp(0, 1, pixels[j][i].b));
 		}
+	}
 
 	stbi_write_jpg(file.c_str(), width, height, 3, output, 100);
 
@@ -63,7 +67,22 @@ pbr::Pixel<float> pbr::Image::get(glm::vec2 uv){
 	return get(uv.x, uv.y);
 }
 
+glm::vec2 pbr::Image::get_size() const{
+
+	return glm::vec2(width, height);
+}
+
 glm::vec3 pbr::ImageTexture::evaluate(Intersection& intersection) const{
 
 	return image->get(intersection.shading.uv.x, intersection.shading.uv.y).to_vec3();
+}
+
+glm::vec3 pbr::ImageTexture::get(glm::vec2 uv) const{
+
+	return image->get(uv).to_vec3();
+}
+
+glm::vec2 pbr::ImageTexture::get_size() const{
+
+	return image->get_size();
 }

@@ -29,6 +29,8 @@ namespace pbr
 
 		Pixel<float> get(glm::vec2 uv);
 
+		glm::vec2 get_size() const;
+
 	private:
 		std::vector<std::vector<Pixel<float>>> pixels;
 		int num_channels;
@@ -48,6 +50,10 @@ namespace pbr
 			: Texture(name), image(std::make_shared<Image>(width, height, path, 3)){}
 
 		glm::vec3 evaluate(Intersection& intersection) const override;
+
+		glm::vec3 get(glm::vec2 uv) const;
+
+		glm::vec2 get_size() const;
 
 	private:
 		std::shared_ptr<Image> image;

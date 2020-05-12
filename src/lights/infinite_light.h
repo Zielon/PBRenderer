@@ -1,20 +1,22 @@
 #pragma once
 
 #include "../core/light.h"
+#include "../core/distribution.h"
+#include "../geometry/transformation.h"
 
 namespace pbr
 {
+	class Ray;
 	class Intersection;
 
 	class InfiniteLight : public Light
 	{
 	public:
-		InfiniteLight(const parser::LightConfig& config)
-			: Light(INFINITE, config), hdr(config.hdr){}
+		explicit InfiniteLight(const parser::LightConfig& config);
 
 		glm::vec3 power() const override;
 
-		glm::vec3 Le(const Intersection& intersection) const;
+		glm::vec3 Le(const Ray& ray) const;
 
 		glm::vec3 sample_Li(
 			const Intersection& intersection,
@@ -34,5 +36,7 @@ namespace pbr
 
 	private:
 		std::shared_ptr<ImageTexture> hdr;
+		std::shared_ptr<Distribution2D> distribution;
+		Transformation transformation;
 	};
 }

@@ -50,6 +50,7 @@
     <ClInclude Include="..\src\core\aggregate.h" />
     <ClInclude Include="..\src\core\bxdf.h" />
     <ClInclude Include="..\src\core\camera.h" />
+    <ClInclude Include="..\src\core\distribution.h" />
     <ClInclude Include="..\src\core\film.h" />
     <ClInclude Include="..\src\core\light.h" />
     <ClInclude Include="..\src\core\integrator.h" />

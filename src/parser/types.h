@@ -26,6 +26,9 @@ namespace parser
 
 			if (type == "INFINITE_LIGHT")
 			{
+				scaling = Parser::string_to_vec3(node["scaling"].GetString());
+				translation = Parser::string_to_vec3(node["translation"].GetString());
+				rotation = Parser::string_to_vec3(node["rotation"].GetString());
 				const rapidjson::Value& texture = node["texture"];
 				auto path = texture["path"].GetString();
 				auto width = texture["width"].GetInt();
@@ -38,6 +41,9 @@ namespace parser
 		std::string name;
 		std::string type;
 		glm::vec3 position{};
+		glm::vec3 scaling{};
+		glm::vec3 translation{};
+		glm::vec3 rotation{};
 		float intensity{};
 		int mesh_id;
 		std::shared_ptr<pbr::ImageTexture> hdr{};
@@ -106,8 +112,7 @@ namespace parser
 			path = node["path"].GetString();
 			scaling = Parser::string_to_vec3(node["scaling"].GetString());
 			translation = Parser::string_to_vec3(node["translation"].GetString());
-			rotation_axis = Parser::string_to_vec3(node["rotation_axis"].GetString());
-			rotation_degree = node["rotation_degree"].GetFloat();
+			rotation = Parser::string_to_vec3(node["rotation"].GetString());
 			material_config = MaterialConfig(node["material"]);
 		}
 
@@ -116,8 +121,7 @@ namespace parser
 		std::string path;
 		glm::vec3 scaling{};
 		glm::vec3 translation{};
-		glm::vec3 rotation_axis{};
-		float rotation_degree{};
+		glm::vec3 rotation{};
 		MaterialConfig material_config;
 	};
 }

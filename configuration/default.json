@@ -4,66 +4,28 @@
       "id": 4,
       "name": "infinite light 1",
       "type": "INFINITE_LIGHT",
+      "scaling": "0.00001 0.00001 0.00001",
+      "translation": "0 0 0",
+      "rotation": "270 0 0",
       "texture": {
         "name": "hdr",
         "type": "IMAGE",
         "width": 8192,
         "height": 4096,
-        "path": "..\\resources\\hdr\\hayfield.jpg"
+        "path": "..\\resources\\hdr\\path.jpg"
       }
     }
   ],
   "meshes": [
-    {
-      "id": 1,
-      "name": "cbox_floor",
-      "path": "..\\resources\\cbox\\cbox_floor.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "IMAGE",
-            "width": 768,
-            "height": 768,
-            "path": "..\\resources\\textures\\checker.jpg"
-          }
-        ]
-      }
-    },
-    {
-      "id": 2,
-      "name": "cbox_luminaire",
-      "path": "..\\resources\\cbox\\cbox_luminaire.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0.1 0",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
     {
       "id": 7,
       "name": "bunny",
       "path": "..\\resources\\bunny\\bunny.ply",
       "scaling": "1 1 1",
       "translation": "-0.25 -0.033 -0.3",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 45,
+      "rotation": "0 0 0",
       "material": {
-        "type": "METAL"
+        "type": "PLASTIC"
       }
     },
     {
@@ -72,8 +34,7 @@
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
       "translation": "-0.475 0.07 -0.075",
-      "rotation_axis": "0 1 0",
-      "rotation_degree": 180,
+      "rotation": "0 0 0",
       "material": {
         "type": "GLASS",
         "textures": [

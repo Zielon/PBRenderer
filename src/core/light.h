@@ -42,5 +42,6 @@ namespace pbr
 
 	protected:
 		const parser::LightConfig configuration;
+		float ray_epsilon = 0.00001f;
 	};
 }

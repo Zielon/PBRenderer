@@ -2,8 +2,8 @@
 
 #include <utility>
 
-#include "../geometry/scene_object.h"
 #include "../core/light.h"
+#include "../geometry/scene_object.h"
 
 namespace pbr
 {
@@ -31,7 +31,6 @@ namespace pbr
 		bool two_sided;
 		const glm::vec3 position;
 		const glm::vec3 luminous;
-		float ray_epsilon = 0.00001f;
 
 		/*
 		 * Area light is represented in the rasterizer as this mesh.
