@@ -11,7 +11,7 @@ glm::vec3 pbr::DirectLighting::Li(const Ray& ray, const std::shared_ptr<Sampler>
 		return glm::vec3(0.f);
 
 	auto triangle = const_cast<Triangle*>(intersection.triangle);
-	auto hit_mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
+	auto hit_mesh = dynamic_cast<Mesh*>(triangle->scene_object);
 
 	hit_mesh->get_material()->compute_BxDF(intersection);
 

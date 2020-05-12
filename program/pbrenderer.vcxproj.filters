@@ -443,5 +443,8 @@
     <None Include="..\configuration\default.json">
       <Filter>configuration</Filter>
     </None>
+    <None Include="..\configuration\box.json">
+      <Filter>configuration</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -26,6 +26,8 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> gl_vertices,
 		config.translation
 	);
 
+	name = config.name;
+
 	generate_triangle();
 	generate_gl_buffers();
 
@@ -34,7 +36,9 @@ pbr::Mesh::Mesh(std::vector<GL_Vertex> gl_vertices,
 
 pbr::Mesh::~Mesh(){
 
-	glDeleteBuffers(1, &VAO);
+	std::cout << "GLBuffers deleted for " << name << std::endl;
+
+	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 }

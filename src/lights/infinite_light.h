@@ -10,7 +10,7 @@ namespace pbr
 	{
 	public:
 		InfiniteLight(const parser::LightConfig& config)
-			: Light(INFINITE, config){}
+			: Light(INFINITE, config), hdr(config.hdr){}
 
 		glm::vec3 power() const override;
 
@@ -31,5 +31,8 @@ namespace pbr
 			const glm::vec2& u,
 			glm::vec3* wi,
 			float* pdf) const override;
+
+	private:
+		std::shared_ptr<ImageTexture> hdr;
 	};
 }

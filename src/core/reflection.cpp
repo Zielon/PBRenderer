@@ -7,12 +7,12 @@
 #include "../geometry/intersection.h"
 #include "../bxdfs/specular_reflection.h"
 
-pbr::BSDF::BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object, float eta) :
+pbr::BSDF::BSDF(Intersection& intersection, SceneObject* object, float eta) :
 	n(normalize(intersection.shading.n)),
 	s_tangent(normalize(intersection.shading.dpdu)),
 	t_bitangent(cross(n, s_tangent)),
 	point(intersection.point),
-	object(std::move(object)){}
+	object(object){}
 
 void pbr::BSDF::add(const std::shared_ptr<BxDF>& bxdf){
 

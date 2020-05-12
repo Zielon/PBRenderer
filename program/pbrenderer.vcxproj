@@ -146,6 +146,7 @@
     <ClCompile Include="..\src\textures\image_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\configuration\box.json" />
     <None Include="..\configuration\default.json" />
     <None Include="..\src\rasterizer\glsl\flat\flat.frag" />
     <None Include="..\src\rasterizer\glsl\flat\flat.geo" />

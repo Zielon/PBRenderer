@@ -2,13 +2,6 @@
   "lights": [
     {
       "id": 4,
-      "name": "area light 1",
-      "type": "AREA_LIGHT",
-      "intensity": 35,
-      "mesh_id": 2
-    },
-    {
-      "id": 4,
       "name": "infinite light 1",
       "type": "INFINITE_LIGHT",
       "texture": {

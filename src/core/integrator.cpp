@@ -5,6 +5,7 @@
 #include <omp.h>
 #include <thread>
 #include <algorithm>
+#include <utility>
 #include <windows.h>
 
 #include "uniform_sampler.h"
@@ -13,7 +14,7 @@
 #include "../math/math.h"
 
 pbr::Integrator::Integrator(std::shared_ptr<Scene> scene, int num_samples, std::string name):
-	name(name), num_samples(num_samples), scene(std::move(scene)){
+	name(std::move(name)), num_samples(num_samples), scene(std::move(scene)){
 
 	const auto threads = std::thread::hardware_concurrency();
 	for (auto i = 0; i < threads; ++i)
@@ -155,7 +156,7 @@ glm::vec3 pbr::Integrator::direct_illumination(
 
 		if (intersects)
 		{
-			auto mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(light_intersection.triangle->scene_object);
+			auto mesh = dynamic_cast<Mesh*>(light_intersection.triangle->scene_object);
 			if (mesh->type == LIGHT && mesh->get_area_light() == light)
 				Li = mesh->get_area_light()->L(light_intersection.shading.n, -wi);
 			if (Li != glm::vec3(0.f))

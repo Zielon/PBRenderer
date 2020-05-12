@@ -23,7 +23,7 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		}
 
 		auto triangle = const_cast<Triangle*>(intersection.triangle);
-		auto hit_mesh = std::dynamic_pointer_cast<Mesh, SceneObject>(triangle->scene_object);
+		auto hit_mesh = dynamic_cast<Mesh*>(triangle->scene_object);
 
 		hit_mesh->get_material()->compute_BxDF(intersection);
 
@@ -46,10 +46,13 @@ glm::vec3 pbr::PathTracer::Li(const Ray& camera_ray, const std::shared_ptr<Sampl
 		 */
 		if (intersection.bsdf->num_components(BxDFType(ALL & ~SPECULAR)) > 0)
 		{
-			float light_pdf;
-			auto light = select_light(sampler->get1D(), &light_pdf);
-			auto Ld = direct_illumination(intersection, light, sampler) / light_pdf;
-			L += beta * Ld;
+			if (!scene->get_lights().get().empty())
+			{
+				float light_pdf;
+				auto light = select_light(sampler->get1D(), &light_pdf);
+				auto Ld = direct_illumination(intersection, light, sampler) / light_pdf;
+				L += beta * Ld;
+			}
 		}
 
 		// Sample BSDF to get new path direction

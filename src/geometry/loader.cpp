@@ -15,7 +15,7 @@
 #include "../lights/area_light.h"
 #include "../lights/infinite_light.h"
 
-void pbr::Loader::load_meshes(const std::string& config){
+void pbr::Loader::load_meshes(const std::string& config, Scene* scene){
 
 	std::ifstream ifs(config);
 	rapidjson::IStreamWrapper isw(ifs);
@@ -43,13 +43,13 @@ void pbr::Loader::load_meshes(const std::string& config){
 		}
 
 		directory = configuration.path.substr(0, configuration.path.find_last_of('\\'));
-		process_node(ai_scene->mRootNode, ai_scene, configuration);
+		process_node(ai_scene->mRootNode, ai_scene, configuration, scene);
 
 		std::cout << "INFO::LOADER Mesh loaded -> [" << configuration.name << "]" << std::endl;
 	}
 }
 
-void pbr::Loader::load_lights(const std::string& config){
+void pbr::Loader::load_lights(const std::string& config, Scene* scene){
 
 	std::ifstream ifs(config);
 	rapidjson::IStreamWrapper isw(ifs);
@@ -87,8 +87,33 @@ void pbr::Loader::load_lights(const std::string& config){
 	}
 }
 
+bool pbr::Loader::needs_reload(const std::string& config) const{
+
+	return config != config_path;
+}
+
+void pbr::Loader::reload(const std::string& config, const std::shared_ptr<Scene>& scene){
+
+	meshes.clear();
+	textures_loaded.clear();
+	config_path = config;
+
+	glFinish();
+
+	auto start = std::chrono::high_resolution_clock::now();
+
+	load_meshes(config_path, scene.get());
+	load_lights(config_path, scene.get());
+
+	scene->build();
+
+	auto end = std::chrono::high_resolution_clock::now();
+	const auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	std::cout << "INFO::LOADER " << config_path << " loading time: [" << millis << " ms]" << std::endl;
+}
+
 void pbr::Loader::process_node(
-	aiNode* node, const aiScene* ai_scene, parser::MeshConfig& configuration){
+	aiNode* node, const aiScene* ai_scene, parser::MeshConfig& configuration, Scene* scene){
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -98,7 +123,7 @@ void pbr::Loader::process_node(
 	}
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
-		process_node(node->mChildren[i], ai_scene, configuration);
+		process_node(node->mChildren[i], ai_scene, configuration, scene);
 }
 
 std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene* scene,
@@ -190,9 +215,7 @@ std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene
 		material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-	return std::shared_ptr<Mesh>(new Mesh(vertices, indices, textures, configuration), [](Mesh* mesh){
-		delete mesh;
-	});
+	return std::make_shared<Mesh>(vertices, indices, textures, configuration);
 }
 
 std::vector<pbr::GL_Texture> pbr::Loader::load_material_textures(

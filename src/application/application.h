@@ -29,7 +29,7 @@ namespace app
 		Window window;
 		std::shared_ptr<pbr::ProjectiveCamera> camera;
 		std::shared_ptr<pbr::Scene> scene;
-		std::shared_ptr<rasterizer::RayCaster> ray_caster;
+		std::unique_ptr<rasterizer::RayCaster> ray_caster;
 		std::shared_ptr<pbr::Loader> model_loader;
 		rasterizer::ShaderManager shader_manager;
 		rasterizer::InputHandler input_handler;
@@ -43,7 +43,6 @@ namespace app
 		bool is_wireframe = false;
 		bool is_picking = false;
 		bool is_rendering = false;
-		bool is_reloading = false;
 		float fps_rate{0.f};
 		int frames{0};
 		int num_samples{10};

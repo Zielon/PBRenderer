@@ -28,7 +28,7 @@ namespace pbr
 	class BSDF
 	{
 	public:
-		explicit BSDF(Intersection& intersection, std::shared_ptr<SceneObject> object, float eta = 1.f);
+		explicit BSDF(Intersection& intersection, SceneObject* object, float eta = 1.f);
 
 		void add(const std::shared_ptr<BxDF>& bx);
 
@@ -56,7 +56,7 @@ namespace pbr
 		glm::vec3 t_bitangent;
 		glm::vec3 point;
 		std::vector<std::shared_ptr<BxDF>> bxdfs;
-		std::shared_ptr<SceneObject> object;
+		SceneObject* object;
 
 		glm::vec3 vertex_to_world(const glm::vec3& v) const;
 

@@ -31,6 +31,8 @@ namespace pbr
 			area = 0.5f * length(cross(edge0, edge1));
 		};
 
+		~Triangle(){}
+
 		bool intersect(const Ray& ray, Intersection& intersection) const;
 
 		Sample sample(const glm::vec2& u) const;
@@ -45,8 +47,7 @@ namespace pbr
 		glm::ivec3 ids;
 		glm::vec3 edge0;
 		glm::vec3 edge1;
-
-		const std::shared_ptr<SceneObject> scene_object{nullptr};
+		SceneObject* scene_object{nullptr};
 
 	private:
 		BBox bbox;
