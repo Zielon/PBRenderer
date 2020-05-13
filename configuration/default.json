@@ -4,14 +4,13 @@
       "id": 4,
       "name": "infinite light 1",
       "type": "INFINITE_LIGHT",
-      "translation": "0 0 0",
       "rotation": "270 0 0",
       "texture": {
         "name": "hdr",
         "type": "IMAGE",
         "width": 8192,
         "height": 4096,
-        "path": "..\\resources\\hdr\\path.jpg"
+        "path": "..\\resources\\hdr\\hayfield.jpg"
       }
     }
   ],
@@ -24,7 +23,7 @@
       "translation": "-0.25 -0.033 -0.3",
       "rotation": "0 0 0",
       "material": {
-        "type": "PLASTIC"
+        "type": "METAL"
       }
     },
     {

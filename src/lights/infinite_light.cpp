@@ -8,7 +8,7 @@
 
 pbr::InfiniteLight::InfiniteLight(const parser::LightConfig& config):
 	Light(INFINITE, config), hdr(config.hdr),
-	transformation(Transformation(config.rotation, glm::vec3(1.f), config.translation)){
+	transformation(Transformation(config.rotation, glm::vec3(1.f), glm::vec3(0.f))){
 
 	auto size = hdr->get_size();
 	int width = size.x;
@@ -64,11 +64,10 @@ glm::vec3 pbr::InfiniteLight::sample_Li(const Intersection& intersection, const 
 
 	auto light_space = glm::vec3(glm::cos(phi) * sin_theta, glm::sin(phi) * sin_theta, glm::cos(theta));
 	auto map_pdf = width * height * distribution->get_pdf(i, j);
+	Intersection shadow_test{};
 
 	*wi = normalize(transformation.vector_to_world(light_space));
 	*pdf = map_pdf / (2 * glm::pi<float>() * glm::pi<float>() * sin_theta); // Transforming between Distributions
-
-	Intersection shadow_test{};
 	*shadow = !scene->intersect(Ray(intersection.point + *wi * ray_epsilon, *wi), shadow_test);
 
 	return hdr->get(uv);

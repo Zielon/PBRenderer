@@ -57,9 +57,9 @@ void app::Application::start(){
 
 		glfwSwapBuffers(window.get());
 		glfwPollEvents();
-
 		fps();
 		reload();
+		rasterizer::InputHandler::time_update();
 	}
 
 	glfwTerminate();

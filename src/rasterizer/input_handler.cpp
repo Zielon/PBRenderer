@@ -57,8 +57,6 @@ void rasterizer::InputHandler::mouse_button_callback(GLFWwindow* window, int but
 
 void rasterizer::InputHandler::process(){
 
-	time_update();
-
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 

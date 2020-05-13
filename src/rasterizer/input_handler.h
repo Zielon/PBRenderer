@@ -12,6 +12,8 @@ namespace rasterizer
 
 		static void process();
 
+		static void time_update();
+
 		static float last_x;
 		static float last_y;
 	private:
@@ -27,7 +29,5 @@ namespace rasterizer
 		static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 		static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-
-		static void time_update();
 	};
 }

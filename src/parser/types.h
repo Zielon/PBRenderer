@@ -26,7 +26,6 @@ namespace parser
 
 			if (type == "INFINITE_LIGHT")
 			{
-				translation = Parser::string_to_vec3(node["translation"].GetString());
 				rotation = Parser::string_to_vec3(node["rotation"].GetString());
 				const rapidjson::Value& texture = node["texture"];
 				auto path = texture["path"].GetString();
@@ -40,7 +39,6 @@ namespace parser
 		std::string name;
 		std::string type;
 		glm::vec3 position{};
-		glm::vec3 translation{};
 		glm::vec3 rotation{};
 		float intensity{};
 		int mesh_id;

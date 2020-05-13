@@ -31,12 +31,15 @@ namespace pbr
 			return (x == 0 ? cdf[0] : cdf[x] - cdf[x - 1]) / count;
 		};
 
-		float count;
+		float count{};
 
 	private:
 		std::vector<float> cdf;
 	};
 
+	/*
+	 * The Piecewise-Constant Sampling Distribution for a High-Dynamic-Range Environment Map
+	 */
 	class Distribution2D final
 	{
 	public:
@@ -46,7 +49,10 @@ namespace pbr
 
 			for (const auto& pdf : pdfs)
 			{
+				// Compute conditional sampling distribution for v
 				row_samplers.emplace_back(pdf);
+
+				// Compute marginal sampling distribution u
 				column_sums.push_back(row_samplers.back().count);
 			}
 
@@ -54,7 +60,9 @@ namespace pbr
 		}
 
 		/*
-		 * The Piecewise-Constant Sampling Distribution for a High-Dynamic-Range Environment Map
+		 * First the marginal 1D distribution is used to select a v value, giving a columns of the image to sample. 
+		 * Columns with bright pixels are more likely to be sampled. 
+		 * Then, given a column, a value u is sampled from that column’s 1D distribution.
 		 */
 		std::pair<int, int> sample(const glm::vec2& u) const{
 
@@ -68,7 +76,7 @@ namespace pbr
 		};
 
 	private:
-		Distribution1D column_sampler;
+		Distribution1D column_sampler{};
 		std::vector<Distribution1D> row_samplers;
 	};
 }
