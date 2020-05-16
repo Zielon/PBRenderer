@@ -9,6 +9,6 @@ namespace pbr
 	public:
 		MetalMaterial() = default;
 
-		void compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const override;
+		void compute_BxDF(Intersection& intersection, TransportMode mode) const override;
 	};
 }

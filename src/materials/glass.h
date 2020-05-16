@@ -22,7 +22,7 @@ namespace pbr
 			v_roughness(std::move(v_roughness)),
 			index(std::move(index)){}
 
-		void compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const override;
+		void compute_BxDF(Intersection& intersection, TransportMode mode) const override;
 
 	private:
 		std::shared_ptr<Texture<glm::vec3>> kr;

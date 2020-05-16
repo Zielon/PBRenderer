@@ -7,8 +7,7 @@ namespace pbr
 	class BeckmannDistribution : public MicrofacetDistribution
 	{
 	public:
-		BeckmannDistribution(float alphax, float alphay) : MicrofacetDistribution(false), alphax(alphax),
-		                                                   alphay(alphay){};
+		BeckmannDistribution(float alpha) : MicrofacetDistribution(false), alpha(alpha){};
 
 		float D(const glm::vec3& wh) const override;
 
@@ -17,7 +16,6 @@ namespace pbr
 		glm::vec3 sample_wh(const glm::vec3& wo, const glm::vec2& u) const override;
 
 	private:
-		const float alphax{};
-		const float alphay{};
+		const float alpha{};
 	};
 }

@@ -12,7 +12,7 @@ namespace pbr
 	public:
 		MirrorMaterial(std::shared_ptr<Texture<glm::vec3>> kr) : kr(std::move(kr)){}
 
-		void compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const override;
+		void compute_BxDF(Intersection& intersection, TransportMode mode) const override;
 
 	private:
 		std::shared_ptr<Texture<glm::vec3>> kr;

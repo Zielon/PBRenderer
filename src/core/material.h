@@ -17,7 +17,6 @@ namespace pbr
 
 		virtual void compute_BxDF(
 			Intersection& intersection,
-			TransportMode mode = TransportMode::Radiance,
-			bool multiple_lobes = false) const = 0;
+			TransportMode mode = TransportMode::Radiance) const = 0;
 	};
 }

@@ -1,43 +1,28 @@
 {
   "camera": {
-    "position": "-0.66176 0.23231 -0.20245",
-    "direction": "0.99985 -0.01745 0.00175"
+    "position": "-0.27980 0.22506 0.16886",
+    "direction": "0.00697 0.05582 -0.99842"
   },
   "lights": [
     {
       "id": 1,
       "name": "area light 1",
       "type": "AREA_LIGHT",
-      "intensity": 8,
+      "intensity": 2,
       "mesh_id": 1
     },
     {
-      "id": 1,
-      "name": "area light 2",
-      "type": "AREA_LIGHT",
-      "intensity": 8,
-      "mesh_id": 2
-    },
-    {
-      "id": 3,
-      "name": "area light 3",
-      "type": "AREA_LIGHT",
-      "intensity": 8,
-      "mesh_id": 3
-    },
-    {
-      "id": 4,
-      "name": "area light 4",
-      "type": "AREA_LIGHT",
-      "intensity": 8,
-      "mesh_id": 4
-    },
-    {
-      "id": 5,
-      "name": "area light 5",
-      "type": "AREA_LIGHT",
-      "intensity": 8,
-      "mesh_id": 5
+      "id": 6,
+      "name": "infinite light 1",
+      "type": "INFINITE_LIGHT",
+      "rotation": "0 0 0",
+      "texture": {
+        "name": "hdr",
+        "type": "IMAGE",
+        "width": 8192,
+        "height": 4096,
+        "path": "..\\resources\\hdr\\hayfield.jpg"
+      }
     }
   ],
   "meshes": [
@@ -46,79 +31,7 @@
       "name": "cbox_luminaire",
       "path": "..\\resources\\cbox\\cbox_luminaire.obj",
       "scaling": "0.001 0.001 0.001",
-      "translation": "0 0.101 0.1",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 2,
-      "name": "cbox_luminaire",
-      "path": "..\\resources\\cbox\\cbox_luminaire.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "-0.25 0.101 0.1",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 3,
-      "name": "cbox_luminaire",
-      "path": "..\\resources\\cbox\\cbox_luminaire.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0.25 0.101 0.1",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 4,
-      "name": "cbox_luminaire",
-      "path": "..\\resources\\cbox\\cbox_luminaire.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0.1011 0.35",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 5,
-      "name": "cbox_luminaire",
-      "path": "..\\resources\\cbox\\cbox_luminaire.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0.1011 -0.15",
+      "translation": "0 -0.01 0.1",
       "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
@@ -136,7 +49,7 @@
       "name": "cbox_floor",
       "path": "..\\resources\\cbox\\cbox_floor.obj",
       "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0.075",
+      "translation": "0 0 0",
       "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
@@ -153,11 +66,47 @@
     },
     {
       "id": 7,
-      "name": "cbox_back",
-      "path": "..\\resources\\cbox\\cbox_floor.obj",
+      "name": "cbox_redwall",
+      "path": "..\\resources\\cbox\\cbox_redwall.obj",
       "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0.075",
-      "rotation": "0 90 180",
+      "translation": "0 0 0",
+      "rotation": "0 0 180",
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0.89 0.89 0.89"
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "name": "cbox_greenwall",
+      "path": "..\\resources\\cbox\\cbox_greenwall.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation": "0 0 180",
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "0.89 0.89 0.89"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "cbox_back",
+      "path": "..\\resources\\cbox\\cbox_back.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
         "textures": [
@@ -172,11 +121,11 @@
       }
     },
     {
-      "id": 9,
-      "name": "cbox_back",
-      "path": "..\\resources\\cbox\\cbox_back.obj",
+      "id": 10,
+      "name": "cbox_ceiling",
+      "path": "..\\resources\\cbox\\cbox_ceiling.obj",
       "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0.075",
+      "translation": "0 0 0",
       "rotation": "0 0 180",
       "material": {
         "type": "LAMBERTIAN",
@@ -184,54 +133,18 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 10,
-      "name": "side",
-      "path": "..\\resources\\cbox\\cbox_floor.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0.075",
-      "rotation": "-90 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
+            "value": "0.89 0.89 0.89"
           }
         ]
       }
     },
     {
       "id": 11,
-      "name": "cbox_redwall",
-      "path": "..\\resources\\cbox\\cbox_redwall.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "-0.5 0 0.075",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 12,
       "name": "ajax",
       "path": "..\\resources\\ajax.obj",
       "scaling": "0.003 0.003 0.003",
-      "translation": "-0.27 0.15 -0.15",
-      "rotation": "0 0 0",
+      "translation": "-0.225 0.15 -0.15",
+      "rotation": "0 0 90",
       "material": {
         "type": "METAL"
       }

@@ -50,8 +50,8 @@ void pbr::Integrator::render(float& progress){
 				for (auto i = 0; i < num_samples; i++)
 				{
 					const auto weight = 1.0f / (i + 1);
-					const auto offset = 
-						std::dynamic_pointer_cast<HammersleySampler, Sampler>(sampler)->hammersley(i, num_samples);
+					const auto offset =
+						std::dynamic_pointer_cast<HammersleySampler, Sampler>(sampler)->get2D();
 					auto ray = get_camera()->cast_ray(glm::vec2(x, y), offset);
 
 					pixel *= i * weight;

@@ -6,7 +6,7 @@
 #include "../bxdfs/specular_transmission.h"
 #include "../bxdfs/specular_reflection.h"
 
-void pbr::GlassMaterial::compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const{
+void pbr::GlassMaterial::compute_BxDF(Intersection& intersection, TransportMode mode) const{
 
 	Triangle* triangle = const_cast<Triangle*>(intersection.triangle);
 

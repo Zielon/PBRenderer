@@ -4,7 +4,7 @@
 #include "../bxdfs/specular_reflection.h"
 #include "../bxdfs/microfacet_transmission.h"
 
-void pbr::MirrorMaterial::compute_BxDF(Intersection& intersection, TransportMode mode, bool multiple_lobes) const{
+void pbr::MirrorMaterial::compute_BxDF(Intersection& intersection, TransportMode mode) const{
 
 	Triangle* triangle = const_cast<Triangle*>(intersection.triangle);
 
