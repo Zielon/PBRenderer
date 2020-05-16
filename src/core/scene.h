@@ -18,6 +18,8 @@ namespace pbr
 		Scene(std::shared_ptr<Camera> camera): bvh(std::make_shared<BVH<SceneObject>>()),
 		                                       camera(std::move(camera)){};
 
+		~Scene();
+
 		bool intersect(const Ray& ray, Intersection& intersection) const;
 
 		void draw(const std::shared_ptr<rasterizer::Shader>& shader, bool wireframe);

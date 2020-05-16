@@ -4,6 +4,8 @@
 #include "../geometry/triangle.h"
 #include "../geometry/mesh.h"
 
+pbr::AreaLight::~AreaLight(){}
+
 glm::vec3 pbr::AreaLight::sample_Li(
 	const Intersection& intersection,
 	const std::shared_ptr<Scene>& scene,

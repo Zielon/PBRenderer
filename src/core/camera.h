@@ -34,6 +34,8 @@ namespace pbr
 
 		std::reference_wrapper<CameraSystem> get_coordinate();
 
+		bool is_active = true;
+
 	protected:
 		float fov = 45.f;
 		float aspect;

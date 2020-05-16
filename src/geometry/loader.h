@@ -22,6 +22,8 @@ namespace pbr
 			reload(config_path, scene);
 		};
 
+		void load_camera(const std::string& config, Camera* camera) const;
+
 		bool needs_reload(const std::string& config) const;
 
 		void reload(const std::string& config, const std::shared_ptr<Scene>& scene);

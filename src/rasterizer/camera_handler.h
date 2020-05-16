@@ -70,9 +70,9 @@ namespace rasterizer
 			if (camera->get_fov() >= 45.0f) camera->set_fov(45.0f);
 		}
 
-	private:
 		static std::shared_ptr<pbr::Camera> camera;
 
+	private:
 		float yaw{};
 		float pitch{};
 		float movement_speed{};

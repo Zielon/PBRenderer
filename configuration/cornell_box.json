@@ -1,4 +1,8 @@
 {
+  "camera": {
+    "position": "-0.277729 0.33627 0.78245",
+    "direction": "-0.000697 -0.05582 -0.99842"
+  },
   "lights": [
     {
       "id": 4,
@@ -122,7 +126,7 @@
     {
       "id": 7,
       "name": "bunny",
-      "path": "..\\resources\\bunny\\bunny.ply",
+      "path": "..\\resources\\bunny.ply",
       "scaling": "1 1 1",
       "translation": "-0.25 -0.033 -0.3",
       "rotation": "0 0 0",
@@ -135,7 +139,7 @@
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
-      "translation": "-0.475 0.04 -0.075",
+      "translation": "-0.475 0.06 -0.08",
       "rotation": "0 0 0",
       "material": {
         "type": "GLASS",

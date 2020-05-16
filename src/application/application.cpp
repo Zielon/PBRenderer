@@ -4,12 +4,14 @@
 #include <thread>
 #include <filesystem>
 
+#include "../rasterizer/input_handler.h"
 #include "../integrators/whitted.h"
 #include "../integrators/path_tracer.h"
 #include "../integrators/direct_lighting.h"
 
 const unsigned int SCR_WIDTH = 900;
 const unsigned int SCR_HEIGHT = 700;
+const std::string DEFAULT = "../configuration/stage.json";
 
 app::Application::Application():
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),
@@ -17,9 +19,10 @@ app::Application::Application():
 	camera(std::make_shared<pbr::ProjectiveCamera>(glm::ivec2(SCR_WIDTH, SCR_HEIGHT))),
 	scene(std::make_shared<pbr::Scene>(camera)),
 	ray_caster(std::make_unique<rasterizer::RayCaster>(scene, camera)),
-	model_loader(std::make_shared<pbr::Loader>(scene, "../configuration/default.json")),
+	model_loader(std::make_shared<pbr::Loader>(scene, DEFAULT)),
 	input_handler(window.get(), camera, SCR_WIDTH, SCR_HEIGHT){
 
+	model_loader->load_camera(DEFAULT, camera.get());
 	attach_menu();
 }
 
@@ -32,6 +35,8 @@ void app::Application::start(){
 
 	begin_frame = high_resolution_clock::now();
 
+	using rasterizer::InputHandler;
+
 	while (!glfwWindowShouldClose(window.get()))
 	{
 		glClear(GL_DEPTH_BUFFER_BIT);
@@ -39,15 +44,17 @@ void app::Application::start(){
 
 		auto shader = shader_manager.reload(shader_type);
 
+		camera->is_active = !is_rendering && !ray_caster->is_saving;
+
 		if (glfwGetKey(window.get(), GLFW_KEY_C) == GLFW_PRESS)
 			ray_caster->ray_cast_frame();
 
 		if (glfwGetKey(window.get(), GLFW_KEY_R) == GLFW_PRESS)
 			render();
 
-		if (!is_rendering && !ray_caster->is_saving)
+		if (camera->is_active)
 		{
-			rasterizer::InputHandler::process();
+			InputHandler::process();
 			camera->update_shader(shader);
 			ray_caster->pick(shader, is_picking);
 		}
@@ -59,7 +66,7 @@ void app::Application::start(){
 		glfwPollEvents();
 		fps();
 		reload();
-		rasterizer::InputHandler::time_update();
+		InputHandler::time_update();
 	}
 
 	glfwTerminate();
@@ -91,7 +98,7 @@ void app::Application::render(){
 	}
 
 	std::thread work([this, integrator](){
-		//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+		SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 		integrator->render(progress);
 		is_rendering = false;
 		progress = 0;
@@ -118,8 +125,9 @@ void app::Application::reload(){
 
 	std::string path;
 
-	if (current_config == 0) path = "../configuration/box.json";
-	if (current_config == 1) path = "../configuration/default.json";
+	if (current_config == 0) path = "../configuration/cornell_box.json";
+	if (current_config == 1) path = "../configuration/environment.json";
+	if (current_config == 2) path = "../configuration/stage.json";
 
 	if (model_loader->needs_reload(path))
 	{
@@ -130,9 +138,10 @@ void app::Application::reload(){
 }
 
 void app::Application::attach_menu(){
+
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
 	const char* integrators[] = {"PATH TRACER", "WHITTED", "DIRECT ILLUMINATION"};
-	const char* configs[] = {"BOX", "INFINITY LIGHT"};
+	const char* configs[] = {"CORNELL BOX", "ENVIRONMENT LIGHT", "STAGE"};
 
 	menu.attach([shaders, integrators, configs, this](){
 
@@ -157,6 +166,7 @@ void app::Application::attach_menu(){
 		}
 
 		const auto position = camera->get_coordinate().get().position;
+		const auto direction = camera->get_coordinate().get().direction;
 
 		ImGui::PushItemWidth(ImGui::GetWindowWidth());
 		if (ImGui::CollapsingHeader("Current integrator"), ImGuiTreeNodeFlags_DefaultOpen)
@@ -171,10 +181,11 @@ void app::Application::attach_menu(){
 		ImGui::Text("FPS             [%3.1f]", fps_rate);
 		ImGui::Text("Camera movement [%4s]", is_rendering || ray_caster->is_saving ? "OFF" : "ON");
 		ImGui::Text("# threads       [%4i]", std::thread::hardware_concurrency());
-		ImGui::Text("Camera position");
-		ImGui::Text("[%.5f %.5f %.5f]", position.x, position.y, position.z);
+		ImGui::Text("Camera position/direction");
+		ImGui::Text("%.5f %.5f %.5f", position.x, position.y, position.z);
+		ImGui::Text("%.5f %.5f %.5f", direction.x, direction.y, direction.z);
 		if (ImGui::CollapsingHeader("Configuration"))
-			ImGui::ListBox("configs", &current_config, configs, IM_ARRAYSIZE(configs), 2);
+			ImGui::ListBox("configs", &current_config, configs, IM_ARRAYSIZE(configs), 3);
 		ImGui::Separator();
 		ImGui::NewLine();
 		ImGui::Text("Program usage: \n"

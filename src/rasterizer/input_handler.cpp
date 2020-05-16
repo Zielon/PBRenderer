@@ -42,15 +42,14 @@ void rasterizer::InputHandler::mouse_callback(GLFWwindow* window, double xpos, d
 	last_x = xpos;
 	last_y = ypos;
 
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-	{
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && CameraHandler::camera->is_active)
 		camera_handler.process_mouse_movement(x_offset, y_offset);
-	}
 }
 
 void rasterizer::InputHandler::scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 
-	camera_handler.process_mouse_scroll(yoffset);
+	if (CameraHandler::camera->is_active)
+		CameraHandler::process_mouse_scroll(yoffset);
 }
 
 void rasterizer::InputHandler::mouse_button_callback(GLFWwindow* window, int button, int action, int mods){ }
@@ -73,6 +72,9 @@ void rasterizer::InputHandler::process(){
 		camera_handler.process_keyboard(Movement::RIGHT, delta_time);
 }
 
+/*
+ * Update time in every frame to not accumulate drift.
+ */
 void rasterizer::InputHandler::time_update(){
 
 	const float current_frame = glfwGetTime();

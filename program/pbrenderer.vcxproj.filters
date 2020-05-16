@@ -273,6 +273,9 @@
     <ClInclude Include="..\src\core\distribution.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\microfacets\trowbridge_reitz.h">
+      <Filter>microfacets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -417,6 +420,9 @@
     <ClCompile Include="..\src\lights\infinite_light.cpp">
       <Filter>lights</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\microfacets\trowbridge_reitz.cpp">
+      <Filter>microfacets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\rasterizer\glsl\texture\texture.frag">
@@ -443,10 +449,13 @@
     <None Include="..\src\rasterizer\glsl\smooth\smooth.vert">
       <Filter>rasterizer\glsl\smooth</Filter>
     </None>
-    <None Include="..\configuration\default.json">
+    <None Include="..\configuration\cornell_box.json">
       <Filter>configuration</Filter>
     </None>
-    <None Include="..\configuration\box.json">
+    <None Include="..\configuration\environment.json">
+      <Filter>configuration</Filter>
+    </None>
+    <None Include="..\configuration\stage.json">
       <Filter>configuration</Filter>
     </None>
   </ItemGroup>

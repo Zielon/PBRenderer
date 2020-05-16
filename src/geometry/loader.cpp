@@ -87,6 +87,23 @@ void pbr::Loader::load_lights(const std::string& config, Scene* scene){
 	}
 }
 
+void pbr::Loader::load_camera(const std::string& config, Camera* camera) const{
+
+	std::ifstream ifs(config);
+	rapidjson::IStreamWrapper isw(ifs);
+	rapidjson::Document document;
+
+	document.ParseStream(isw);
+
+	const rapidjson::Value& node = document["camera"];
+
+	auto position = parser::Parser::string_to_vec3(node["position"].GetString());
+	auto direction = parser::Parser::string_to_vec3(node["direction"].GetString());
+
+	camera->get_coordinate().get().position = position;
+	camera->get_coordinate().get().update(direction);
+}
+
 bool pbr::Loader::needs_reload(const std::string& config) const{
 
 	return config != config_path;
@@ -104,6 +121,7 @@ void pbr::Loader::reload(const std::string& config, const std::shared_ptr<Scene>
 
 	load_meshes(config_path, scene.get());
 	load_lights(config_path, scene.get());
+	load_camera(config_path, scene->get_camera().get());
 
 	scene->build();
 
@@ -129,61 +147,65 @@ void pbr::Loader::process_node(
 std::shared_ptr<pbr::Mesh> pbr::Loader::process_mesh(aiMesh* mesh, const aiScene* scene,
                                                      parser::MeshConfig& configuration){
 
-	std::vector<GL_Vertex> vertices;
+	std::vector<GL_Vertex> vertices(mesh->mNumVertices);
 	std::vector<unsigned int> indices;
 	std::vector<GL_Texture> textures;
 
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+	#pragma omp parallel num_threads(std::thread::hardware_concurrency())
 	{
-		GL_Vertex vertex{};
-
-		glm::vec3 vector;
-
-		vector.x = mesh->mVertices[i].x;
-		vector.y = mesh->mVertices[i].y;
-		vector.z = mesh->mVertices[i].z;
-
-		vertex.position = vector;
-
-		vector.x = mesh->mNormals[i].x;
-		vector.y = mesh->mNormals[i].y;
-		vector.z = mesh->mNormals[i].z;
-
-		vertex.normal = vector;
-
-		if (mesh->mTextureCoords[0])
+		#pragma omp for schedule(dynamic)
+		for (long i = 0; i < mesh->mNumVertices; i++)
 		{
-			glm::vec2 vec;
-			vec.x = mesh->mTextureCoords[0][i].x;
-			vec.y = mesh->mTextureCoords[0][i].y;
+			GL_Vertex vertex{};
 
-			vertex.tex_coords = vec;
+			glm::vec3 vector;
+
+			vector.x = mesh->mVertices[i].x;
+			vector.y = mesh->mVertices[i].y;
+			vector.z = mesh->mVertices[i].z;
+
+			vertex.position = vector;
+
+			vector.x = mesh->mNormals[i].x;
+			vector.y = mesh->mNormals[i].y;
+			vector.z = mesh->mNormals[i].z;
+
+			vertex.normal = vector;
+
+			if (mesh->mTextureCoords[0])
+			{
+				glm::vec2 vec;
+				vec.x = mesh->mTextureCoords[0][i].x;
+				vec.y = mesh->mTextureCoords[0][i].y;
+
+				vertex.tex_coords = vec;
+			}
+			else
+				vertex.tex_coords = glm::vec2(0.0f, 0.0f);
+
+			// To generate tangents UV coordinates are needed.
+			if (mesh->mTangents)
+			{
+				vector.x = mesh->mTangents[i].x;
+				vector.y = mesh->mTangents[i].y;
+				vector.z = mesh->mTangents[i].z;
+
+				vertex.tangent = vector;
+			}
+
+			if (mesh->mBitangents)
+			{
+				vector.x = mesh->mBitangents[i].x;
+				vector.y = mesh->mBitangents[i].y;
+				vector.z = mesh->mBitangents[i].z;
+
+				vertex.bitangent = vector;
+			}
+
+			vertex.mesh_id = configuration.id;
+
+			vertices[i] = vertex;
 		}
-		else
-			vertex.tex_coords = glm::vec2(0.0f, 0.0f);
-
-		// To generate tangents UV coordinates are needed.
-		if (mesh->mTangents)
-		{
-			vector.x = mesh->mTangents[i].x;
-			vector.y = mesh->mTangents[i].y;
-			vector.z = mesh->mTangents[i].z;
-
-			vertex.tangent = vector;
-		}
-
-		if (mesh->mBitangents)
-		{
-			vector.x = mesh->mBitangents[i].x;
-			vector.y = mesh->mBitangents[i].y;
-			vector.z = mesh->mBitangents[i].z;
-
-			vertex.bitangent = vector;
-		}
-
-		vertex.mesh_id = configuration.id;
-
-		vertices.push_back(vertex);
 	}
 
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
