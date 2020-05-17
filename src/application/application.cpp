@@ -98,7 +98,7 @@ void app::Application::render(){
 	}
 
 	std::thread work([this, integrator](){
-		SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+		//SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 		integrator->render(progress);
 		is_rendering = false;
 		progress = 0;
@@ -141,7 +141,7 @@ void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
 	const char* integrators[] = {"PATH TRACER", "WHITTED", "DIRECT ILLUMINATION"};
-	const char* configs[] = {"CORNELL BOX", "ENVIRONMENT LIGHT", "STAGE"};
+	const char* configs[] = {"CORNELL BOX BUNNY", "ENVIRONMENT BUNNY", "ENVIRONMENT AJAX"};
 
 	menu.attach([shaders, integrators, configs, this](){
 

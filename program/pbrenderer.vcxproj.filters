@@ -276,6 +276,9 @@
     <ClInclude Include="..\src\microfacets\trowbridge_reitz.h">
       <Filter>microfacets</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\textures\hdr_texture.h">
+      <Filter>textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -422,6 +425,9 @@
     </ClCompile>
     <ClCompile Include="..\src\microfacets\trowbridge_reitz.cpp">
       <Filter>microfacets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\textures\hdr_texture.cpp">
+      <Filter>textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -94,6 +94,7 @@
     <ClInclude Include="..\src\rasterizer\shader.h" />
     <ClInclude Include="..\src\rasterizer\shader_manager.h" />
     <ClInclude Include="..\src\textures\constant_texture.h" />
+    <ClInclude Include="..\src\textures\hdr_texture.h" />
     <ClInclude Include="..\src\textures\image_texture.h" />
     <ClInclude Include="..\src\textures\texture.h" />
   </ItemGroup>
@@ -146,6 +147,7 @@
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
+    <ClCompile Include="..\src\textures\hdr_texture.cpp" />
     <ClCompile Include="..\src\textures\image_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +349,7 @@ xcopy /d "$(SolutionDir)3rd_party\assimp\binary\assimp-vc141-mt.dll" "$(TargetDi
       <SupportJustMyCode>true</SupportJustMyCode>
       <EnableModules>true</EnableModules>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalOptions>/Zo %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

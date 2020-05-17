@@ -8,6 +8,7 @@
 #include "../textures/texture.h"
 #include "../textures/constant_texture.h"
 #include "../textures/image_texture.h"
+#include "../textures/hdr_texture.h"
 
 namespace parser
 {
@@ -29,9 +30,7 @@ namespace parser
 				rotation = Parser::string_to_vec3(node["rotation"].GetString());
 				const rapidjson::Value& texture = node["texture"];
 				auto path = texture["path"].GetString();
-				auto width = texture["width"].GetInt();
-				auto height = texture["height"].GetInt();
-				hdr = std::make_shared<pbr::ImageTexture>(name, width, height, path);
+				hdr = std::make_shared<pbr::HDRTexture>(name, path);
 			}
 		}
 
@@ -42,7 +41,7 @@ namespace parser
 		glm::vec3 rotation{};
 		float intensity{};
 		int mesh_id;
-		std::shared_ptr<pbr::ImageTexture> hdr{};
+		std::shared_ptr<pbr::HDRTexture> hdr{};
 	};
 
 	struct MaterialConfig final
@@ -76,7 +75,7 @@ namespace parser
 					}
 					else
 					{
-						auto const_value = Parser::string_to_vec3(attribute["value"].GetString());
+						auto const_value = Parser::string_to_vec3(attribute["value"].GetString()) / 255.f;
 						textures_vec3[name] = std::make_shared<pbr::ConstantTexture<glm::vec3>>(name, const_value);
 					}
 				}
@@ -84,10 +83,8 @@ namespace parser
 				if (type == "IMAGE")
 				{
 					auto path = attribute["path"].GetString();
-					auto width = attribute["width"].GetInt();
-					auto height = attribute["height"].GetInt();
 
-					textures_vec3[name] = std::make_shared<pbr::ImageTexture>(name, width, height, path);
+					textures_vec3[name] = std::make_shared<pbr::ImageTexture>(name, path);
 				}
 			}
 		}

@@ -47,9 +47,13 @@ void pbr::Film::save_jpg(const std::string& file){
 	{
 		for (int i = 0; i < size.x; ++i)
 		{
-			output[index++] = char(255 * pixels[j][i].r);
-			output[index++] = char(255 * pixels[j][i].g);
-			output[index++] = char(255 * pixels[j][i].b);
+			auto r = glm::clamp(pixels[j][i].r, 0.f, 1.f);
+			auto g = glm::clamp(pixels[j][i].g, 0.f, 1.f);
+			auto b = glm::clamp(pixels[j][i].b, 0.f, 1.f);
+
+			output[index++] = char(glm::pow(r, 0.45454545f) * 255.f);
+			output[index++] = char(glm::pow(g, 0.45454545f) * 255.f);
+			output[index++] = char(glm::pow(b, 0.45454545f) * 255.f);
 		}
 	}
 
@@ -124,7 +128,7 @@ glm::vec2 pbr::Film::get_size() const{
 }
 
 float pbr::Film::gaussian2D(const glm::vec2& sample){
-	
+
 	auto a = 1.f / glm::sqrt(2.f * glm::pi<float>());
 	auto x = glm::exp(-(sample.x - 0.5f) * (sample.x - 0.5f) / 2.f);
 	auto y = glm::exp(-(sample.y - 0.5f) * (sample.y - 0.5f) / 2.f);

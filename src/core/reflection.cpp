@@ -56,8 +56,7 @@ glm::vec3 pbr::BSDF::sample_f(
 	if (components == 0)
 	{
 		*pdf = 0.f;
-		if (sampled_type)
-			*sampled_type = BxDFType(0);
+		*sampled_type = BxDFType(0);
 		return glm::vec3(0.f);
 	}
 
@@ -76,15 +75,15 @@ glm::vec3 pbr::BSDF::sample_f(
 	glm::vec3 wi = glm::vec3(0.f);
 	const glm::vec3 wo = vertex_to_local(wo_w);
 	if (wo.z == 0) return glm::vec3(0.f);
-	if (sampled_type) *sampled_type = bxdf->type;
+
+	*sampled_type = bxdf->type;
 	*pdf = 0.f;
 
 	glm::vec3 f = bxdf->sample_f(wo, &wi, sampler->get2D(), pdf, sampled_type);
 
 	if (*pdf == 0)
 	{
-		if (sampled_type)
-			*sampled_type = BxDFType(0);
+		*sampled_type = BxDFType(0);
 		return glm::vec3(0.f);
 	}
 

@@ -25,14 +25,16 @@ float pbr::BeckmannDistribution::lambda(const glm::vec3& w) const{
 	return (1 - 1.259f * a + 0.396f * a * a) / (3.535f * a + 2.181f * a * a);
 }
 
-glm::vec3 pbr::BeckmannDistribution::sample_wh(const glm::vec3& wo, const glm::vec2& u) const{
+glm::vec3 pbr::BeckmannDistribution::sample_wh(const glm::vec3& wo, const glm::vec2& u){
+
+	alpha = (1.2f - 0.2f * glm::sqrt(glm::abs(math::cos_theta(wo)))) * alpha;
 
 	float tan2Theta, phi;
 	float log_sample = std::log(1 - u[0]);
 	tan2Theta = -alpha * alpha * log_sample;
 	phi = u[1] * 2 * glm::pi<float>();
 	float cos_theta = 1 / std::sqrt(1 + tan2Theta);
-	float sin_theta = std::sqrt(std::max(float(0), 1 - cos_theta * cos_theta));
+	float sin_theta = std::sqrt(std::max(0.f, 1.f - cos_theta * cos_theta));
 	glm::vec3 wh = math::spherical_direction(sin_theta, cos_theta, phi);
 
 	if (!math::same_hemisphere(wo, wh)) wh = -wh;

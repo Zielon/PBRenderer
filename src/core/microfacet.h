@@ -23,7 +23,7 @@ namespace pbr
 		 */
 		virtual float lambda(const glm::vec3& w) const = 0;
 
-		virtual glm::vec3 sample_wh(const glm::vec3& wo, const glm::vec2& u) const = 0;
+		virtual glm::vec3 sample_wh(const glm::vec3& wo, const glm::vec2& u) = 0;
 
 		float pdf(const glm::vec3& wo, const glm::vec3& wh) const;
 
@@ -44,10 +44,5 @@ namespace pbr
 		}
 
 		static float roughness_to_alpha(float roughness);
-
-	protected:
-		MicrofacetDistribution(bool sample_visible_area): sample_visible_normals(sample_visible_area){};
-
-		const bool sample_visible_normals;
 	};
 }

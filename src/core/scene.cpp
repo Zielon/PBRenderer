@@ -49,6 +49,7 @@ void pbr::Scene::add_light(const std::shared_ptr<Light>& light){
 
 void pbr::Scene::add_environment_light(const std::shared_ptr<InfiniteLight>& light){
 
+	lights.push_back(light);
 	environment_lights.push_back(light);
 }
 

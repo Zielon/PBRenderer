@@ -5,33 +5,49 @@
   },
   "lights": [
     {
-      "id": 4,
+      "id": 2,
       "name": "infinite light 1",
       "type": "INFINITE_LIGHT",
       "rotation": "270 0 0",
       "texture": {
-        "name": "hdr",
-        "type": "IMAGE",
-        "width": 8192,
-        "height": 4096,
-        "path": "..\\resources\\hdr\\hayfield.jpg"
+        "name": "hdr_vankleef",
+        "type": "HDR",
+        "path": "..\\resources\\hdr\\vankleef.hdr"
       }
     }
   ],
   "meshes": [
     {
-      "id": 7,
+      "id": 1,
+      "name": "cbox_floor",
+      "path": "..\\resources\\cbox\\cbox_floor.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "0 0 0",
+      "rotation": "0 0 180",
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "228 225 222"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
       "name": "bunny",
       "path": "..\\resources\\bunny.ply",
       "scaling": "1 1 1",
       "translation": "-0.25 -0.033 -0.3",
       "rotation": "0 0 0",
       "material": {
-        "type": "METAL"
+        "type": "PLASTIC"
       }
     },
     {
-      "id": 9,
+      "id": 3,
       "name": "sphere",
       "path": "..\\resources\\parametric\\sphere.ply",
       "scaling": "0.01 0.01 0.01",
@@ -43,24 +59,24 @@
           {
             "name": "kr",
             "type": "CONSTANT",
-            "value": "0.99 0.99 0.99"
+            "value": "255 255 255"
           },
           {
             "name": "kt",
             "type": "CONSTANT",
-            "value": "1 1 1"
+            "value": "255 255 255"
           },
           {
             "name": "u_roughness",
             "type": "CONSTANT",
             "float": true,
-            "value": 0
+            "value": 0.1
           },
           {
             "name": "v_roughness",
             "type": "CONSTANT",
             "float": true,
-            "value": 0
+            "value": 0.1
           },
           {
             "name": "index",

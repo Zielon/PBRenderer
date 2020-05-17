@@ -8,7 +8,7 @@
       "id": 4,
       "name": "area light 1",
       "type": "AREA_LIGHT",
-      "intensity": 35,
+      "intensity": 20,
       "mesh_id": 2
     }
   ],
@@ -26,9 +26,7 @@
           {
             "name": "kd",
             "type": "IMAGE",
-            "width": 768,
-            "height": 768,
-            "path": "..\\resources\\textures\\checker.jpg"
+            "path": "..\\resources\\textures\\checker2.jpg"
           }
         ]
       }
@@ -46,7 +44,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "1 1 1"
+            "value": "255 255 255"
           }
         ]
       }
@@ -64,7 +62,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.9236 0.0984 0.3883"
+            "value": "235 25 99"
           }
         ]
       }
@@ -82,7 +80,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.4117 0.6745 0.2824"
+            "value": "104 172 72"
           }
         ]
       }
@@ -100,7 +98,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.2275 0.4862 0.6509"
+            "value": "58 123 165"
           }
         ]
       }
@@ -118,7 +116,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "0.2275 0.4862 0.6509"
+            "value": "58 123 165"
           }
         ]
       }
@@ -147,12 +145,12 @@
           {
             "name": "kr",
             "type": "CONSTANT",
-            "value": "0.9 0.9 0.9"
+            "value": "245 245 245"
           },
           {
             "name": "kt",
             "type": "CONSTANT",
-            "value": "1 1 1"
+            "value": "245 245 245"
           },
           {
             "name": "u_roughness",

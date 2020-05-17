@@ -1,51 +1,24 @@
 {
   "camera": {
-    "position": "-0.27980 0.22506 0.16886",
-    "direction": "0.00697 0.05582 -0.99842"
+    "position": "-0.27947 0.15962 0.02915",
+    "direction": "0.00338 -0.24700 -0.96901"
   },
   "lights": [
     {
-      "id": 1,
-      "name": "area light 1",
-      "type": "AREA_LIGHT",
-      "intensity": 2,
-      "mesh_id": 1
-    },
-    {
-      "id": 6,
+      "id": 2,
       "name": "infinite light 1",
       "type": "INFINITE_LIGHT",
-      "rotation": "0 0 0",
+      "rotation": "270 0 0",
       "texture": {
-        "name": "hdr",
-        "type": "IMAGE",
-        "width": 8192,
-        "height": 4096,
-        "path": "..\\resources\\hdr\\hayfield.jpg"
+        "name": "hdr_vankleef",
+        "type": "HDR",
+        "path": "..\\resources\\hdr\\vankleef.hdr"
       }
     }
   ],
   "meshes": [
     {
       "id": 1,
-      "name": "cbox_luminaire",
-      "path": "..\\resources\\cbox\\cbox_luminaire.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 -0.01 0.1",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "1 1 1"
-          }
-        ]
-      }
-    },
-    {
-      "id": 6,
       "name": "cbox_floor",
       "path": "..\\resources\\cbox\\cbox_floor.obj",
       "scaling": "0.001 0.001 0.001",
@@ -56,94 +29,18 @@
         "textures": [
           {
             "name": "kd",
-            "type": "IMAGE",
-            "width": 768,
-            "height": 768,
-            "path": "..\\resources\\textures\\checker2.jpg"
+            "type": "CONSTANT",
+            "value": "228 225 222"
           }
         ]
       }
-    },
+    },   
     {
       "id": 7,
-      "name": "cbox_redwall",
-      "path": "..\\resources\\cbox\\cbox_redwall.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.89 0.89 0.89"
-          }
-        ]
-      }
-    },
-    {
-      "id": 8,
-      "name": "cbox_greenwall",
-      "path": "..\\resources\\cbox\\cbox_greenwall.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.89 0.89 0.89"
-          }
-        ]
-      }
-    },
-    {
-      "id": 9,
-      "name": "cbox_back",
-      "path": "..\\resources\\cbox\\cbox_back.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "IMAGE",
-            "width": 768,
-            "height": 768,
-            "path": "..\\resources\\textures\\checker2.jpg"
-          }
-        ]
-      }
-    },
-    {
-      "id": 10,
-      "name": "cbox_ceiling",
-      "path": "..\\resources\\cbox\\cbox_ceiling.obj",
-      "scaling": "0.001 0.001 0.001",
-      "translation": "0 0 0",
-      "rotation": "0 0 180",
-      "material": {
-        "type": "LAMBERTIAN",
-        "textures": [
-          {
-            "name": "kd",
-            "type": "CONSTANT",
-            "value": "0.89 0.89 0.89"
-          }
-        ]
-      }
-    },
-    {
-      "id": 11,
       "name": "ajax",
       "path": "..\\resources\\ajax.obj",
-      "scaling": "0.003 0.003 0.003",
-      "translation": "-0.225 0.15 -0.15",
+      "scaling": "0.005 0.005 0.005",
+      "translation": "-0.19 0 -0.25",
       "rotation": "0 0 90",
       "material": {
         "type": "METAL"

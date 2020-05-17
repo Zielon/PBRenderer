@@ -8,33 +8,81 @@
 
 namespace pbr
 {
+	template <typename T, typename U, typename V>
+	T Clamp(T val, U low, V high){
+		if (val < low)
+			return low;
+		if (val > high)
+			return high;
+		return val;
+	}
+
+	template <typename Predicate>
+	int FindInterval(int size, const Predicate& pred){
+		int first = 0, len = size;
+		while (len > 0)
+		{
+			int half = len >> 1, middle = first + half;
+			// Bisect range based on value of _pred_ at _middle_
+			if (pred(middle))
+			{
+				first = middle + 1;
+				len -= half + 1;
+			}
+			else
+				len = half;
+		}
+		return Clamp(first - 1, 0, size - 2);
+	}
+
 	class Distribution1D final
 	{
 	public:
 		Distribution1D() = default;
 
-		explicit Distribution1D(const std::vector<float>& pdf){
+		explicit Distribution1D(const std::vector<float>& f): cdf(f.size() + 1){
 
-			cdf.resize(pdf.size());
-			std::partial_sum(pdf.begin(), pdf.end(), cdf.begin());
-			count = cdf.back();
+			func = f;
+			cdf[0] = 0;
+			auto n = f.size();
+			for (int i = 1; i < n + 1; ++i) cdf[i] = cdf[i - 1] + func[i - 1] / n;
+			funcInt = cdf[n];
+			if (funcInt == 0)
+			{
+				for (int i = 1; i < n + 1; ++i) cdf[i] = float(i) / float(n);
+			}
+			else
+			{
+				for (int i = 1; i < n + 1; ++i) cdf[i] /= funcInt;
+			}
 		}
 
-		int sample(const float u) const{
+		float sample(const float u, float* pdf, int* off = nullptr) const{
 
-			const auto end = std::upper_bound(cdf.begin(), cdf.end(), u * count);
-			return std::distance(cdf.begin(), end);
+			int offset = FindInterval((int)cdf.size(), [&](int index){
+				return cdf[index] <= u;
+			});
+
+			if (off) *off = offset;
+
+			float du = u - cdf[offset];
+			if ((cdf[offset + 1] - cdf[offset]) > 0)
+			{
+				du /= (cdf[offset + 1] - cdf[offset]);
+			}
+
+			if (pdf) *pdf = (funcInt > 0) ? func[offset] / funcInt : 0;
+			return (float(offset) + du) / float(func.size());
 		};
 
-		float get_pdf(const int x) const{
+		float funcInt{};
 
-			return (x == 0 ? cdf[0] : cdf[x] - cdf[x - 1]) / count;
-		};
+		int count() const{
+			return (int)func.size();
+		}
 
-		float count{};
-
-	private:
 		std::vector<float> cdf;
+		std::vector<float> func;
 	};
 
 	/*
@@ -43,40 +91,43 @@ namespace pbr
 	class Distribution2D final
 	{
 	public:
-		explicit Distribution2D(const std::vector<std::vector<float>>& pdfs){
+		explicit Distribution2D(const std::vector<std::vector<float>>& func){
 
-			std::vector<float> column_sums;
+			std::vector<float> marginalFunc;
 
-			for (const auto& pdf : pdfs)
+			for (auto& f : func)
 			{
-				// Compute conditional sampling distribution for v
-				row_samplers.emplace_back(pdf);
-
-				// Compute marginal sampling distribution u
-				column_sums.push_back(row_samplers.back().count);
+				pConditionalV.emplace_back(new Distribution1D(f));
 			}
 
-			column_sampler = Distribution1D(column_sums);
+			for (auto& c : pConditionalV)
+			{
+				marginalFunc.push_back(c->funcInt);
+			}
+
+			pMarginal.reset(new Distribution1D(marginalFunc));
 		}
 
-		/*
-		 * First the marginal 1D distribution is used to select a v value, giving a columns of the image to sample. 
-		 * Columns with bright pixels are more likely to be sampled. 
-		 * Then, given a column, a value u is sampled from that column’s 1D distribution.
-		 */
-		std::pair<int, int> sample(const glm::vec2& u) const{
+		glm::vec2 sample(const glm::vec2& u, float* pdf) const{
 
-			auto column = column_sampler.sample(u.x);
-			return std::make_pair(column, row_samplers[column].sample(u.y));
+			float pdfs[2];
+			int v;
+			float d1 = pMarginal->sample(u[1], &pdfs[1], &v);
+			float d0 = pConditionalV[v]->sample(u[0], &pdfs[0]);
+			*pdf = pdfs[0] * pdfs[1];
+			return glm::vec2(d0, d1);
 		};
 
-		float get_pdf(const int x, const int y) const{
+		float get_pdf(const glm::vec2& p) const{
 
-			return column_sampler.get_pdf(x) * row_samplers[x].get_pdf(y);
+			int iu = Clamp(int(p[0] * pConditionalV[0]->count()), 0,
+			               pConditionalV[0]->count() - 1);
+			int iv =
+				Clamp(int(p[1] * pMarginal->count()), 0, pMarginal->count() - 1);
+			return pConditionalV[iv]->func[iu] / pMarginal->funcInt;
 		};
 
-	private:
-		Distribution1D column_sampler{};
-		std::vector<Distribution1D> row_samplers;
+		std::shared_ptr<Distribution1D> pMarginal;
+		std::vector<std::shared_ptr<Distribution1D>> pConditionalV;
 	};
 }

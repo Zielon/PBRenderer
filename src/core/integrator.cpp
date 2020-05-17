@@ -18,7 +18,7 @@ pbr::Integrator::Integrator(std::shared_ptr<Scene> scene, int num_samples, std::
 
 	const auto threads = std::thread::hardware_concurrency();
 	for (auto i = 0; i < threads; ++i)
-		samplers.push_back(std::make_shared<HammersleySampler>());
+		samplers.push_back(std::make_shared<HaltonSampler>());
 }
 
 void pbr::Integrator::render(float& progress){
@@ -51,7 +51,7 @@ void pbr::Integrator::render(float& progress){
 				{
 					const auto weight = 1.0f / (i + 1);
 					const auto offset =
-						std::dynamic_pointer_cast<HammersleySampler, Sampler>(sampler)->get2D();
+						std::dynamic_pointer_cast<HaltonSampler, Sampler>(sampler)->get2D(i, num_samples);
 					auto ray = get_camera()->cast_ray(glm::vec2(x, y), offset);
 
 					pixel *= i * weight;

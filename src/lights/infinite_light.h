@@ -3,6 +3,7 @@
 #include "../core/light.h"
 #include "../core/distribution.h"
 #include "../geometry/transformation.h"
+#include "../textures/hdr_texture.h"
 
 namespace pbr
 {
@@ -35,7 +36,7 @@ namespace pbr
 			float* pdf) const override;
 
 	private:
-		std::shared_ptr<ImageTexture> hdr;
+		std::shared_ptr<HDRTexture> hdr;
 		std::shared_ptr<Distribution2D> distribution;
 		Transformation transformation;
 	};

@@ -16,9 +16,7 @@ namespace pbr
 	class Image
 	{
 	public:
-		Image(int width, int height, std::string path, int num_channels):
-			pixels(std::vector<std::vector<Pixel<float>>>(height, std::vector<Pixel<float>>(width))),
-			num_channels(num_channels), width(width), height(height), path(std::move(path)){
+		Image(std::string path): path(std::move(path)){
 
 			load();
 		}
@@ -46,8 +44,8 @@ namespace pbr
 	public:
 		ImageTexture(std::string name, std::shared_ptr<Image> image) : Texture(name), image(std::move(image)){}
 
-		ImageTexture(std::string name, int width, int height, std::string path)
-			: Texture(name), image(std::make_shared<Image>(width, height, path, 3)){}
+		ImageTexture(std::string name, std::string path)
+			: Texture(name), image(std::make_shared<Image>(path)){}
 
 		glm::vec3 evaluate(Intersection& intersection) const override;
 

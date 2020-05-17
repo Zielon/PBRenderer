@@ -36,16 +36,19 @@ namespace pbr
 		std::uniform_real_distribution<float> distribution;
 	};
 
-	class HammersleySampler : public UniformSampler
+	class HaltonSampler : public UniformSampler
 	{
 	public:
-		glm::vec2 hammersley(uint32_t i, uint32_t N) const{
+		/*
+		 * Low-discrepancy sequence
+		 */
+		glm::vec2 get2D(uint32_t i, uint32_t N) const{
 
-			return glm::vec2(float(i) / float(N), radical_inverse_vdc(i));
+			return glm::vec2(float(i) / float(N), radical_inverse(i));
 		}
 
 	private:
-		static float radical_inverse_vdc(uint32_t bits){
+		static float radical_inverse(uint32_t bits){
 
 			bits = (bits << 16u) | (bits >> 16u);
 			bits = ((bits & 0x55555555u) << 1u) | ((bits & 0xAAAAAAAAu) >> 1u);
