@@ -29,15 +29,8 @@ To run the project Visual Studio is needed. Render images are saved in the folde
 
 The renderd images are in 900x700 resolution.
 
-![input_1](https://github.com/Zielon/PBRenderer/blob/master/samples/input_1.jpg)
 ![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/output_1.jpg)
-
-> The Stanford Bunny mesh in the picture above is made of plastic material, the smaller sphere is made of glass and the bigger one in the right corner is mirror.
-> The image was genereated using 2048 samples per pixel and it took 35 minutes [8 core CPU].
-
-![output_2](https://github.com/Zielon/PBRenderer/blob/master/samples/output_2.jpg)
-
-> The image was genereated using 1024 samples per pixel and it took 8 minutes [8 core CPU].
+> The image was genereated using 1500 samples per pixel and it took 8 minutes [8 core CPU].
 
 #### TODO:
 

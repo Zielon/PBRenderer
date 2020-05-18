@@ -49,9 +49,9 @@ void pbr::Integrator::render(float& progress){
 
 				for (auto i = 0; i < num_samples; i++)
 				{
-					const auto weight = 1.0f / (i + 1);
+					const auto weight = 1.f / (float(i) + 1.f);
 					const auto offset =
-						std::dynamic_pointer_cast<HaltonSampler, Sampler>(sampler)->get2D(i, num_samples);
+						std::dynamic_pointer_cast<UniformSampler, Sampler>(sampler)->get2D();
 					auto ray = get_camera()->cast_ray(glm::vec2(x, y), offset);
 
 					pixel *= i * weight;
