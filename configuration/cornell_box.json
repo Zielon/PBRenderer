@@ -5,7 +5,7 @@
   },
   "lights": [
     {
-      "id": 4,
+      "id": 1,
       "name": "area light 1",
       "type": "AREA_LIGHT",
       "intensity": 20,
@@ -116,7 +116,7 @@
           {
             "name": "kd",
             "type": "CONSTANT",
-            "value": "58 123 165"
+            "value": "228 225 222"
           }
         ]
       }

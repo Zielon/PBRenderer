@@ -59,5 +59,14 @@ SPP: 3000
 Rays max depth: 10
 ```
 
+![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/bunny.jpg)
+```
+Material: plastic and glass sphere
+IOR 1.5
+Resolution: [900x700]
+SPP: 1536
+Rays max depth: 10
+```
+
 #### References:
 [0] [pbr-book (3ed-2018)](http://www.pbr-book.org/3ed-2018/contents.html)
