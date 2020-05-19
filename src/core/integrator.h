@@ -44,7 +44,7 @@ namespace pbr
 
 		std::string name;
 		int num_samples{};
-		int max_depth = 4;
+		int max_depth = 10;
 		std::shared_ptr<Scene> scene;
 		std::vector<std::shared_ptr<Sampler>> samplers;
 		float ray_epsilon = 0.00001f;

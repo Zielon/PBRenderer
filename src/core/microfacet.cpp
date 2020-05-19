@@ -2,11 +2,6 @@
 
 #include "../math/math.h"
 
-float pbr::MicrofacetDistribution::pdf(const glm::vec3& wo, const glm::vec3& wh) const{
-
-	return D(wh) * math::abs_cos_theta(wh);
-}
-
 float pbr::MicrofacetDistribution::roughness_to_alpha(float roughness){
 
 	roughness = std::max(roughness, float(1e-3));

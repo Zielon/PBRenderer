@@ -43,7 +43,6 @@
     <ClInclude Include="..\src\bxdfs\fresnel.h" />
     <ClInclude Include="..\src\bxdfs\lambertian_reflection.h" />
     <ClInclude Include="..\src\bxdfs\microfacet_reflection.h" />
-    <ClInclude Include="..\src\bxdfs\microfacet_transmission.h" />
     <ClInclude Include="..\src\bxdfs\specular_reflection.h" />
     <ClInclude Include="..\src\bxdfs\specular_transmission.h" />
     <ClInclude Include="..\src\cameras\projective.h" />
@@ -84,8 +83,7 @@
     <ClInclude Include="..\src\math\math.h" />
     <ClInclude Include="..\src\medium\homogeneous_medium.h" />
     <ClInclude Include="..\src\medium\phase_function.h" />
-    <ClInclude Include="..\src\microfacets\beckmann_distribution.h" />
-    <ClInclude Include="..\src\microfacets\trowbridge_reitz.h" />
+    <ClInclude Include="..\src\microfacets\ggx.h" />
     <ClInclude Include="..\src\parser\parser.h" />
     <ClInclude Include="..\src\parser\types.h" />
     <ClInclude Include="..\src\rasterizer\camera_handler.h" />
@@ -111,7 +109,6 @@
     <ClCompile Include="..\src\bxdfs\fresnel.cpp" />
     <ClCompile Include="..\src\bxdfs\lambertian_reflection.cpp" />
     <ClCompile Include="..\src\bxdfs\microfacet_reflection.cpp" />
-    <ClCompile Include="..\src\bxdfs\microfacet_transmission.cpp" />
     <ClCompile Include="..\src\bxdfs\specular_reflection.cpp" />
     <ClCompile Include="..\src\bxdfs\specular_transmission.cpp" />
     <ClCompile Include="..\src\cameras\projective.cpp" />
@@ -141,8 +138,7 @@
     <ClCompile Include="..\src\materials\mirror.cpp" />
     <ClCompile Include="..\src\materials\plastic.cpp" />
     <ClCompile Include="..\src\medium\homogeneous_medium.cpp" />
-    <ClCompile Include="..\src\microfacets\beckmann_distribution.cpp" />
-    <ClCompile Include="..\src\microfacets\trowbridge_reitz.cpp" />
+    <ClCompile Include="..\src\microfacets\ggx.cpp" />
     <ClCompile Include="..\src\rasterizer\input_handler.cpp" />
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />

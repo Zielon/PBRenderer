@@ -228,16 +228,10 @@
     <ClInclude Include="..\src\materials\glass.h">
       <Filter>materials</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\microfacets\beckmann_distribution.h">
-      <Filter>microfacets</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\microfacet.h">
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="..\src\bxdfs\microfacet_reflection.h">
-      <Filter>bxdfs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\bxdfs\microfacet_transmission.h">
       <Filter>bxdfs</Filter>
     </ClInclude>
     <ClInclude Include="..\src\materials\metal.h">
@@ -273,11 +267,11 @@
     <ClInclude Include="..\src\core\distribution.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\microfacets\trowbridge_reitz.h">
-      <Filter>microfacets</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\textures\hdr_texture.h">
       <Filter>textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\microfacets\ggx.h">
+      <Filter>microfacets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -390,16 +384,10 @@
     <ClCompile Include="..\src\materials\glass.cpp">
       <Filter>materials</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\microfacets\beckmann_distribution.cpp">
-      <Filter>microfacets</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\core\microfacet.cpp">
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="..\src\bxdfs\microfacet_reflection.cpp">
-      <Filter>bxdfs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\bxdfs\microfacet_transmission.cpp">
       <Filter>bxdfs</Filter>
     </ClCompile>
     <ClCompile Include="..\src\materials\metal.cpp">
@@ -423,11 +411,11 @@
     <ClCompile Include="..\src\lights\infinite_light.cpp">
       <Filter>lights</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\microfacets\trowbridge_reitz.cpp">
-      <Filter>microfacets</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\textures\hdr_texture.cpp">
       <Filter>textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\microfacets\ggx.cpp">
+      <Filter>microfacets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

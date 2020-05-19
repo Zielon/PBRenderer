@@ -1,3 +1,5 @@
+#pragma once
+
 #include <glm/glm.hpp>
 #include <algorithm>
 #include "../core/uniform_sampler.h"

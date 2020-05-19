@@ -10,29 +10,29 @@ namespace pbr
 	public:
 		virtual ~Fresnel(){};
 
-		virtual glm::vec3 evaluate(float cos_i) const = 0;
+		virtual glm::vec3 evaluate(float cos_i, float nt_over_ni) const = 0;
+
+		float eta_i, eta_t;
 	};
 
 	class FresnelConductor : public Fresnel
 	{
 	public:
-		glm::vec3 evaluate(float cos_theta_i) const override;
+		glm::vec3 evaluate(float cos_theta_i, float nt_over_ni) const override;
 
-		FresnelConductor(const glm::vec3& eta_i, const glm::vec3& eta_t, const glm::vec3& k)
-			: eta_i(eta_i), eta_t(eta_t), k(k){}
+		FresnelConductor(const glm::vec3& eta_n, const glm::vec3& eta_k): eta_n(eta_n), eta_k(eta_k){}
 
 	private:
-		glm::vec3 eta_i, eta_t, k;
+		glm::vec3 eta_n, eta_k;
 	};
 
 	class FresnelDielectric : public Fresnel
 	{
 	public:
-		glm::vec3 evaluate(float cos_theta_i) const override;
+		glm::vec3 evaluate(float cos_theta_i, float nt_over_ni) const override;
 
 		FresnelDielectric(float eta_i, float eta_t) : eta_i(eta_i), eta_t(eta_t){}
 
-	private:
 		float eta_i, eta_t;
 	};
 
@@ -41,6 +41,6 @@ namespace pbr
 	public:
 		FresnelMirror() = default;
 
-		glm::vec3 evaluate(float) const override;
+		glm::vec3 evaluate(float, float) const override;
 	};
 }

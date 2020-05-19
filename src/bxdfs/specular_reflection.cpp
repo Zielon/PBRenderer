@@ -5,7 +5,7 @@ glm::vec3 pbr::SpecularReflection::sample_f(const glm::vec3& wo, glm::vec3* wi, 
 
 	*wi = glm::vec3(-wo.x, -wo.y, wo.z);
 	*pdf = 1;
-	return fresnel->evaluate(math::cos_theta(*wi)) * r / math::abs_cos_theta(*wi);
+	return fresnel->evaluate(math::cos_theta(*wi), 0) * r / math::abs_cos_theta(*wi);
 }
 
 glm::vec3 pbr::SpecularReflection::f(const glm::vec3& wo, const glm::vec3& wi) const{

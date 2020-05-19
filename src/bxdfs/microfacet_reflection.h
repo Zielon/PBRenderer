@@ -12,9 +12,8 @@ namespace pbr
 	public:
 		MicrofacetReflection(
 			std::shared_ptr<MicrofacetDistribution> distribution,
-			const glm::vec3& r,
 			std::shared_ptr<Fresnel> fresnel):
-			BxDF(BxDFType(REFLECTION | GLOSSY)), r(r),
+			BxDF(BxDFType(REFLECTION | GLOSSY)),
 			fresnel(std::move(fresnel)),
 			distribution(std::move(distribution)){}
 
@@ -27,7 +26,6 @@ namespace pbr
 		float pdf(const glm::vec3& wo, const glm::vec3& wi) const override;
 
 	private:
-		const glm::vec3 r;
 		const std::shared_ptr<Fresnel> fresnel;
 		const std::shared_ptr<MicrofacetDistribution> distribution;
 	};
