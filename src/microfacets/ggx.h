@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+
 #include "../core/microfacet.h"
 
 namespace pbr

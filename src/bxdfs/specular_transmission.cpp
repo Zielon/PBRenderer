@@ -1,5 +1,7 @@
 #include "specular_transmission.h"
 
+#include "../math/math.h"
+
 glm::vec3 pbr::SpecularTransmission::sample_f(
 	const glm::vec3& wo, glm::vec3* wi, const glm::vec2& sample, float* pdf, BxDFType* sampledType) const{
 
@@ -11,7 +13,7 @@ glm::vec3 pbr::SpecularTransmission::sample_f(
 		return glm::vec3(0.f);
 
 	*pdf = 1.f;
-	glm::vec3 ft = t * (glm::vec3(1.f) - fresnel->evaluate(math::cos_theta(*wi), 0));
+	glm::vec3 ft = t * (glm::vec3(1.f) - fresnel->evaluate(math::cos_theta(*wi)));
 
 	if (mode == TransportMode::Radiance)
 		ft *= eta;

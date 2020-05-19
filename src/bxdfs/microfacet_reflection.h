@@ -1,8 +1,9 @@
 #pragma once
 
 #include <utility>
-#include "../core/bxdf.h"
+
 #include "fresnel.h"
+#include "../core/bxdf.h"
 #include "../core/microfacet.h"
 
 namespace pbr
@@ -19,11 +20,10 @@ namespace pbr
 
 		glm::vec3 f(const glm::vec3& wo, const glm::vec3& wi) const override;
 
-		glm::vec3 sample_f(const glm::vec3& wo, glm::vec3* wi,
-		                   const glm::vec2& sample, float* pdf,
-		                   BxDFType* sampledType = nullptr) const override;
-
 		float pdf(const glm::vec3& wo, const glm::vec3& wi) const override;
+
+		glm::vec3 sample_f(const glm::vec3& wo, glm::vec3* wi, const glm::vec2& u, float* pdf,
+		                   BxDFType* sampledType = nullptr) const override;
 
 	private:
 		const std::shared_ptr<Fresnel> fresnel;

@@ -446,10 +446,13 @@
     <None Include="..\configuration\cornell_box.json">
       <Filter>configuration</Filter>
     </None>
-    <None Include="..\configuration\environment.json">
+    <None Include="..\configuration\ajax_glass.json">
       <Filter>configuration</Filter>
     </None>
-    <None Include="..\configuration\stage.json">
+    <None Include="..\configuration\ajax_gold.json">
+      <Filter>configuration</Filter>
+    </None>
+    <None Include="..\configuration\ajax_plastic.json">
       <Filter>configuration</Filter>
     </None>
   </ItemGroup>

@@ -2,12 +2,12 @@
 
 float pbr::GGX::D(const glm::vec3& wh) const{
 
-	auto costheta = math::cos_theta(wh);
+	auto cos_theta = math::cos_theta(wh);
 
-	if (costheta > 0.0f)
+	if (cos_theta > 0.0f)
 	{
 		auto temp = alpha * alpha + math::tan2_theta(wh);
-		return alpha * alpha / (glm::pi<float>() * costheta * costheta * costheta * costheta * temp * temp);
+		return alpha * alpha / (glm::pi<float>() * cos_theta * cos_theta * cos_theta * cos_theta * temp * temp);
 	}
 
 	return 0.0f;
@@ -26,6 +26,10 @@ float pbr::GGX::pdf(const glm::vec3& wo, const glm::vec3& wh) const{
 	return glm::abs(G1(wo, wh) * dot(wo, wh) * D(wh) / math::cos_theta(wo));
 }
 
+/*
+ * A Simpler and Exact Sampling Routine for the GGX by Eric Heitz
+ * https://hal.archives-ouvertes.fr/hal-01509746/document
+ */
 glm::vec3 pbr::GGX::sample_wh(const glm::vec3& w, const glm::vec2& u){
 
 	auto wi = math::cos_theta(w) < 0.0f ? -w : w;

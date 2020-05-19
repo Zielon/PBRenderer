@@ -9,7 +9,9 @@ namespace pbr
 {
 	enum LightType { AREA, POINT, INFINITE };
 
+	class Ray;
 	class Scene;
+	class Intersection;
 
 	class Light
 	{
@@ -28,7 +30,8 @@ namespace pbr
 			float* pdf,
 			bool* shadow) const = 0;
 
-		virtual float pdf_Li(const Intersection& ref, const std::shared_ptr<Scene>& scene, const glm::vec3& wi) const = 0;
+		virtual float pdf_Li(const Intersection& ref, const std::shared_ptr<Scene>& scene,
+		                     const glm::vec3& wi) const = 0;
 
 		virtual float sample_Le(
 			const Intersection& intersection,
@@ -36,7 +39,10 @@ namespace pbr
 			glm::vec3* wi,
 			float* pdf) const = 0;
 
-		//virtual void pdf_Le(const Ray &ray, const Normal3f &nLight, Float *pdfPos, Float *pdfDir) const = 0;
+		virtual glm::vec3 Le(const Ray& ray) const{
+
+			return glm::vec3(0.f);
+		}
 
 		LightType type;
 

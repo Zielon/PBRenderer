@@ -147,9 +147,10 @@
     <ClCompile Include="..\src\textures\image_texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\configuration\ajax_glass.json" />
+    <None Include="..\configuration\ajax_gold.json" />
+    <None Include="..\configuration\ajax_plastic.json" />
     <None Include="..\configuration\cornell_box.json" />
-    <None Include="..\configuration\environment.json" />
-    <None Include="..\configuration\stage.json" />
     <None Include="..\src\rasterizer\glsl\flat\flat.frag" />
     <None Include="..\src\rasterizer\glsl\flat\flat.geo" />
     <None Include="..\src\rasterizer\glsl\flat\flat.vert" />

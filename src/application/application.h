@@ -46,7 +46,7 @@ namespace app
 		float fps_rate{0.f};
 		int frames{0};
 		int num_samples{10};
-		int current_config{2};
+		int current_config{1};
 
 		void attach_menu();
 

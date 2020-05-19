@@ -15,7 +15,7 @@ void pbr::PlasticMaterial::compute_BxDF(Intersection& intersection, TransportMod
 
 	auto kd = glm::vec3(51.f / 255.f, 51.f / 255.f, 153.f / 255.f);
 	auto fresnel = std::make_shared<FresnelDielectric>(1.5f, 1.f);
-	auto distribution = std::make_shared<GGX>(0.6f);
+	auto distribution = std::make_shared<GGX>(0.55f);
 
 	intersection.bsdf->add(std::make_shared<LambertianReflection>(kd));
 	intersection.bsdf->add(std::make_shared<MicrofacetReflection>(distribution, fresnel));

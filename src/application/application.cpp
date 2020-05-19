@@ -11,7 +11,7 @@
 
 const unsigned int SCR_WIDTH = 900;
 const unsigned int SCR_HEIGHT = 700;
-const std::string DEFAULT = "../configuration/stage.json";
+const std::string DEFAULT = "../configuration/ajax_gold.json";
 
 app::Application::Application():
 	menu(glm::ivec2(0, 0), glm::ivec2(200, 300)),
@@ -44,7 +44,7 @@ void app::Application::start(){
 
 		auto shader = shader_manager.reload(shader_type);
 
-		camera->is_active = !is_rendering && !ray_caster->is_saving;
+		camera->is_active = !is_rendering && !ray_caster->is_saving && !ImGui::GetIO().WantCaptureMouse;
 
 		if (glfwGetKey(window.get(), GLFW_KEY_C) == GLFW_PRESS)
 			ray_caster->ray_cast_frame();
@@ -125,9 +125,10 @@ void app::Application::reload(){
 
 	std::string path;
 
-	if (current_config == 0) path = "../configuration/cornell_box.json";
-	if (current_config == 1) path = "../configuration/environment.json";
-	if (current_config == 2) path = "../configuration/stage.json";
+	if (current_config == 0) path = "../configuration/ajax_glass.json";
+	if (current_config == 1) path = "../configuration/ajax_gold.json";
+	if (current_config == 2) path = "../configuration/ajax_plastic.json";
+	if (current_config == 3) path = "../configuration/cornell_box.json";
 
 	if (model_loader->needs_reload(path))
 	{
@@ -141,7 +142,7 @@ void app::Application::attach_menu(){
 
 	const char* shaders[] = {"FLAT", "NORMALS", "SMOOTH"};
 	const char* integrators[] = {"PATH TRACER", "WHITTED", "DIRECT ILLUMINATION"};
-	const char* configs[] = {"CORNELL BOX BUNNY", "ENVIRONMENT BUNNY", "ENVIRONMENT AJAX"};
+	const char* configs[] = {"AJAX GLASS", "AJAX GOLD", "AJAX PLASTIC", "CORNELL BOX"};
 
 	menu.attach([shaders, integrators, configs, this](){
 
@@ -184,8 +185,10 @@ void app::Application::attach_menu(){
 		ImGui::Text("Camera position/direction");
 		ImGui::Text("%.5f %.5f %.5f", position.x, position.y, position.z);
 		ImGui::Text("%.5f %.5f %.5f", direction.x, direction.y, direction.z);
+		ImGui::NewLine();
+		ImGui::Text("%s", configs[current_config]);
 		if (ImGui::CollapsingHeader("Configuration"))
-			ImGui::ListBox("configs", &current_config, configs, IM_ARRAYSIZE(configs), 3);
+			ImGui::ListBox("configs", &current_config, configs, IM_ARRAYSIZE(configs), 4);
 		ImGui::Separator();
 		ImGui::NewLine();
 		ImGui::Text("Program usage: \n"

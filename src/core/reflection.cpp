@@ -1,11 +1,10 @@
 #include "reflection.h"
 
-#include <utility>
+#include <algorithm>
 
 #include "bxdf.h"
-#include <algorithm>
+#include "../core/uniform_sampler.h"
 #include "../geometry/intersection.h"
-#include "../bxdfs/specular_reflection.h"
 
 pbr::BSDF::BSDF(Intersection& intersection, SceneObject* object, float eta) :
 	n(normalize(intersection.shading.n)),
@@ -56,7 +55,8 @@ glm::vec3 pbr::BSDF::sample_f(
 	if (components == 0)
 	{
 		*pdf = 0.f;
-		*sampled_type = BxDFType(0);
+		if (sampled_type)
+			*sampled_type = BxDFType(0);
 		return glm::vec3(0.f);
 	}
 
@@ -83,7 +83,8 @@ glm::vec3 pbr::BSDF::sample_f(
 
 	if (*pdf == 0)
 	{
-		*sampled_type = BxDFType(0);
+		if (sampled_type)
+			*sampled_type = BxDFType(0);
 		return glm::vec3(0.f);
 	}
 
@@ -156,6 +157,6 @@ float pbr::BSDF::pdf(const glm::vec3& wo_w, const glm::vec3& wi_w, BxDFType flag
 			pdf += bxdf->pdf(wo, wi);
 			matching++;
 		}
-	
+
 	return matching > 0 ? pdf / matching : 0.f;
 }

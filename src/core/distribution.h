@@ -1,6 +1,5 @@
 #pragma once
 
-#include <utility>
 #include <vector>
 #include <numeric>
 
@@ -8,33 +7,6 @@
 
 namespace pbr
 {
-	template <typename T, typename U, typename V>
-	T Clamp(T val, U low, V high){
-		if (val < low)
-			return low;
-		if (val > high)
-			return high;
-		return val;
-	}
-
-	template <typename Predicate>
-	int FindInterval(int size, const Predicate& pred){
-		int first = 0, len = size;
-		while (len > 0)
-		{
-			int half = len >> 1, middle = first + half;
-			// Bisect range based on value of _pred_ at _middle_
-			if (pred(middle))
-			{
-				first = middle + 1;
-				len -= half + 1;
-			}
-			else
-				len = half;
-		}
-		return Clamp(first - 1, 0, size - 2);
-	}
-
 	class Distribution1D final
 	{
 	public:
@@ -59,9 +31,9 @@ namespace pbr
 
 		float sample(const float u, float* pdf, int* off = nullptr) const{
 
-			int offset = FindInterval((int)cdf.size(), [&](int index){
-				return cdf[index] <= u;
-			});
+			int offset = std::clamp(
+				int(std::distance(cdf.begin(), std::upper_bound(cdf.begin(), cdf.end(), u))) - 1,
+				0, int(cdf.size()) - 2);
 
 			if (off) *off = offset;
 
@@ -78,7 +50,7 @@ namespace pbr
 		float funcInt{};
 
 		int count() const{
-			return (int)func.size();
+			return int(func.size());
 		}
 
 		std::vector<float> cdf;
@@ -93,19 +65,19 @@ namespace pbr
 	public:
 		explicit Distribution2D(const std::vector<std::vector<float>>& func){
 
-			std::vector<float> marginalFunc;
+			std::vector<float> marginal_func;
 
 			for (auto& f : func)
 			{
 				pConditionalV.emplace_back(new Distribution1D(f));
 			}
 
-			for (auto& c : pConditionalV)
+			for (auto& conditional : pConditionalV)
 			{
-				marginalFunc.push_back(c->funcInt);
+				marginal_func.push_back(conditional->funcInt);
 			}
 
-			pMarginal.reset(new Distribution1D(marginalFunc));
+			pMarginal.reset(new Distribution1D(marginal_func));
 		}
 
 		glm::vec2 sample(const glm::vec2& u, float* pdf) const{
@@ -120,10 +92,8 @@ namespace pbr
 
 		float get_pdf(const glm::vec2& p) const{
 
-			int iu = Clamp(int(p[0] * pConditionalV[0]->count()), 0,
-			               pConditionalV[0]->count() - 1);
-			int iv =
-				Clamp(int(p[1] * pMarginal->count()), 0, pMarginal->count() - 1);
+			int iu = std::clamp(int(p[0] * pConditionalV[0]->count()), 0, pConditionalV[0]->count() - 1);
+			int iv = std::clamp(int(p[1] * pMarginal->count()), 0, pMarginal->count() - 1);
 			return pConditionalV[iv]->func[iu] / pMarginal->funcInt;
 		};
 

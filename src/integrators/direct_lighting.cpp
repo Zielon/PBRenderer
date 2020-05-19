@@ -5,10 +5,14 @@
 glm::vec3 pbr::DirectLighting::Li(const Ray& ray, const std::shared_ptr<Sampler>& sampler, int depth) const{
 
 	Intersection intersection;
-	glm::vec3 L = glm::vec3(0.f);
+	auto L = glm::vec3(0.f);
 
 	if (!scene->intersect(ray, intersection))
-		return glm::vec3(0.f);
+	{
+		for (auto& light : scene->get_lights().get())
+			L += light->Le(ray);
+		return L;
+	}
 
 	auto triangle = const_cast<Triangle*>(intersection.triangle);
 	auto hit_mesh = dynamic_cast<Mesh*>(triangle->scene_object);

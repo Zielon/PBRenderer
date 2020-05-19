@@ -1,0 +1,50 @@
+{
+  "camera": {
+    "position": "-0.38392 0.10874 0.01520",
+    "direction": "0.0000 -0.09585 -0.99540"
+  },
+  "lights": [
+    {
+      "id": 1,
+      "name": "infinite light 1",
+      "type": "INFINITE_LIGHT",
+      "rotation": "270 0 0",
+      "texture": {
+        "name": "hdr_vankleef",
+        "type": "HDR",
+        "path": "..\\resources\\hdr\\vankleef.hdr"
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "id": 1,
+      "name": "cbox_floor",
+      "path": "..\\resources\\cbox\\cbox_floor.obj",
+      "scaling": "0.001 0.001 0.001",
+      "translation": "-0.3 0 0.15",
+      "rotation": "0 0 180",
+      "material": {
+        "type": "LAMBERTIAN",
+        "textures": [
+          {
+            "name": "kd",
+            "type": "CONSTANT",
+            "value": "228 225 222"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "ajax",
+      "path": "..\\resources\\ajax.obj",
+      "scaling": "0.005 0.005 0.005",
+      "translation": "-0.30 0 -0.25",
+      "rotation": "0 0 90",
+      "material": {
+        "type": "METAL"
+      }
+    }
+  ]
+}

@@ -1,56 +1,74 @@
 #include "fresnel.h"
 
-inline glm::vec3 conductor(float costheta, const glm::vec3& nt_over_ni, const glm::vec3& kt_over_ki){
+#include <algorithm>
+#include "../math/math.h"
 
-	/*From https://seblagarde.wordpress.com/2013/04/29/memo-on-fresnel-equations*/
-	auto cos2theta = costheta * costheta;
-	auto sin2theta = 1.0f - cos2theta;
-	auto n2 = nt_over_ni * nt_over_ni;
-	auto k2 = kt_over_ki * kt_over_ki;
+inline glm::vec3 conductor(float cos_theta_i, const glm::vec3& eta_i, const glm::vec3& eta_t, const glm::vec3& k) {
 
-	auto t0 = n2 - k2 - sin2theta;
-	auto a2_plus_b2 = glm::sqrt(t0 * t0 + 4.0f * n2 * k2);
-	auto t1 = a2_plus_b2 + cos2theta;
-	auto a = glm::sqrt(0.5f * (a2_plus_b2 + t0));
-	auto t2 = 2.0f * a * costheta;
-	auto rs = (t1 - t2) / (t1 + t2);
+	cos_theta_i = math::clamp(cos_theta_i, -1.f, 1.f);
 
-	auto t3 = cos2theta * a2_plus_b2 + sin2theta * sin2theta;
-	auto t4 = t2 * sin2theta;
-	auto rp = rs * (t3 - t4) / (t3 + t4);
+	// Since eta_i is assumed to be dielectric so that a normal real division can be used.
+	// Instead complex division operation.
+	glm::vec3 eta = eta_t / eta_i;
+	glm::vec3 etak = k / eta_i;
 
-	return 0.5f * (rp + rs);
+	float cosThetaI2 = cos_theta_i * cos_theta_i;
+	float sinThetaI2 = 1.f - cosThetaI2;
+	glm::vec3 eta2 = eta * eta;
+	glm::vec3 etak2 = etak * etak;
+
+	glm::vec3 t0 = eta2 - etak2 - sinThetaI2;
+	glm::vec3 a2plusb2 = sqrt(t0 * t0 + 4.f * eta2 * etak2);
+	glm::vec3 t1 = a2plusb2 + cosThetaI2;
+	glm::vec3 a = sqrt(0.5f * (a2plusb2 + t0));
+	glm::vec3 t2 = float(2) * cos_theta_i * a;
+	glm::vec3 Rs = (t1 - t2) / (t1 + t2);
+
+	glm::vec3 t3 = cosThetaI2 * a2plusb2 + sinThetaI2 * sinThetaI2;
+	glm::vec3 t4 = t2 * sinThetaI2;
+	glm::vec3 Rp = Rs * (t3 - t4) / (t3 + t4);
+
+	return 0.5f * (Rp + Rs);
 }
 
-inline float dielectric(float cos_theta_i, float nt_over_ni){
+inline glm::vec3 dielectric(float cos_theta_i, float eta_i, float eta_t) {
 
-	auto g = nt_over_ni * nt_over_ni - 1.0f + cos_theta_i * cos_theta_i;
+	cos_theta_i = math::clamp(cos_theta_i, -1, 1);
 
-	//In the case of total internal reflection, return 1.
-	if (g < 0.0f)
+	// Potentially swap indices of refraction
+	const bool entering = cos_theta_i > 0.f;
+
+	if (!entering)
 	{
-		return 1.0f;
+		std::swap(eta_i, eta_t);
+		cos_theta_i = std::abs(cos_theta_i);
 	}
 
-	g = glm::sqrt(g);
-	auto g_minus_c = g - cos_theta_i;
-	auto g_plus_c = g + cos_theta_i;
-	auto temp_div = (cos_theta_i * g_plus_c - 1.0f) / (cos_theta_i * g_minus_c + 1.0f);
+	// Compute cosThetaT using Snell’s law
+	const float sin_theta_i = std::sqrt(std::max(float(0), 1 - cos_theta_i * cos_theta_i));
+	const float sin_theta_t = eta_i / eta_t * sin_theta_i;
 
-	return 0.5f * (g_minus_c * g_minus_c) * (1.0f + temp_div * temp_div) / (g_plus_c * g_plus_c);
+	// Total internal reflection
+	if (sin_theta_t >= 1) return glm::vec3(1);
+
+	float cos_theta_t = std::sqrt(std::max(float(0), 1 - sin_theta_t * sin_theta_t));
+	float rparl = ((eta_t * cos_theta_i) - (eta_i * cos_theta_t)) / ((eta_t * cos_theta_i) + (eta_i * cos_theta_t));
+	float rperp = ((eta_i * cos_theta_i) - (eta_t * cos_theta_t)) / ((eta_i * cos_theta_i) + (eta_t * cos_theta_t));
+
+	return glm::vec3((rparl * rparl + rperp * rperp) / 2.f);
 }
 
-glm::vec3 pbr::FresnelConductor::evaluate(float cos_theta_i, float nt_over_ni) const{
+glm::vec3 pbr::FresnelConductor::evaluate(float cos_theta_i) const {
 
-	return conductor(cos_theta_i, eta_n, eta_k);
+	return conductor(cos_theta_i, eta_i, eta_t, k);
 }
 
-glm::vec3 pbr::FresnelDielectric::evaluate(float cos_theta_i, float nt_over_n) const{
+glm::vec3 pbr::FresnelDielectric::evaluate(float cos_theta_i) const {
 
-	return glm::vec3(dielectric(cos_theta_i, nt_over_n));
+	return dielectric(cos_theta_i, eta_i, eta_t);
 }
 
-glm::vec3 pbr::FresnelMirror::evaluate(float, float) const{
+glm::vec3 pbr::FresnelMirror::evaluate(float) const {
 
 	return glm::vec3(1.f);
 }

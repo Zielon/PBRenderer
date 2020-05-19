@@ -7,9 +7,6 @@
 
 namespace pbr
 {
-	class Ray;
-	class Intersection;
-
 	class InfiniteLight : public Light
 	{
 	public:
@@ -17,7 +14,7 @@ namespace pbr
 
 		glm::vec3 power() const override;
 
-		glm::vec3 Le(const Ray& ray) const;
+		glm::vec3 Le(const Ray& ray) const override;
 
 		glm::vec3 sample_Li(
 			const Intersection& intersection,
