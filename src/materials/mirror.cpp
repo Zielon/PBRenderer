@@ -2,7 +2,6 @@
 
 #include "../geometry/triangle.h"
 #include "../bxdfs/specular_reflection.h"
-#include "../bxdfs/microfacet_transmission.h"
 
 void pbr::MirrorMaterial::compute_BxDF(Intersection& intersection, TransportMode mode) const{
 

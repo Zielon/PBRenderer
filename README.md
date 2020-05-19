@@ -29,7 +29,7 @@ To run the project Visual Studio is needed. Render images are saved in the folde
 
 ####  Results:
 
-It took around 10-15 minutes per image [8 core CPU].
+It took around 10-15 minutes per image [8 threads].
 
 ![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/ajax_gold.jpg)
 ```
