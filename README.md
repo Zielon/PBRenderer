@@ -32,26 +32,32 @@ To run the project Visual Studio is needed. Render images are saved in the folde
 It took around 10-15 minutes per image [8 core CPU].
 
 ![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/ajax_gold.jpg)
-> Material: gold 
-> Distribuion: GGX with alpha 0.15
-> Resolution: [900x700]
-> SPP: 1536
-> Rays max depth: 10
+```
+Material: gold
+Distribuion: GGX with alpha 0.15
+Resolution: [900x700]
+SPP: 1536
+Rays max depth: 10
+```
 
 ![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/ajax_plastic.jpg)
-> Material: plastic
-> Distribuion: GGX with alpha 0.55
-> Lambertian material + Microfacets reflection
-> Resolution: [900x700]
-> SPP: 1536
-> Rays max depth: 10
+```
+Material: plastic
+Distribuion: GGX with alpha 0.55
+Lambertian material + Microfacets reflection
+Resolution: [900x700]
+SPP: 1536
+Rays max depth: 10
+```
 
 ![output_1](https://github.com/Zielon/PBRenderer/blob/master/samples/ajax_glass.jpg)
-> Material: glass
-> IOR 1.5
-> Resolution: [900x700]
-> SPP: 3000
-> Rays max depth: 10
+```
+Material: glass
+IOR 1.5
+Resolution: [900x700]
+SPP: 3000
+Rays max depth: 10
+```
 
 #### References:
 [0] [pbr-book (3ed-2018)](http://www.pbr-book.org/3ed-2018/contents.html)
