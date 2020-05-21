@@ -18,7 +18,7 @@ namespace pbr
 	public:
 		virtual ~Light() = default;
 
-		Light(LightType type, parser::LightConfig config): type(type), configuration(std::move(config)){}
+		Light(LightType type, parser::LightConfig config) : type(type), configuration(std::move(config)) {}
 
 		virtual glm::vec3 power() const = 0;
 
@@ -30,9 +30,10 @@ namespace pbr
 			float* pdf,
 			bool* shadow) const = 0;
 
-		virtual float pdf_Li(const Intersection& ref, 
-							 const std::shared_ptr<Scene>& scene,
-		                     const glm::vec3& wi) const = 0;
+		virtual float pdf_Li(
+			const Intersection& ref,
+			const std::shared_ptr<Scene>& scene,
+			const glm::vec3& wi) const = 0;
 
 		virtual float sample_Le(
 			const Intersection& intersection,
@@ -40,7 +41,7 @@ namespace pbr
 			glm::vec3* wi,
 			float* pdf) const = 0;
 
-		virtual glm::vec3 Le(const Ray& ray) const{
+		virtual glm::vec3 Le(const Ray& ray) const {
 
 			return glm::vec3(0.f);
 		}
