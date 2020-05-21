@@ -30,7 +30,8 @@ namespace pbr
 			float* pdf,
 			bool* shadow) const = 0;
 
-		virtual float pdf_Li(const Intersection& ref, const std::shared_ptr<Scene>& scene,
+		virtual float pdf_Li(const Intersection& ref, 
+							 const std::shared_ptr<Scene>& scene,
 		                     const glm::vec3& wi) const = 0;
 
 		virtual float sample_Le(

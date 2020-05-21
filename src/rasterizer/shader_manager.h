@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shader.h"
+#include <memory>
 #include <map>
 
 namespace rasterizer

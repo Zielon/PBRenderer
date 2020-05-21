@@ -2,6 +2,7 @@
 
 #include <glm/vec3.hpp>
 #include <utility>
+#include <string>
 #include <rapidjson/document.h>
 
 namespace pbr

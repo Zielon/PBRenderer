@@ -11,7 +11,7 @@
 pbr::Film::Film(glm::vec2 size):
 	pixels(std::vector<std::vector<Pixel<float>>>(size.y, std::vector<Pixel<float>>(size.x))), size(size){
 
-	std::experimental::filesystem::create_directory("../output");
+	std::filesystem::create_directory("../output");
 }
 
 pbr::Pixel<float> pbr::Film::get_pixel(int x, int y){

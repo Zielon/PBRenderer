@@ -2,6 +2,7 @@
 
 #include "texture.h"
 #include <vector>
+#include <string>
 #include <glm/vec2.hpp>
 
 namespace pbr

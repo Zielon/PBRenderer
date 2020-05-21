@@ -1,5 +1,7 @@
 #include "shader_manager.h"
 
+#include <stdexcept>
+
 rasterizer::ShaderManager::ShaderManager(){
 
 	shaders["FLAT"] = std::make_shared<Shader>(R"(flat\flat.vert)", R"(flat\flat.frag)", R"(flat\flat.geo)");
