@@ -8,7 +8,7 @@ Application for generating physically based renderings. The whole project is div
 
 To run the project Visual Studio is needed. Render images are saved in the folder output which is created in the repository root automatically. The example of a configuraiton file is in the folder with the same name.
 
-Use [vcpkg](https://github.com/Microsoft/vcpkg) to install packages:
+Use [vcpkg](https://github.com/Microsoft/vcpkg) to install the following packages:
 ```
 1) glad_x64-windows
 2) glfw3_x64-windows
@@ -16,6 +16,9 @@ Use [vcpkg](https://github.com/Microsoft/vcpkg) to install packages:
 4) stb_x64-windows
 5) zlib_x64-windows
 6) rapidjson_x64-windows
+
+Run command to install all:
+vcpkg install glad_x64-windows glfw3_x64-windows glm_x64-windows stb_x64-windows zlib_x64-windows rapidjson_x64-windows
 ```
 
 #### Available integrators:
