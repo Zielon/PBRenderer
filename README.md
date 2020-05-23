@@ -15,6 +15,7 @@ Use [vcpkg](https://github.com/Microsoft/vcpkg) to install packages:
 3) glm_x64-windows
 4) stb_x64-windows
 5) zlib_x64-windows
+6) rapidjson_x64-windows
 ```
 
 #### Available integrators:

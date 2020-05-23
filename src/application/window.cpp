@@ -39,9 +39,13 @@ app::Window::Window(int width, int height): width(width), height(height){
 }
 
 app::Window::~Window(){
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
 	glfwDestroyWindow(window);
 	glfwTerminate();
-	ImGui::DestroyContext();
 }
 
 GLFWwindow* app::Window::get() const{
