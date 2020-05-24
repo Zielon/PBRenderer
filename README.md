@@ -77,7 +77,7 @@ Rays max depth: 10
 Material: plastic and glass sphere
 IOR 1.5
 Resolution: [900x700]
-SPP: 1536
+SPP: 3100
 Rays max depth: 10
 ```
 

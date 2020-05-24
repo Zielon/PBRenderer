@@ -49,5 +49,6 @@ app::Window::~Window(){
 }
 
 GLFWwindow* app::Window::get() const{
+
 	return window;
 }
