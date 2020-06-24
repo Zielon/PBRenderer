@@ -273,6 +273,9 @@
     <ClInclude Include="..\src\microfacets\ggx.h">
       <Filter>microfacets</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\textures\bump_texture.h">
+      <Filter>textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -416,6 +419,9 @@
     </ClCompile>
     <ClCompile Include="..\src\microfacets\ggx.cpp">
       <Filter>microfacets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\textures\bump_texture.cpp">
+      <Filter>textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

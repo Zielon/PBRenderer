@@ -44,7 +44,7 @@ void app::Application::start(){
 
 		auto shader = shader_manager.reload(shader_type);
 
-		camera->is_active = !is_rendering && !ray_caster->is_saving && !ImGui::GetIO().WantCaptureMouse;
+		camera->is_active = !is_rendering && !ray_caster->is_saving;
 
 		if (glfwGetKey(window.get(), GLFW_KEY_C) == GLFW_PRESS)
 			ray_caster->ray_cast_frame();

@@ -16,5 +16,6 @@ namespace pbr
 
 	private:
 		std::shared_ptr<Texture<glm::vec3>> kd;
+		std::shared_ptr<Texture<glm::vec3>> bump;
 	};
 }

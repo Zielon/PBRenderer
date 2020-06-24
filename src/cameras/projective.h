@@ -31,7 +31,7 @@ namespace pbr
 		void set_fov(float fov) override;
 
 	private:
-		float near = 0.1f;
+		float near = 0.01f;
 		float far = 100.f;
 		glm::mat4 camera_to_screen{};
 	};

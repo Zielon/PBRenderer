@@ -45,13 +45,14 @@ bool pbr::Triangle::intersect(const Ray& ray, Intersection& intersection) const{
 
 		auto ns = normalize(v0.normal + v1.normal + v2.normal);
 		auto ss = normalize(v0.bitangent + v1.bitangent + v2.bitangent);
+		auto tt = normalize(v0.tangent + v1.tangent + v2.tangent);
 
 		shading.uv = v0.tex_coords + v1.tex_coords + v2.tex_coords;
 		shading.n = ns;
 		shading.dpdu = scene_object->transformation.vector_to_local(ss);
-		shading.dpdv = scene_object->transformation.vector_to_local(cross(ss, ns));
+		shading.dpdv = scene_object->transformation.vector_to_local(tt);
 
-		// In the case of no tangent and bitangent space, use spherical mapping
+		// In the case of neither tangent nor bitangent space available, use spherical mapping
 		if (v0.tex_coords == glm::vec2(0.f) &&
 			v1.tex_coords == glm::vec2(0.f) &&
 			v2.tex_coords == glm::vec2(0.f))

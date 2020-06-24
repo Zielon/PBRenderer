@@ -16,8 +16,8 @@ namespace pbr
 	class Image
 	{
 	public:
-		Image(std::string path): path(std::move(path)){
-
+		Image(std::string path): path(std::move(path))
+		{
 			load();
 		}
 
@@ -42,10 +42,14 @@ namespace pbr
 	class ImageTexture : public Texture<glm::vec3>
 	{
 	public:
-		ImageTexture(std::string name, std::shared_ptr<Image> image) : Texture(name), image(std::move(image)){}
+		ImageTexture(std::string name, std::shared_ptr<Image> image) : Texture(name), image(std::move(image))
+		{
+		}
 
 		ImageTexture(std::string name, std::string path)
-			: Texture(name), image(std::make_shared<Image>(path)){}
+			: Texture(name), image(std::make_shared<Image>(path))
+		{
+		}
 
 		glm::vec3 evaluate(Intersection& intersection) const override;
 

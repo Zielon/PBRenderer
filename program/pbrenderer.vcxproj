@@ -91,6 +91,7 @@
     <ClInclude Include="..\src\rasterizer\ray_caster.h" />
     <ClInclude Include="..\src\rasterizer\shader.h" />
     <ClInclude Include="..\src\rasterizer\shader_manager.h" />
+    <ClInclude Include="..\src\textures\bump_texture.h" />
     <ClInclude Include="..\src\textures\constant_texture.h" />
     <ClInclude Include="..\src\textures\hdr_texture.h" />
     <ClInclude Include="..\src\textures\image_texture.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="..\src\rasterizer\ray_caster.cpp" />
     <ClCompile Include="..\src\rasterizer\shader.cpp" />
     <ClCompile Include="..\src\rasterizer\shader_manager.cpp" />
+    <ClCompile Include="..\src\textures\bump_texture.cpp" />
     <ClCompile Include="..\src\textures\hdr_texture.cpp" />
     <ClCompile Include="..\src\textures\image_texture.cpp" />
   </ItemGroup>
