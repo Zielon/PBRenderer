@@ -47,10 +47,12 @@ void pbr::Film::save_jpg(const std::string& file){
 	{
 		for (int i = 0; i < size.x; ++i)
 		{
+			// Tone mapping to LDR
 			auto r = glm::clamp(pixels[j][i].r, 0.f, 1.f);
 			auto g = glm::clamp(pixels[j][i].g, 0.f, 1.f);
 			auto b = glm::clamp(pixels[j][i].b, 0.f, 1.f);
 
+			// Gamma correction
 			output[index++] = char(glm::pow(r, 0.45454545f) * 255.f);
 			output[index++] = char(glm::pow(g, 0.45454545f) * 255.f);
 			output[index++] = char(glm::pow(b, 0.45454545f) * 255.f);

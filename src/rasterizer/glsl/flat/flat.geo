@@ -35,4 +35,6 @@ void main()
 	gl_Position = vertices[2].position;
 	vertex.normal = n;
 	EmitVertex();
+
+	EndPrimitive();
 }
