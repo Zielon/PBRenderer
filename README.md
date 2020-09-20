@@ -1,8 +1,8 @@
 # PBRenderer 2.0.0
 
-####  Physically Based Renderer
+####  Physically Based Renderer Engine
 
-Application for generating physically based renderings. The whole project is divided into two main parts; rasterizer and pbrenderer. The first part implements a few basic GLSL shaders for visualising normals with flat and smooth shading, additionally, mouse picking and normal ray casting is added. A user can fly around the scene freely using the following buttons: W, S, D, A and left mouse button. Finally, place the camera in a selected position in the world space and render an image using R or C button. The former has to be pressed to physically based render a scene and the latter to ray cast normals. The biggest part of this project is pbrenderer.
+Engine for generating physically based renderings. The whole project is divided into two main parts; rasterizer and pbrenderer. The first part implements a few basic GLSL shaders for visualising normals with flat and smooth shading, additionally, mouse picking and normal ray casting is added. A user can fly around the scene freely using the following buttons: W, S, D, A and left mouse button. Finally, place the camera in a selected position in the world space and render an image using R or C button. The former has to be pressed to physically based render a scene and the latter to ray cast normals. The biggest part of this project is pbrenderer.
 
 #### How to run:
 
