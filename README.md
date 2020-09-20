@@ -29,6 +29,14 @@ vcpkg install glad_x64-windows glfw3_x64-windows glm_x64-windows stb_x64-windows
 3) Path tracer with MIS
 ```
 
+#### Available lights:
+
+```
+1) Area light
+2) Point light
+3) Environment light
+```
+
 ####  Available materials:
 
 ```
